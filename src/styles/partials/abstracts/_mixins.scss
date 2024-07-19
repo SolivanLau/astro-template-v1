@@ -1,0 +1,16 @@
+// media query mixin
+@mixin responsive-style($breakpoint){
+    @if $breakpoint == tablet{
+        @media(max-width: 768px){
+            @content;
+        }
+    }  @else if $breakpoint == mobile{
+        @media(max-width: 400px){
+            @content;
+        }
+    } @else{
+        @media(max-width: $breakpoint){
+            @content;
+        }
+    }
+}

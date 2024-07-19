@@ -1,0 +1,29 @@
+:root {
+    /* Font size */
+    --fs__global-size: 125%;
+    --fs__base-size: 1rem;
+    /* Type scale */
+    --fs__type-scale: 1.333; /* Major Fourth Type Scale */
+    --fs__max-growth: 1.25; /* Max growth rate for fluid styles */
+    /* Viewport */
+    --fs__viewport--min: 320px;
+    --fs__viewport--max: 1240px;
+    --fs__viewport--range: calc(var(--fs__viewport--max) - var(--fs__viewport--min));
+    /* Static font sizes */
+    --fs--400: var(--fs__base-size);
+    --fs--500: calc(var(--fs--400) * var(--fs__type-scale));
+    --fs--600: calc(var(--fs--500) * var(--fs__type-scale));
+    --fs--700: calc(var(--fs--600) * var(--fs__type-scale));
+    --fs--800: calc(var(--fs--700) * var(--fs__type-scale));
+    --fs--900: calc(var(--fs--800) * var(--fs__type-scale));
+    --fs--1000: calc(var(--fs--900) * var(--fs__type-scale));
+    // fluid font sizes
+}
+
+html {
+    font-size: var(--fs__global-size); 
+}
+
+p {
+    
+}
