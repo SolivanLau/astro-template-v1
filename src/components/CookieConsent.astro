@@ -1,0 +1,54 @@
+<section class="cookie-consent hidden">
+	<h2>This Website Uses Cookies</h2>
+	<p>
+		We use cookies and other tracking technologies to improve your browsing
+		experience on our website, to analyze our website traffic, and to
+		understand where our visitors are coming from.
+	</p>
+
+	<div class="cookie-consent__btn-container">
+		<button class="cookie-consent__btn" data-consent="granted">
+			Agree
+		</button>
+		<button class="cookie-consent__btn" data-consent="decline">
+			Decline
+		</button>
+	</div>
+</section>
+
+<style lang="scss">
+	.cookie-consent {
+		background-color: red;
+		padding: 20px;
+		max-width: 400px;
+		position: fixed;
+		bottom: 40px;
+		right: 0px;
+
+		:nth-child(1) {
+			margin-top: 0px;
+		}
+	}
+</style>
+
+<script>
+	// DOM Elements
+	const consentBanner = document.querySelector(".cookie-consent");
+	const consentBtns = consentBanner.querySelectorAll(".cookie-consent__btn");
+
+	// Check for user preference
+	const userConsentPreference = localStorage.getItem("cookieConsentMode");
+	if (!userConsentPreference) {
+		console.log("no preference - open up banner");
+		consentBanner.classList.remove("hidden");
+	}
+
+	// Button Logic
+	consentBtns.forEach(btn => {
+		const consentPreference = btn.getAttribute("data-consent");
+
+		btn.addEventListener("click", () => {
+			localStorage.setItem("cookieConsentMode", consentPreference);
+		});
+	});
+</script>

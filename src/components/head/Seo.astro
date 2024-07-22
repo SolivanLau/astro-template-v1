@@ -1,13 +1,26 @@
 ---
+const { seo: seoData } = Astro.props;
 
+const {
+	metaTitle,
+	metaDescription,
+	keywords,
+	metaRobots,
+	metaViewport,
+	structuredData,
+	canonicalURL,
+} = seoData ?? {};
 ---
 
 <!-- title -->
-<title>TITLE</title>
+<title>{metaTitle || "Random Title"}</title>
 <!-- description -->
-<meta name="description" content="Here is a test description" />
+<meta
+	name="description"
+	content={metaDescription || "this is a fallback description"}
+/>
 <!-- keywords -->
-<meta name="keywords" content="keyword1, keyword2, keyword3, keyword4" />
+<meta name="keywords" content={keywords || "fallback"} />
 <!-- canaonical url -->
 <link rel="canonical" href="https://www.example.com/your-page-url" />
 <!-- robots -->
@@ -30,17 +43,5 @@
 <!-- Open Graph: Twitter/X -->
 <meta name="twitter:card" content="summary" />
 <!-- Schema Markup -->
-<script type="application/ld+json">
-	{
-		"@context": "https://schema.org/",
-		"@type": "Recipe",
-		"name": "Party Coffee Cake",
-		"author": {
-			"@type": "Person",
-			"name": "Mary Stone"
-		},
-		"datePublished": "2018-03-10",
-		"description": "This coffee cake is awesome and perfect for parties.",
-		"prepTime": "PT20M"
-	}
+<script set:html={JSON.stringify(structuredData)} type="application/ld+json">
 </script>

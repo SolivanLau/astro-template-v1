@@ -1,6 +1,9 @@
 ---
+import CookieConsent from "@components/CookieConsent.astro";
+import Analytics from "@components/head/Analytics.astro";
 import Seo from "@components/head/Seo.astro";
 import "@styles/styles.scss";
+const { seo } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,12 +13,16 @@ import "@styles/styles.scss";
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<Seo />
+		<Seo seo={seo} />
+		<Analytics />
 	</head>
 	<body>
 		<slot />
+		<CookieConsent></CookieConsent>
 	</body>
 </html>
+
+
 
 
 <style is:global>
