@@ -1,6 +1,21 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Header from "@layouts/Header.astro";
+import cmsFetch from "@scripts/cms/cmsFetch";
+import { renderBlock } from "@scripts/cms/blockRenderer";
+
+// CMS query params
+const queryParams = {
+    populate: {
+        text: {
+            populate: "*",
+        },
+    },
+};
+// CMS page query
+const blockTests = await cmsFetch("blocks-tests", queryParams);
+
+const content = renderBlock(blockTests[0].attributes.text);
 ---
 
 <Layout>
@@ -10,10 +25,10 @@ import Header from "@layouts/Header.astro";
             <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim cupiditate aliquam at
                 consectetur quas facere consequuntur mollitia adipisci commodi ea praesentium nam,
-                quos impedit eligendi natus ex, tempore et quaerat? <a href="/connect"
-                    >Connect Page</a
-                >
+                quos impedit eligendi natus ex, tempore et quaerat?
+                <a href="/connect">Connect Page</a>
             </p>
+            <Fragment set:html={content} />
         </div>
     </main>
 </Layout>

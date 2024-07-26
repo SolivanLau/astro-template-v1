@@ -1,8 +1,7 @@
-import createQueryUrl from "../cms/createQueryUrl";
+import createQueryUrl from "./createQueryUrl";
 
-const cmsFetch = async (endpoint, options) => {
-    console.log("fetching");
-
+const cmsFetch = async (endpoint: string, options) => {
+    
     const url = createQueryUrl(endpoint, options);
 
     // network or cors errors

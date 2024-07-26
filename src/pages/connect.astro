@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Header from "@layouts/Header.astro";
 import Footer from "@layouts/Footer.astro";
 import cmsFetch from "@scripts/cms/cmsFetch";
-
+// CMS query params
 const queryParameters = {
     populate: {
         profile: {
@@ -17,7 +17,7 @@ const queryParameters = {
         },
     },
 };
-
+// CMS page query
 const pageQuery = await cmsFetch("connect-page", queryParameters);
 
 const { profile, links, seo } = pageQuery.attributes;
@@ -32,7 +32,8 @@ const { profile, links, seo } = pageQuery.attributes;
 </Layout>
 
 <!-- TESTING -->
-<script define:vars={{ profile, links, seo }}>
+<script define:vars={{ pageQuery, profile, links, seo }}>
+    console.log(pageQuery);
     console.log("Profile:", profile);
     console.log("Links:", links);
     console.log("SEO:", seo.structuredData);
