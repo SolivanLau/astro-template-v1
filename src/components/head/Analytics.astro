@@ -1,23 +1,23 @@
 <!-- Google tag (gtag.js) -->
-<script
-	type="text/partytown"
-	src="https://www.googletagmanager.com/gtag/js?id=G-RTDCWR473E"></script>
+<script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-RTDCWR473E"
+></script>
 
 <script type="text/partytown">
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	if (localStorage.getItem("cookieConsentMode") === null) {
-		gtag("consent", "default", {
-			analytics_storage: "denied",
-		});
-	} else {
-		gtag("consent", "default", {
-			analytics_storage: JSON.parse(localStorage.getItem(cookieConsentMode)),
-		});
-	}
-	gtag("js", new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-	gtag("config", "G-RTDCWR473E");
+    if (localStorage.getItem("cookieConsentMode") === null) {
+        gtag("consent", "default", {
+            analytics_storage: "denied",
+        });
+    } else {
+        gtag("consent", "default", {
+            analytics_storage: JSON.parse(localStorage.getItem(cookieConsentMode)),
+        });
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-RTDCWR473E");
 </script>

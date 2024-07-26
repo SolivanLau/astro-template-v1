@@ -4,8 +4,8 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  build: {
-    inlineStylesheets: "never"
-  },
-  integrations: [partytown()]
+    build: {
+        inlineStylesheets: "never",
+    },
+    integrations: [partytown()],
 });

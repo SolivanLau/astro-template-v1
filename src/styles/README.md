@@ -22,8 +22,8 @@ Examples: **logo--dark-mode**, **list--bulleted**, **accordion\_\_question--high
 
 ### Best Practices
 
--  **Use meaningful names**: Names should be understandable without needing to look at the HTML.
--  **Avoid deep nesting**: Ideally, limit the depth of nesting to three levels to keep CSS manageable.
+-   **Use meaningful names**: Names should be understandable without needing to look at the HTML.
+-   **Avoid deep nesting**: Ideally, limit the depth of nesting to three levels to keep CSS manageable.
 
 ### Resources
 
@@ -33,9 +33,9 @@ Please reference the [BEM introduction](https://getbem.com/introduction/) and [B
 
 `@styles` consists of all global styles or non-`.astro` component styles:
 
--  `styles.scss` - the main stylesheet with all global styles
--  `/partials` - individual partial files forwarding all files to `styles.scss`
--  `/modules` - non-`.astro` component styles.
+-   `styles.scss` - the main stylesheet with all global styles
+-   `/partials` - individual partial files forwarding all files to `styles.scss`
+-   `/modules` - non-`.astro` component styles.
 
 ## Usage
 
@@ -53,36 +53,36 @@ To centralize styles during build time, **all** styles are configured to be comp
 
 The global `styles.scss` file compiles from `@styles/partials` which is loosely based on of Kitty Giraudel's [7-1 Pattern SCSS architecture](https://sass-guidelin.es/#architecture):
 
--  `/abstracts`
--  `/base`
+-   `/abstracts`
+-   `/base`
 
 ### `/abstracts`
 
--  `_normalize` uses [CSS Normalize](https://necolas.github.io/normalize.css/) from Nicolas Gallagher
--  `_variables` use vanilla css variables for globally scoped styles.
--  `_utilities` are common classes used throughout the project.
--  `_mixins` are Scss mixins, mainly for responsive styling.
+-   `_normalize` uses [CSS Normalize](https://necolas.github.io/normalize.css/) from Nicolas Gallagher
+-   `_variables` use vanilla css variables for globally scoped styles.
+-   `_utilities` are common classes used throughout the project.
+-   `_mixins` are Scss mixins, mainly for responsive styling.
 
 ### `/base`
 
--  `_normalize` uses [CSS Normalize](https://necolas.github.io/normalize.css/) from Nicolas Gallagher
--  `_typography` fonts and type scaling.
+-   `_normalize` uses [CSS Normalize](https://necolas.github.io/normalize.css/) from Nicolas Gallagher
+-   `_typography` fonts and type scaling.
 
 ## .astro `<style>`
 
 Each `.astro` component will have their own `<style lang="scss">` tag. Using Astro's scoped styles, naming conventions are less frequent and rely on Astro's props and component structure to:
 
--  traditionally pass down styles to children with the `:global()` selector
--  pass a unique `class` attribute (renamed) from parent to child
--  using `...rest` to pass down the `data-astro-cid` attribute from parent to child
+-   traditionally pass down styles to children with the `:global()` selector
+-   pass a unique `class` attribute (renamed) from parent to child
+-   using `...rest` to pass down the `data-astro-cid` attribute from parent to child
 
 Please reference Astro's documentation for:
 
--  [scss integration](https://docs.astro.build/en/guides/styling/#sass-and-scss)
--  [scoped styles](https://docs.astro.build/en/guides/styling/#scoped-styles)
--  [global styles](https://docs.astro.build/en/guides/styling/#global-styles)
--  [passing a class to a child component](https://docs.astro.build/en/guides/styling/#passing-a-class-to-a-child-component)
--  [scopedStyleStrategy Configuration](https://docs.astro.build/en/reference/configuration-reference/#scopedstylestrategy)
+-   [scss integration](https://docs.astro.build/en/guides/styling/#sass-and-scss)
+-   [scoped styles](https://docs.astro.build/en/guides/styling/#scoped-styles)
+-   [global styles](https://docs.astro.build/en/guides/styling/#global-styles)
+-   [passing a class to a child component](https://docs.astro.build/en/guides/styling/#passing-a-class-to-a-child-component)
+-   [scopedStyleStrategy Configuration](https://docs.astro.build/en/reference/configuration-reference/#scopedstylestrategy)
 
 **currently scopedStyleStrategy is not set to class, but maybe in the future**
 

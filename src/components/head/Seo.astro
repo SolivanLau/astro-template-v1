@@ -1,47 +1,46 @@
 ---
 const { seo: seoData } = Astro.props;
-
 const {
-	metaTitle,
-	metaDescription,
-	keywords,
-	metaRobots,
-	metaViewport,
-	structuredData,
-	canonicalURL,
+    metaTitle,
+    metaDescription,
+    keywords,
+    metaRobots,
+    metaViewport,
+    structuredData,
+    canonicalURL,
 } = seoData ?? {};
 ---
 
 <!-- title -->
 <title>{metaTitle || "Random Title"}</title>
+
 <!-- description -->
-<meta
-	name="description"
-	content={metaDescription || "this is a fallback description"}
-/>
+<meta name="description" content={metaDescription || "this is a fallback description"} />
+
 <!-- keywords -->
 <meta name="keywords" content={keywords || "fallback"} />
+
 <!-- canaonical url -->
 <link rel="canonical" href="https://www.example.com/your-page-url" />
+
 <!-- robots -->
 <meta name="robots" content="index, follow" />
+
 <!-- Open Graph: Facebook -->
 <meta
-	property="og:url"
-	content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html"
+    property="og:url"
+    content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html"
 />
+
+<!-- Open Graph: General -->
 <meta property="og:type" content="article" />
 <meta property="og:title" content="When Great Minds Don't Think Alike" />
+<meta property="og:description" content="How much does culture influence creative thinking?" />
 <meta
-	property="og:description"
-	content="How much does culture influence creative thinking?"
-/>
-<meta
-	property="og:image"
-	content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg"
+    property="og:image"
+    content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg"
 />
 <!-- Open Graph: Twitter/X -->
 <meta name="twitter:card" content="summary" />
 <!-- Schema Markup -->
-<script set:html={JSON.stringify(structuredData)} type="application/ld+json">
-</script>
+<script set:html={JSON.stringify(structuredData)} type="application/ld+json" />

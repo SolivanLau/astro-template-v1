@@ -5,17 +5,17 @@ import Footer from "@layouts/Footer.astro";
 import cmsFetch from "@scripts/cms/cmsFetch";
 
 const queryParameters = {
-	populate: {
-		profile: {
-			populate: "*",
-		},
-		links: {
-			populate: "*",
-		},
-		seo: {
-			populate: "*",
-		},
-	},
+    populate: {
+        profile: {
+            populate: "*",
+        },
+        links: {
+            populate: "*",
+        },
+        seo: {
+            populate: "*",
+        },
+    },
 };
 
 const pageQuery = await cmsFetch("connect-page", queryParameters);
@@ -24,15 +24,16 @@ const { profile, links, seo } = pageQuery.attributes;
 ---
 
 <Layout seo={seo}>
-	<Header title="Connect" />
-	<main>
-		<div class="wrapper"></div>
-	</main>
-	<Footer />
+    <Header title="Connect" />
+    <main>
+        <div class="wrapper"></div>
+    </main>
+    <Footer />
 </Layout>
 
 <!-- TESTING -->
 <script define:vars={{ profile, links, seo }}>
-	console.log("Profile:", profile);
-	console.log("Links:", links);
+    console.log("Profile:", profile);
+    console.log("Links:", links);
+    console.log("SEO:", seo.structuredData);
 </script>
