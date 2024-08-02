@@ -1,7 +1,6 @@
 import createQueryUrl from "./createQueryUrl";
 
-const cmsFetch = async (endpoint: string, options) => {
-    
+const cmsFetch = async (endpoint: string, options?) => {
     const url = createQueryUrl(endpoint, options);
 
     // network or cors errors
@@ -18,9 +17,11 @@ const cmsFetch = async (endpoint: string, options) => {
         if (!response.ok) {
             switch (response.status) {
                 case 404:
-                    throw new Error("404, We could not find what you were looking for!");
+                    throw new Error(
+                        `404, We could not find what you were looking for!  ${response.statusText}`,
+                    );
                 case 500:
-                    throw new Error("500, internal server error");
+                    throw new Error(`500, internal server error: ${response.statusText}`);
 
                 default:
                     throw new Error(`HTTP Error: ${response.status}: ${response.statusText}`);

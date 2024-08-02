@@ -14,9 +14,11 @@
         "@astrojs/netlify": "^5.4.0",
         "@astrojs/partytown": "^2.1.1",
         "astro": "^4.11.5",
-        "qs": "^6.12.3"
+        "qs": "^6.12.3",
+        "sharp": "^0.33.4"
     },
     "devDependencies": {
+        "@types/node": "^22.0.2",
         "@types/qs": "^6.9.15",
         "prettier": "^3.3.3",
         "prettier-plugin-astro": "^0.14.1",

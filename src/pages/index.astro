@@ -1,8 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Header from "@layouts/Header.astro";
+import EmailForm from "@components/EmailForm.astro";
 import cmsFetch from "@scripts/cms/cmsFetch";
 import { renderBlock } from "@scripts/cms/blockRenderer";
+import { Image } from "astro:assets";
 
 // CMS query params
 const queryParams = {
@@ -12,8 +14,20 @@ const queryParams = {
         },
     },
 };
+
+const imageQueryParams = {
+    populate: {
+        entryName: "*",
+        profile: {
+            populate: "*",
+        },
+        socials: "*",
+    },
+};
 // CMS page query
 const blockTests = await cmsFetch("blocks-tests", queryParams);
+
+const authorQuery = await cmsFetch("authors", imageQueryParams);
 
 const content = renderBlock(blockTests[0].attributes.text);
 ---
@@ -29,6 +43,19 @@ const content = renderBlock(blockTests[0].attributes.text);
                 <a href="/connect">Connect Page</a>
             </p>
             <Fragment set:html={content} />
+            <EmailForm />
+            {
+                authorQuery.map((author) => {
+                    const { url } = author.attributes.profile.picture.data.attributes;
+                    const altText = author.attributes.profile.username;
+                    return (
+                        <>
+                            <Image src={url} alt={altText} inferSize={true} format="webp" />
+                            <p>{altText}</p>
+                        </>
+                    );
+                })
+            }
         </div>
     </main>
 </Layout>

@@ -14,9 +14,11 @@ const createQueryUrl = (endpoint: string, queryParameters: queryParameters) => {
     // sanitize endpoint with not additional /
     endpoint.startsWith("/") && endpoint.slice(1);
 
+    let urlBase = import.meta.env.PROD ? import.meta.env.CMS_URL : "http://localhost:1337";
+
     // generic endpoint with no parameter specifications
     if (!queryParameters) {
-        const url = new URL(`${import.meta.env.CMS_URL}/api/${endpoint}`);
+        const url = new URL(`${urlBase}/api/${endpoint}`);
         return url;
     }
 
@@ -30,7 +32,7 @@ const createQueryUrl = (endpoint: string, queryParameters: queryParameters) => {
         },
     );
 
-    const url = new URL(`${import.meta.env.CMS_URL}/api/${endpoint}?${query}`);
+    const url = new URL(`${urlBase}/api/${endpoint}?${query}`);
 
     return url;
 };
