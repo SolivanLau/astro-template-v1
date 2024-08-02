@@ -1,0 +1,83 @@
+---
+import cmsFetch from "@scripts/cms/cmsFetch";
+import { downloadImage } from "@scripts/lib/downloadImage";
+import path from "path";
+
+const queryParameters = {
+    populate: {
+        favicon: {
+            populate: "*",
+        },
+    },
+};
+const componentQuery = await cmsFetch("site-information", queryParameters);
+const favicons = componentQuery.attributes.favicon;
+
+// PRODUCTION: Download fetched images for local use of Favicons
+if ((favicons || favicons.length > 0) && import.meta.env.PROD) {
+    const fileDest = path.resolve(process.cwd(), "public");
+
+    for (const icon of favicons) {
+        const { type, size } = icon;
+        const { ext, url } = icon.imageMedia.data.attributes;
+        // File Path
+        const fileName = `favicon-${type}-${size}x${size}${ext}`;
+        const filePath = path.resolve(fileDest, fileName);
+
+        try {
+            await downloadImage(url, filePath);
+            console.log(`Downloaded ${fileName} to ${filePath}`);
+        } catch (error) {
+            console.error(`Failed to download ${fileName}:`, error);
+        }
+    }
+}
+---
+
+{
+    !favicons || favicons.length === 0 ? (
+        <>
+            <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        </>
+    ) : (
+        favicons.map((icon) => {
+            const { type, size } = icon;
+            const { ext } = icon.imageMedia.data.attributes;
+            // File Path
+            if (type === "apple") {
+                return (
+                    <link
+                        rel="apple-touch-icon"
+                        sizes={`${size}x${size}`}
+                        href={`/favicon-${type}-${size}x${size}${ext}`}
+                    />
+                );
+            }
+
+            if (type === "standard") {
+                switch (size) {
+                    case 32:
+                        return (
+                            <link
+                                rel="icon"
+                                type="image/png"
+                                sizes={`${size}x${size}`}
+                                href={`/favicon-${type}-${size}x${size}${ext}`}
+                            />
+                        );
+                    case 16:
+                        return (
+                            <link
+                                rel="icon"
+                                type="image/png"
+                                sizes={`${size}x${size}`}
+                                href={`/favicon-${type}-${size}x${size}${ext}`}
+                            />
+                        );
+                }
+            }
+
+            return null;
+        })
+    )
+}
