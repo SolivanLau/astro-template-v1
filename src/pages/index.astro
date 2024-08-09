@@ -40,8 +40,16 @@ const content = renderBlock(blockTests[0].attributes.text);
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim cupiditate aliquam at
                 consectetur quas facere consequuntur mollitia adipisci commodi ea praesentium nam,
                 quos impedit eligendi natus ex, tempore et quaerat?
-                <a href="/connect">Connect Page</a>
             </p>
+            <h2>Useful Links</h2>
+            <ul>
+                <li>
+                    <a href="/events">Events Page</a>
+                </li>
+                <li>
+                    <a href="/connect">Connect Page</a>
+                </li>
+            </ul>
             <Fragment set:html={content} />
             <EmailForm />
             {

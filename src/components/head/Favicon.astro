@@ -1,16 +1,16 @@
 ---
-import { readdirSync, statSync } from "fs";
+import { readdirSync } from "fs";
 const faviconDir = "public";
 const faviconRegex = /^favicon-([^-]+)-(\d+)x\2\.(png|ico|svg)$/;
 
 const checkForCMSFavicons = async () => {
     try {
+        console.log("Searching for local favicons");
         const files = readdirSync(faviconDir);
 
         const cmsFiles = files.filter((file) => faviconRegex.test(file));
 
         if (cmsFiles.length > 0) {
-            console.log("cms files found in public drive");
             const files = cmsFiles.map((name) => {
                 const match = name.match(faviconRegex);
 
