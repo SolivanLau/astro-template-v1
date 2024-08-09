@@ -1,6 +1,6 @@
 import createQueryUrl from "./createQueryUrl";
 
-const cmsFetch = async (endpoint: string, options?) => {
+const cmsFetch = async (endpoint, options) => {
     const url = createQueryUrl(endpoint, options);
 
     // network or cors errors
@@ -9,7 +9,7 @@ const cmsFetch = async (endpoint: string, options?) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${import.meta.env.CMS_TOKEN}`,
+                Authorization: `Bearer ${process.env.CMS_TOKEN}`,
             },
         });
 

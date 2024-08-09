@@ -2,13 +2,16 @@
     "extends": "astro/tsconfigs/base",
     "compilerOptions": {
         "baseUrl": ".",
+        // "esModuleInterop": true,
         "paths": {
             "@components/*": ["src/components/*"],
             "@layouts/*": ["src/layouts/*"],
             "@pages/*": ["src/pages/*"],
             "@assets/*": ["src/assets/*"],
-            "@styles/*": ["src/styles/*"],
-            "@scripts/*": ["src/scripts/*"]
+            "@icons/*": ["src/assets/icons/*"],
+            "@images/*": ["src/assets/images/*"],
+            "@styles/*": ["src/assets/styles/*"],
+            "@scripts/*": ["src/assets/scripts/*"]
         }
     }
 }
