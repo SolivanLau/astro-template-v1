@@ -59,7 +59,6 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         // Success Response
-
         const members = [...response.new_members, ...response.updated_members];
         return new Response(JSON.stringify({ success: true, data: { members } }));
     } catch (error) {

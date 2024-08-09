@@ -34,12 +34,13 @@
 
     // Check for user preference
     const userConsentPreference = localStorage.getItem("cookieConsentMode");
+
     if (!userConsentPreference) {
         console.log("no preference - open up banner");
         consentBanner.classList.remove("hidden");
     }
 
-    // Button Logic
+    // Cookie Consent Buttons:  Logic
     consentBtns.forEach((btn) => {
         const consentPreference = btn.getAttribute("data-consent");
 
