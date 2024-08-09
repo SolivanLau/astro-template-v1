@@ -1,0 +1,52 @@
+---
+import cmsFetch from "@assets/scripts/cms/cmsFetch";
+import Layout from "@layouts/Layout.astro";
+
+const queryParameters = {
+    fields: ["title", "slug"],
+    populate: {
+        poster: "*",
+        details: {
+            populate: {
+                dateTime: "*",
+            },
+        },
+    },
+};
+const pageQuery = await cmsFetch("events", queryParameters);
+---
+
+<Layout>
+    <header>
+        <div class="wrapper">
+            <h1>Events Main Page</h1>
+        </div>
+    </header>
+    <main>
+        <div class="wrapper">
+            <h2>Testing Links</h2>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/connect">Connect Page</a></li>
+            </ul>
+            <h2>All Events</h2>
+
+            {
+                // ALL Events
+                pageQuery.length > 0 && (
+                    <ul>
+                        {pageQuery.map((event) => {
+                            const { title, slug }: { title: string; slug: string } =
+                                event.attributes;
+                            return (
+                                <li>
+                                    <a href={`/events/${slug}`}>{title}</a>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )
+            }
+        </div>
+    </main>
+</Layout>

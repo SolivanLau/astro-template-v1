@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from "astro";
+import cmsFetch from "@assets/scripts/cms/cmsFetch";
+import Layout from "@layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+    const queryParameters = {
+        populate: {
+            details: {
+                populate: "*",
+            },
+            about: {
+                populate: "*",
+            },
+            program: {
+                populate: "*",
+            },
+            perofrmanceMedia: {
+                populate: "*",
+            },
+            seo: "*",
+        },
+    };
+    const eventPagesQuery = await cmsFetch("events", queryParameters);
+
+    return eventPagesQuery.map((event) => ({
+        params: { slug: event.attributes.slug },
+        props: event.attributes,
+    }));
+}) satisfies GetStaticPaths;
+
+const { title, details, about, performanceMedia, seo } = Astro.props;
+console.log(details, about, performanceMedia);
+---
+
+<Layout seo={seo}>
+    <h1>{title}</h1>
+    <main>
+        <div class="wrapper"></div>
+    </main>
+</Layout>
