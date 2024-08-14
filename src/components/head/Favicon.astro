@@ -14,8 +14,6 @@ const checkForCMSFavicons = async () => {
             const files = cmsFiles.map((name) => {
                 const match = name.match(faviconRegex);
 
-                console.log(`Rendering ${name} favicon`);
-
                 return {
                     type: match[1],
                     size: match[2],
@@ -28,6 +26,8 @@ const checkForCMSFavicons = async () => {
         }
     } catch (error) {
         console.error("Error checking favicon files:", error);
+    } finally {
+        console.log(`Rendered favicons`);
     }
 };
 let favicons = await checkForCMSFavicons();

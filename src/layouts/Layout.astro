@@ -1,23 +1,40 @@
 ---
 import "@styles/styles.scss";
+import Navigation from "@components/nav/Navigation.astro";
 import CookieConsent from "@components/CookieConsent.astro";
 import Analytics from "@components/head/Analytics.astro";
 import Favicon from "@components/head/Favicon.astro";
 import Seo from "@components/head/Seo.astro";
+import cmsFetch from "@assets/scripts/cms/cmsFetch";
 const { seo } = Astro.props;
+
+const navigationParameters = {
+    populate: {
+        logo: {
+            populate: "*",
+        },
+        menu: {
+            populate: "*",
+        },
+        ctaButton: {
+            populate: "*",
+        },
+    },
+};
+const navigationQuery = await cmsFetch("navigation", navigationParameters);
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width" />
         <Favicon />
         <Seo seo={seo} />
         <Analytics />
     </head>
     <body>
+        <Navigation data={navigationQuery} />
         <slot />
         <CookieConsent />
     </body>

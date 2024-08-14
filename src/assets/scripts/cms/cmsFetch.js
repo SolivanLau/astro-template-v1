@@ -18,13 +18,16 @@ const cmsFetch = async (endpoint, options) => {
             switch (response.status) {
                 case 404:
                     throw new Error(
-                        `404, We could not find what you were looking for!  ${response.statusText}`,
+                        `404, could not find resource!  ${response.statusText}`,
+                        response,
                     );
                 case 500:
-                    throw new Error(`500, internal server error: ${response.statusText}`);
-
+                    throw new Error(`500, internal server error: ${response.statusText}`, response);
                 default:
-                    throw new Error(`HTTP Error: ${response.status}: ${response.statusText}`);
+                    throw new Error(
+                        `HTTP Error: ${response.status}: ${response.statusText}`,
+                        response,
+                    );
             }
         }
 

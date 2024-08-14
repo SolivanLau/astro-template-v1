@@ -1,15 +1,95 @@
 ---
+import Picture from "astro/components/Picture.astro";
+import Image from "astro/components/Image.astro";
 import Link from "@components/Link.astro";
 
-const { logo, menu, ctaButton } = Astro.props;
+import logoBackup from "@icons/twc-logo.svg";
+import NavMenu from "./NavMenu.astro";
+import NavMobileButton from "./NavMobileButton.astro";
+const { logo, menu, ctaButton } = Astro.props.data.attributes;
+
+const { imageMedia, description } = logo;
 ---
 
 <nav id="main-navigation" role="navigation">
     <div class="wrapper">
         <!-- LOGO -->
-
+        <Link url="/">
+            {
+                logo ? (
+                    <Picture src={imageMedia.data.attributes.url} alt={description} inferSize />
+                ) : (
+                    <Image src={logoBackup} alt="Toronto Wind Collective logo" />
+                )
+            }
+        </Link>
         <!-- MENU -->
-
+        <NavMenu menu={menu} />
         <!-- MOBILE MENU BUTTON -->
+        {ctaButton && <Link />}
+
+        <NavMobileButton />
     </div>
 </nav>
+
+<style is:global lang="scss">
+    @use "@styles/partials/abstracts" as *;
+    // nav
+    #main-navigation {
+        background-color: #3d3d3d;
+        color: #ffffff;
+        position: relative;
+        z-index: 999;
+
+        .user-scroll-down {
+            transform: translateY(-50%);
+        }
+        // layout
+        .wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    // MEDIA QUERIES
+
+    @include responsive-style(tablet) {
+        // mobile nav appears/ disappears when user scrolls
+        .user-scroll-down #main-navigation {
+            transform: translateY(-100%);
+        }
+
+        .user-scroll-up #main-navigation {
+            transform: translateY(0);
+        }
+
+        // Fixed Top Navigation
+        #main-navigation {
+            position: fixed;
+            width: 100%;
+            top: 0px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            transition: transform 0.5s ease 0.3s;
+            z-index: 1000;
+        }
+
+        main {
+            margin-top: 50px;
+        }
+
+        .connect main {
+            margin: 0px;
+        }
+
+        // mobile menu setup
+        nav .wrapper {
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #main-navigation.open ul {
+            transform: translateX(0);
+        }
+    }
+</style>
