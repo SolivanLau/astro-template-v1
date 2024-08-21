@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-
 export const prerender = false;
 
 const apiKey = import.meta.env.NEWSLETTER_API_KEY;
