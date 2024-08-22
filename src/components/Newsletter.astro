@@ -1,0 +1,214 @@
+---
+import { Picture } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import bgImage from "@images/newsletter-bg-desktop.webp";
+import Input from "@components/Input.astro";
+---
+
+<section class="newsletter background-image__parent">
+    <div class="wrapper">
+        <!-- Heading -->
+        <div class="newsletter__text">
+            <h2>Stay Informed</h2>
+            <p>Get updates on concerts, events, and more!</p>
+        </div>
+        <!-- Form -->
+        <form id="newsletter__form">
+            <div class="title">
+                <h3>Join Our Mailing List</h3>
+                <Icon name="mail" />
+            </div>
+            <!-- Inputs -->
+            <div class="inputs">
+                <Input inputType="text" name="Email" id="email" required />
+                <Input inputType="text" name="First Name" id="first-name" required />
+                <Input inputType="text" name="Last Name" id="last-name" required />
+            </div>
+
+            <div class="response">
+                <button class="button-primary" type="submit">Sign Up</button>
+                <div class="status">
+                    <div class="status__icon">
+                        <Icon name="success" />
+                        <Icon name="error" />
+                    </div>
+                    <p class="status__message">test</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Background Image -->
+    <Picture
+        class="background-image"
+        src={bgImage}
+        alt="Toronto Wind Collective Rehearsal Shot"
+        width={1920}
+        formats={["webp", "jpg"]}
+    />
+</section>
+
+<style lang="scss">
+    // Background Image
+    .background-image__parent {
+        background: linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%);
+    }
+
+    .background-image {
+        translate: 38%;
+    }
+    // Layout
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 700px;
+    }
+    // Text
+    // Form
+    #newsletter__form {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        padding: 48px;
+
+        width: 40%;
+        display: grid;
+        gap: 32px;
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            // TEMPORARY MARGIN REMOVAL: MOVE TO GLOBALS
+            h3 {
+                margin: 0;
+            }
+            [data-icon="mail"] {
+                font-size: 30px;
+            }
+        }
+    }
+
+    // inputs
+    .inputs {
+        display: grid;
+        gap: 12px;
+    }
+
+    // submit button
+    .response {
+        display: grid;
+        gap: 12px;
+        button[type="submit"] {
+            width: 100%;
+        }
+    }
+    // status text
+    .status {
+        min-height: 76px;
+        padding: 16px 12px;
+        display: flex;
+        font-weight: 700;
+        opacity: 0;
+        transition: 0.3s ease-in-out opacity;
+        // SUCCESS STYLES
+        color: #255634;
+        border: 2px hsla(138, 35%, 38%, 0.399) solid;
+        background-color: #c9f6d7;
+
+        [data-icon] {
+            font-size: 26px;
+        }
+
+        [data-icon="error"] {
+            display: none;
+        }
+
+        // ERROR RESPONSE
+        &.error {
+            color: #78140b;
+            border: 2px hsla(5, 35%, 38%, 0.37) solid;
+            background-color: #f6d0c9;
+
+            [data-icon="success"] {
+                display: none;
+            }
+            [data-icon="error"] {
+                display: block;
+            }
+        }
+
+        // RESPONSE ANIMATION
+        &.respond {
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    const newsletterForms = document.querySelectorAll("#newsletter__form");
+
+    // Newsletter Submission
+    newsletterForms.forEach((form) => {
+        // DOM Elements
+        const email = form.querySelector("#email") as HTMLInputElement;
+        const firstName = form.querySelector("#first-name") as HTMLInputElement;
+        const lastName = form.querySelector("#last-name") as HTMLInputElement;
+        const status = form.querySelector(".status");
+        const statusMessage = form.querySelector(".status__message");
+
+        statusMessage.classList.remove("respond");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const url: string = "/api/newsletter";
+
+            try {
+                const request = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email.value.trim().toLowerCase(),
+                        firstName: firstName.value.trim(),
+                        lastName: lastName.value.trim(),
+                    }),
+                });
+
+                // network and CORS errors
+                if (!request.ok) {
+                    switch (request.status) {
+                        case 404:
+                            throw new Error(
+                                `404, We could not find what you were looking for!  ${request.statusText}`,
+                            );
+                        case 500:
+                            throw new Error(`500, internal server error: ${request.statusText}`);
+
+                        default:
+                            throw new Error(`HTTP Error: ${request.status}: ${request.statusText}`);
+                    }
+                }
+
+                const response = await request.json();
+                // API RESPONSE
+                if (response.success) {
+                    console.log("Yaya", response);
+                    status.classList.remove("error");
+                    statusMessage.innerHTML = `Welcome to the collective! <br />
+        We'll keep you updated with new events.`;
+                    status.classList.add("respond");
+                } else {
+                    console.log("NAUR", response);
+                    status.classList.add("error");
+                    statusMessage.textContent = `Error: ${response.data.message}`;
+                    status.classList.add("respond");
+                }
+            } catch (error) {
+                console.error(`Error subscribing to newsletter: ${error}`);
+                statusMessage.classList.add("error");
+                statusMessage.textContent = `we ran into an issue`;
+            }
+        });
+    });
+</script>

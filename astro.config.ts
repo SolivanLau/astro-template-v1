@@ -23,7 +23,7 @@ export default defineConfig({
     integrations: [
         partytown(),
         icon({
-            iconDir: "@icons",
+            iconDir: "src/assets/icons",
         }),
         {
             name: "prebuild",

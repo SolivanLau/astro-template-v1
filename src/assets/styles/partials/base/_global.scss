@@ -1,3 +1,13 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
 img {
     display: block;
     max-width: 100%;
@@ -6,4 +16,8 @@ img {
 ul[class] {
     list-style-type: none;
     padding: 0;
+}
+
+:focus-visible {
+    outline-color: #8c52ff;
 }

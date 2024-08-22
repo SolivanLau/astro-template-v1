@@ -1,0 +1,70 @@
+---
+interface Props {
+    inputType:
+        | "button"
+        | "checkbox"
+        | "color"
+        | "date"
+        | "datetime-local"
+        | "email"
+        | "file"
+        | "hidden"
+        | "image"
+        | "month"
+        | "number"
+        | "password"
+        | "radio"
+        | "range"
+        | "reset"
+        | "search"
+        | "submit"
+        | "tel"
+        | "text"
+        | "time"
+        | "url"
+        | "week";
+    id: string;
+    name: string;
+    [key: string]: any;
+}
+
+const { inputType, id, name, ...rest } = Astro.props as Props;
+---
+
+<div class="form-input">
+    <label for={id}>{name}</label>
+    <input type={inputType} name={id} id={id} {...rest} />
+</div>
+
+<style lang="scss">
+    .form-input {
+        position: relative;
+    }
+
+    label,
+    input {
+        cursor: text;
+    }
+
+    label {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        padding: 0 12px;
+        font-weight: 700;
+        transition: all 0.2s ease-in-out;
+    }
+    input {
+        width: 100%;
+        border-radius: 0;
+        padding: 16px 12px 4px;
+        border: 2px solid hsla(0, 0%, 10%, 0.37);
+    }
+
+    // Label Input animation
+    input:focus + label,
+    .form-input:focus-within label {
+        top: 22%;
+        font-size: 16px;
+    }
+</style>
