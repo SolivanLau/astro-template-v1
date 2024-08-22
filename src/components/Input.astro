@@ -63,8 +63,31 @@ const { inputType, id, name, ...rest } = Astro.props as Props;
 
     // Label Input animation
     input:focus + label,
-    .form-input:focus-within label {
+    .form-input:focus-within label,
+    .input__active {
         top: 22%;
         font-size: 16px;
     }
 </style>
+
+<script>
+    const inputs = document.querySelectorAll(".form-input input");
+    const textBasedInputTypes = ["text", "email", "password", "tel", "url", "search"];
+
+    inputs.forEach((input) => {
+        const inputElement = input as HTMLInputElement;
+        const label = input.previousElementSibling;
+
+        console.log(label);
+        // Check if input type is one of the text-based input types
+        if (textBasedInputTypes.includes(inputElement.type)) {
+            inputElement.addEventListener("blur", () => {
+                if (inputElement.value !== "") {
+                    label.classList.add("input__active");
+                } else {
+                    label.classList.remove("input__active");
+                }
+            });
+        }
+    });
+</script>

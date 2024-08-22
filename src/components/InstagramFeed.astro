@@ -12,6 +12,56 @@ import Link from "./Link.astro";
     </div>
 </section>
 
+<style lang="scss">
+    @use "@styles/partials/" as *;
+
+    .instagram_gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr 1fr;
+        gap: 32px;
+        // DOM GENERATED CONTENT
+        :global(.instagram_card) {
+            -webkit-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background-color: antiquewhite;
+        }
+
+        :global(.instagram_img) {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        // video icon
+        :global(.instagram_card--video) {
+            position: relative;
+        }
+        :global(.instagram_card--video-icon) {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .instagram_gallery {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .instagram_gallery {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+    }
+</style>
+
 <script>
     interface InstagramPost {
         media_type: "IMAGE" | "VIDEO";
@@ -84,53 +134,3 @@ import Link from "./Link.astro";
 
     document.addEventListener("DOMContentLoaded", fetchInstagramGallery);
 </script>
-
-<style lang="scss">
-    @use "@styles/partials/" as *;
-
-    .instagram_gallery {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 1fr 1fr;
-        gap: 32px;
-        // DOM GENERATED CONTENT
-        :global(.instagram_card) {
-            -webkit-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
-            -moz-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
-            box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
-            aspect-ratio: 1 / 1;
-            overflow: hidden;
-            background-color: antiquewhite;
-        }
-
-        :global(.instagram_img) {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        // video icon
-        :global(.instagram_card--video) {
-            position: relative;
-        }
-        :global(.instagram_card--video-icon) {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-        }
-    }
-
-    @include responsive-style(tablet) {
-        .instagram_gallery {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        }
-    }
-
-    @include responsive-style(mobile) {
-        .instagram_gallery {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-    }
-</style>
