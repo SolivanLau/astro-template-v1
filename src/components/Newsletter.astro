@@ -9,13 +9,13 @@ import Input from "@components/Input.astro";
     <div class="wrapper">
         <!-- Heading -->
         <div class="newsletter__text">
-            <h2>Stay Informed</h2>
-            <p>Get updates on concerts, events, and more!</p>
+            <h2 class="h1">Stay Informed</h2>
+            <p class="h6">Get updates on concerts, events, and more!</p>
         </div>
         <!-- Form -->
         <form id="newsletter__form">
             <div class="title">
-                <h3>Join Our Mailing List</h3>
+                <h3 class="h6 body-font">Join Our Mailing List</h3>
                 <Icon name="mail" />
             </div>
             <!-- Inputs -->
@@ -64,6 +64,11 @@ import Input from "@components/Input.astro";
         min-height: 700px;
     }
     // Text
+    .newsletter__text {
+        color: var(--clr-white);
+        display: grid;
+        gap: var(--spc-sm);
+    }
     // Form
     #newsletter__form {
         background-color: #ffffff;

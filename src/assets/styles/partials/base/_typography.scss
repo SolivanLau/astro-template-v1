@@ -1,29 +1,78 @@
-:root {
-    /* Font size */
-    --fs__global-size: 125%;
-    --fs__base-size: 1rem;
-    /* Type scale */
-    --fs__type-scale: 1.333; /* Major Fourth Type Scale */
-    --fs__max-growth: 1.25; /* Max growth rate for fluid styles */
-    /* Viewport */
-    --fs__viewport--min: 320px;
-    --fs__viewport--max: 1240px;
-    --fs__viewport--range: calc(var(--fs__viewport--max) - var(--fs__viewport--min));
-    /* Static font sizes */
-    --fs--400: var(--fs__base-size);
-    --fs--500: calc(var(--fs--400) * var(--fs__type-scale));
-    --fs--600: calc(var(--fs--500) * var(--fs__type-scale));
-    --fs--700: calc(var(--fs--600) * var(--fs__type-scale));
-    --fs--800: calc(var(--fs--700) * var(--fs__type-scale));
-    --fs--900: calc(var(--fs--800) * var(--fs__type-scale));
-    --fs--1000: calc(var(--fs--900) * var(--fs__type-scale));
-    // fluid font sizes
+// Local Font Imports
+/* playfair-display-regular - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/fonts/title/playfair-display-v37-latin-regular.woff2") format("woff2");
+}
+/* playfair-display-italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Playfair Display";
+    font-style: italic;
+    font-weight: 400;
+    src: url("/fonts/title/playfair-display-v37-latin-italic.woff2") format("woff2");
+}
+/* playfair-display-700 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/fonts/title/playfair-display-v37-latin-700.woff2") format("woff2");
+}
+/* playfair-display-700italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Playfair Display";
+    font-style: italic;
+    font-weight: 700;
+    src: url("/fonts/title/playfair-display-v37-latin-700italic.woff2") format("woff2");
+}
+/* playfair-display-900 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 900;
+    src: url("/fonts/title/playfair-display-v37-latin-900.woff2") format("woff2");
+}
+/* lato-regular */
+@font-face {
+    font-display: swap;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/fonts/body/lato-v24-latin-regular.woff2") format("woff2");
+}
+/* lato-italic */
+@font-face {
+    font-display: swap;
+    font-family: "Lato";
+    font-style: italic;
+    font-weight: 400;
+    src: url("/fonts/body/lato-v24-latin-italic.woff2") format("woff2");
+}
+/* lato-700 */
+@font-face {
+    font-display: swap;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/fonts/body/lato-v24-latin-700.woff2") format("woff2");
+}
+/* lato-700italic */
+@font-face {
+    font-display: swap;
+    font-family: "Lato";
+    font-style: italic;
+    font-weight: 700;
+    src: url("/fonts/body/lato-v24-latin-700italic.woff2") format("woff2");
 }
 
-html {
-    font-size: var(--fs__global-size);
-}
-
+// stripping margins
 h1,
 h2,
 h3,
@@ -32,4 +81,58 @@ h5,
 h6,
 p {
     margin: 0;
+}
+// accessible font size
+html {
+    font-size: 100%;
+    color: var(--clr-black);
+}
+// FONT FAMILIES with utility classes
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title-font {
+    font-family: var(--font-fm-title);
+}
+
+p,
+a,
+label,
+input,
+button,
+.body-font {
+    font-family: var(--font-fm-body);
+}
+// FONT-SIZES with  utility classes
+p,
+.p {
+    font-size: var(--font-sz-400);
+}
+h6,
+.h6 {
+    font-size: var(--font-sz-500);
+}
+h5,
+.h5 {
+    font-size: var(--font-sz-600);
+}
+h4,
+.h4 {
+    font-size: var(--font-sz-700);
+}
+h3,
+.h3 {
+    font-size: var(--font-sz-800);
+}
+h2,
+.h2 {
+    font-size: var(--font-sz-900);
+}
+h1,
+.h1 {
+    font-size: var(--font-sz-1100);
+    font-weight: 900;
 }

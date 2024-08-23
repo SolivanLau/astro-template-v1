@@ -14,10 +14,6 @@ nav,
 section {
     display: block;
 }
-h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
-}
 figcaption,
 figure,
 main {
@@ -104,6 +100,7 @@ textarea {
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
+    color: inherit;
 }
 button,
 input {
