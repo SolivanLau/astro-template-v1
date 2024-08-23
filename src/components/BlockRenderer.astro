@@ -1,0 +1,14 @@
+---
+import type { Node } from "@assets/scripts/cms/blockRenderer";
+import { renderBlock } from "@assets/scripts/cms/blockRenderer";
+
+interface Props {
+    html: Node[] | undefined;
+}
+
+const { html } = Astro.props;
+---
+
+<Fragment>
+    {!html ? <slot /> : <Fragment set:html={renderBlock(html)} />}
+</Fragment>

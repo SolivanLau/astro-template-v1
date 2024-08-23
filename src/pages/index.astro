@@ -7,7 +7,8 @@ import cmsFetch from "@assets/scripts/cms/cmsFetch";
 import { renderBlock } from "@assets/scripts/cms/blockRenderer";
 import { Image } from "astro:assets";
 import DividerLayout from "@layouts/DividerLayout.astro";
-import { Icon } from "astro-icon/components";
+
+import headerBg from "@images/home-bg-desktop.webp";
 // CMS query params
 const queryParams = {
     populate: {
@@ -35,7 +36,7 @@ const content = renderBlock(blockTests[0].attributes.text);
 ---
 
 <Layout>
-    <Header title="Hello World" />
+    <Header title="About Us" backgroundImgPath={headerBg} />
     <main>
         <div class="wrapper">
             <p>

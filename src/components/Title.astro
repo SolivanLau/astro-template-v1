@@ -1,0 +1,30 @@
+---
+interface Props {
+    topper?: string;
+    title: string;
+}
+
+const { topper, title } = Astro.props;
+---
+
+<div>
+    {topper && <span class="topper">{topper}</span>}
+    <h2 class="title">{title}</h2>
+</div>
+
+<style lang="scss">
+    div {
+        display: grid;
+    }
+
+    .topper {
+        color: var(--clr-brand-primary);
+        font-size: var(--font-sz-400);
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .title {
+        font-size: var(--font-sz-900);
+        font-weight: 700;
+    }
+</style>
