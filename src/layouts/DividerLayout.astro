@@ -1,0 +1,41 @@
+---
+import { Icon } from "astro-icon/components";
+interface Props {
+    dividerTopFileName: string;
+    dividerBottomFileName: string;
+    dividerColor?: string;
+    color: string;
+}
+
+const { dividerTopFileName, dividerBottomFileName, dividerColor, color } = Astro.props as Props;
+---
+
+<section>
+    <Icon name={dividerTopFileName} />
+    <div class="content">
+        <div class="wrapper">
+            <slot />
+        </div>
+    </div>
+    <Icon name={dividerBottomFileName} />
+</section>
+
+<style define:vars={{ dividerColor, color }}>
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    [data-icon] {
+        width: 100%;
+        height: auto;
+        fill: var(--dividerColor);
+        fill: var(--color);
+        color: var(--color);
+    }
+    .content {
+        background-color: var(--color);
+        padding: 32px 0;
+        margin: -1px 0;
+    }
+</style>

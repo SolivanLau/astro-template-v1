@@ -105,7 +105,7 @@ import Input from "@components/Input.astro";
     }
     // status text
     .status {
-        min-height: 76px;
+        min-height: 72px;
         padding: 16px 12px;
         font-size: 16px;
         display: flex;
@@ -154,18 +154,22 @@ import Input from "@components/Input.astro";
     // Newsletter Submission
     newsletterForms.forEach((form) => {
         // DOM Elements
-        const email = form.querySelector("#email") as HTMLInputElement;
-        const firstName = form.querySelector("#first-name") as HTMLInputElement;
-        const lastName = form.querySelector("#last-name") as HTMLInputElement;
-        const status = form.querySelector(".status");
-        const statusMessage = form.querySelector(".status__message");
+        const newsletterForm = form as HTMLFormElement;
+        const email = newsletterForm.querySelector("#email") as HTMLInputElement;
+        const firstName = newsletterForm.querySelector("#first-name") as HTMLInputElement;
+        const lastName = newsletterForm.querySelector("#last-name") as HTMLInputElement;
+        const submitButton = newsletterForm.querySelector(
+            'button[type="submit"]',
+        ) as HTMLButtonElement;
+        const status = newsletterForm.querySelector(".status");
+        const statusMessage = newsletterForm.querySelector(".status__message");
 
         statusMessage.classList.remove("respond");
 
-        form.addEventListener("submit", async (e) => {
+        newsletterForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-
             const url: string = "/api/newsletter";
+            submitButton.disabled = true;
 
             try {
                 const request = await fetch(url, {
@@ -199,20 +203,22 @@ import Input from "@components/Input.astro";
                 // API RESPONSE
                 if (response.success) {
                     console.log("Yaya", response);
-                    status.classList.remove("error");
                     statusMessage.innerHTML = `Welcome to the collective! <br />
-        We'll keep you updated with new events.`;
-                    status.classList.add("respond");
+                    We'll keep you updated with new events.`;
+                    status.classList.remove("error");
                 } else {
                     console.log("NAUR", response);
-                    status.classList.add("error");
                     statusMessage.textContent = `Error: ${response.data.message}`;
-                    status.classList.add("respond");
+                    status.classList.add("error");
                 }
             } catch (error) {
                 console.error(`Error subscribing to newsletter: ${error}`);
-                statusMessage.classList.add("error");
                 statusMessage.textContent = `we ran into an issue`;
+                status.classList.add("error");
+            } finally {
+                status.classList.add("respond");
+                newsletterForm.reset();
+                submitButton.disabled = false;
             }
         });
     });
