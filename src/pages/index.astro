@@ -3,36 +3,9 @@ import Layout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import EmailForm from "@components/Newsletter.astro";
 import InstagramFeed from "@components/InstagramFeed.astro";
-import cmsFetch from "@assets/scripts/cms/cmsFetch";
-import { renderBlock } from "@assets/scripts/cms/blockRenderer";
-import { Image } from "astro:assets";
+import Link from "@components/Link.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
-
 import headerBg from "@images/home-bg-desktop.webp";
-// CMS query params
-const queryParams = {
-    populate: {
-        text: {
-            populate: "*",
-        },
-    },
-};
-
-const imageQueryParams = {
-    populate: {
-        entryName: "*",
-        profile: {
-            populate: "*",
-        },
-        socials: "*",
-    },
-};
-// CMS page query
-const blockTests = await cmsFetch("blocks-tests", queryParams);
-
-const authorQuery = await cmsFetch("authors", imageQueryParams);
-
-const content = renderBlock(blockTests[0].attributes.text);
 ---
 
 <Layout>
@@ -47,26 +20,15 @@ const content = renderBlock(blockTests[0].attributes.text);
             <h2>Useful Links</h2>
             <ul>
                 <li>
-                    <a href="/events">Events Page</a>
+                    <Link url="/events">Events Page</Link>
                 </li>
                 <li>
-                    <a href="/connect">Connect Page</a>
+                    <Link url="/about">About Page</Link>
+                </li>
+                <li>
+                    <Link url="/about">Connect Page</Link>
                 </li>
             </ul>
-            <Fragment set:html={content} />
-
-            {
-                authorQuery.map((author) => {
-                    const { url } = author.attributes.profile.picture.data.attributes;
-                    const altText = author.attributes.profile.username;
-                    return (
-                        <>
-                            <Image src={url} alt={altText} inferSize={true} format="webp" />
-                            <p>{altText}</p>
-                        </>
-                    );
-                })
-            }
         </div>
         <EmailForm />
         <InstagramFeed />

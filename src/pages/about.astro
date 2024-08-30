@@ -82,7 +82,17 @@ const { header, missionStatement, services, ctaBanner, team } = pageQuery.attrib
         <!-- SERVICES -->
         <section class="services">
             <div class="wrapper">
-                <Title title="" topper="" />
+                <Title
+                    title={services.title.title || "Premiering Canadian Wind Music"}
+                    topper={services.title.subtitle || "What We Do"}
+                />
+
+                <BlockRenderer html={services.text}>
+                    <p>
+                        The collective works with early career musicians to write, workshop, record,
+                        and premeire wind compositions!
+                    </p>
+                </BlockRenderer>
             </div>
         </section>
     </main>

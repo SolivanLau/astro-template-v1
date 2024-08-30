@@ -106,12 +106,10 @@ input,
 button,
 .body-font {
     font-family: var(--font-fm-body);
-}
-// FONT-SIZES with  utility classes
-p,
-.p {
     font-size: var(--font-sz-400);
 }
+// FONT-SIZES with  utility classes
+
 h6,
 .h6 {
     font-size: var(--font-sz-500);

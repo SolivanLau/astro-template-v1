@@ -5,11 +5,14 @@ interface Props {
     title: string;
     subtitle?: string;
     backgroundImgPath?: ImageMetadata;
+    tag?: "div" | "section";
 }
-const { title, subtitle, backgroundImgPath } = Astro.props;
+const { title, subtitle, backgroundImgPath, tag } = Astro.props;
+
+const ParentTag = tag ? tag : "header";
 ---
 
-<header class={backgroundImgPath ? "background-image__parent" : "header"}>
+<ParentTag class={backgroundImgPath ? "background-image__parent" : "header"}>
     <div class="wrapper">
         <div class="title">
             <h1>{title}</h1>
@@ -27,7 +30,7 @@ const { title, subtitle, backgroundImgPath } = Astro.props;
             />
         )
     }
-</header>
+</ParentTag>
 
 <style lang="scss">
     .wrapper {
