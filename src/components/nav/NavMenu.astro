@@ -6,6 +6,7 @@ const { menu } = Astro.props;
 
 <ul id="menu">
     {
+        menu &&
         // CMS menu
         menu.length > 0 ? (
             menu.map((item) => {

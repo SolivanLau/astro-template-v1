@@ -3,11 +3,23 @@ import qs from "qs";
 const createQueryUrl = (endpoint, queryParameters) => {
     // sanitize endpoint with not additional /
 
-    console.log(`Creating cms query url for: ${endpoint.toUpperCase()}`);
-
     endpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
+
     const isProduction = process.env.NODE_ENV === "production";
+
     const urlBase = isProduction ? process.env.CMS_URL : "http://localhost:1337";
+
+    console.log(
+        `Creating cms query url for: ${endpoint.toUpperCase()}. ${isProduction ? "Production CMS" : "Localhost CMS"}`,
+    );
+
+    // Strapi CMS preview mode: retrieve only draft entries
+    const previewMode =
+        process.env.IS_PREVIEW_MODE === "true"
+            ? {
+                  publicationState: "preview",
+              }
+            : null;
 
     // generic endpoint with no parameter specifications
     if (!queryParameters) {
@@ -20,6 +32,7 @@ const createQueryUrl = (endpoint, queryParameters) => {
         const query = qs.stringify(
             {
                 ...queryParameters,
+                ...previewMode,
             },
             {
                 encodeValuesOnly: true,

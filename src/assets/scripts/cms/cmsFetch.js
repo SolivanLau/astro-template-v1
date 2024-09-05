@@ -17,25 +17,30 @@ const cmsFetch = async (endpoint, options) => {
         if (!response.ok) {
             switch (response.status) {
                 case 404:
-                    throw new Error(
-                        `404, could not find resource!  ${response.statusText}`,
+                    console.error(
+                        `404, could not find resource for ${endpoint}!  ${response.statusText}`,
                         response,
                     );
+                    return null;
                 case 500:
-                    throw new Error(`500, internal server error: ${response.statusText}`, response);
+                    console.error(
+                        `500, internal server error when querying for ${endpoint}: ${response.statusText}`,
+                        response,
+                    );
+                    return null;
                 default:
-                    throw new Error(
+                    console.error(
                         `HTTP Error: ${response.status}: ${response.statusText}`,
                         response,
                     );
+                    return null;
             }
         }
 
         const { data } = await response.json();
         return data;
     } catch (error) {
-        console.error(`Error fetching data: ${error}`);
-        throw error;
+        console.error(`Error fetching CMS data from ${endpoint}: ${error}`);
     }
 };
 

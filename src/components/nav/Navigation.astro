@@ -6,9 +6,9 @@ import Link from "@components/Link.astro";
 import logoBackup from "@icons/twc-logo.svg";
 import NavMenu from "./NavMenu.astro";
 import NavMobileButton from "./NavMobileButton.astro";
-const { logo, menu, ctaButton } = Astro.props.data.attributes;
+const { logo, menu, ctaButton } = Astro.props.data?.attributes || {};
 
-const { imageMedia, description } = logo;
+const { imageMedia, description } = logo || {};
 ---
 
 <nav id="main-navigation" role="navigation">
