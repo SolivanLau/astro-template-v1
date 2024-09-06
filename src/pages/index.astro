@@ -1,5 +1,5 @@
 ---
-import Layout from "@layouts/PageLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import EmailForm from "@components/Newsletter.astro";
 import InstagramFeed from "@components/InstagramFeed.astro";
@@ -8,7 +8,7 @@ import DividerLayout from "@layouts/DividerLayout.astro";
 import headerBg from "@images/home-bg-desktop.webp";
 ---
 
-<Layout>
+<PageLayout isTurnstile={true}>
     <Header title="About Us" backgroundImgPath={headerBg} />
     <main>
         <div class="wrapper">
@@ -41,4 +41,4 @@ import headerBg from "@images/home-bg-desktop.webp";
             <h2>HELLO. TESTING DIVIDER</h2>
         </DividerLayout>
     </main>
-</Layout>
+</PageLayout>

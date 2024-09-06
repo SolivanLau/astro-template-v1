@@ -2,7 +2,7 @@
 import { Picture } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import bgImage from "@images/newsletter-bg-desktop.webp";
-import Input from "@components/Input.astro";
+import Input from "@components/forms/Input.astro";
 ---
 
 <section class="newsletter background-image__parent">
@@ -20,9 +20,16 @@ import Input from "@components/Input.astro";
             </div>
             <!-- Inputs -->
             <div class="inputs">
-                <Input inputType="email" name="Email" id="email" required />
-                <Input inputType="text" name="First Name" id="first-name" required />
-                <Input inputType="text" name="Last Name" id="last-name" required />
+                <Input inputType="email" name="Email" id="email" />
+                <Input inputType="text" name="First Name" id="first-name" />
+                <Input inputType="text" name="Last Name" id="last-name" />
+                <div
+                    class="cf-turnstile"
+                    data-sitekey={process.env.TURNSTILE_SITE_KEY}
+                    data-size="flexible"
+                    data-theme="light"
+                >
+                </div>
             </div>
 
             <div class="response">
@@ -150,22 +157,26 @@ import Input from "@components/Input.astro";
         &.respond {
             opacity: 1;
         }
+
+        .status__message {
+            white-space: pre-line;
+        }
     }
 </style>
 
 <script>
+    declare const turnstile: any;
+
     const newsletterForms = document.querySelectorAll("#newsletter__form");
 
     // Newsletter Submission
     newsletterForms.forEach((form) => {
         // DOM Elements
         const newsletterForm = form as HTMLFormElement;
-        const email = newsletterForm.querySelector("#email") as HTMLInputElement;
-        const firstName = newsletterForm.querySelector("#first-name") as HTMLInputElement;
-        const lastName = newsletterForm.querySelector("#last-name") as HTMLInputElement;
         const submitButton = newsletterForm.querySelector(
             'button[type="submit"]',
         ) as HTMLButtonElement;
+        const turnstileWidget = newsletterForm.querySelector(".cf-turnstile");
         const status = newsletterForm.querySelector(".status");
         const statusMessage = newsletterForm.querySelector(".status__message");
 
@@ -176,53 +187,48 @@ import Input from "@components/Input.astro";
             const url: string = "/api/newsletter";
             submitButton.disabled = true;
 
+            // Reset status and message each submission
+            status.classList.remove("respond", "error");
+            statusMessage.textContent = "";
+
+            const formData = new FormData(newsletterForm);
+
+            // API REQUEST
             try {
                 const request = await fetch(url, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: email.value.trim().toLowerCase(),
-                        firstName: firstName.value.trim(),
-                        lastName: lastName.value.trim(),
-                    }),
+                    body: formData,
                 });
-
-                // network and CORS errors
+                // // network and CORS errors
                 if (!request.ok) {
-                    switch (request.status) {
-                        case 404:
-                            throw new Error(
-                                `404, We could not find what you were looking for!  ${request.statusText}`,
-                            );
-                        case 500:
-                            throw new Error(`500, internal server error: ${request.statusText}`);
+                    console.log("request", request);
 
-                        default:
-                            throw new Error(`HTTP Error: ${request.status}: ${request.statusText}`);
-                    }
+                    throw new Error(request.statusText);
                 }
 
                 const response = await request.json();
+
                 // API RESPONSE
-                if (response.success) {
-                    console.log("Yaya", response);
-                    statusMessage.innerHTML = `Welcome to the collective! <br />
-                    We'll keep you updated with new events.`;
-                    status.classList.remove("error");
-                } else {
-                    console.log("NAUR", response);
-                    statusMessage.textContent = `Error: ${response.data.message}`;
+                if (!response.success) {
+                    console.error("Error subscribing to newsletter:", response);
+                    statusMessage.textContent = ` ${response.message}`;
                     status.classList.add("error");
+                    return;
                 }
+
+                statusMessage.textContent = `Welcome to the collective!\nWe'll keep you updated with new events.`;
+                status.classList.remove("error");
+                // Reset form on success
+                newsletterForm.reset();
             } catch (error) {
+                console.log("ERROR", error);
+
                 console.error(`Error subscribing to newsletter: ${error}`);
-                statusMessage.textContent = `we ran into an issue`;
+                statusMessage.textContent = `${error}`;
                 status.classList.add("error");
             } finally {
+                turnstile.reset(turnstileWidget);
                 status.classList.add("respond");
-                newsletterForm.reset();
                 submitButton.disabled = false;
             }
         });

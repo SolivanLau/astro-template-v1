@@ -76,16 +76,27 @@ const { inputType, id, name, ...rest } = Astro.props as Props;
 
     inputs.forEach((input) => {
         const inputElement = input as HTMLInputElement;
-        const label = input.previousElementSibling;
+        const label = input.previousElementSibling as HTMLLabelElement;
 
-        console.log(label);
         // Check if input type is one of the text-based input types
         if (textBasedInputTypes.includes(inputElement.type)) {
+            // focus
+            inputElement.addEventListener("focus", () => {
+                label.classList.add("input__active");
+            });
+            // blur
             inputElement.addEventListener("blur", () => {
                 if (inputElement.value !== "") {
                     label.classList.add("input__active");
                 } else {
                     label.classList.remove("input__active");
+                }
+            });
+            inputElement.form?.addEventListener("submit", () => {
+                if (inputElement.value !== "") {
+                    setTimeout(() => {
+                        label.classList.remove("input__active");
+                    }, 1200);
                 }
             });
         }

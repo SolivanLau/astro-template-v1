@@ -1,16 +1,17 @@
 # Astro Template: Basic Site
 
-A custom Hybrid SSG and Server Side Astro Solution for a Strapi CMS backend and Netlify deployment. With SCSS for styling and
+A custom Hybrid SSG and Server Side Astro Solution for a Strapi CMS backend and Netlify deployment.
 
 ## 🔌 Plugins & Packages
 
 Outside of Astro's usual plugin and package configuration, the following plugins and packages are used for the frontend:
 
-### Astro Plugins
+### Astro Plugins & Integrations
 
 -   [Netlify SSR Adapter](https://docs.astro.build/en/guides/integrations-guide/netlify/#_top/) for **hybrid** SSG and Server Side Deployment.
 -   [Astro Icons](https://github.com/natemoo-re/astro-icon) for straight forward SVG icons.
 -   [Astro Prettier Plugin](https://github.com/withastro/prettier-plugin-astro) for project specific code formatting.
+-   [Partytown Integration](https://docs.astro.build/en/guides/integrations-guide/partytown/) relocates heavy scripts off the main thread and into a web worker.
 
 ### Project Packages
 
@@ -61,7 +62,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## ENV Variable Configuration
 
-Please include the following `.env` variables in your development and deployment environments for the project to work out of the box.
+Please include the following `.env` variables in your development and deployment environments for the project to work out of the box. Please look at the included `.env.example` for a template list of variables.
 
 ### PREVIEW MODE
 
@@ -72,9 +73,17 @@ Please include the following `.env` variables in your development and deployment
 -   **CMS_URL:** deployed url of your Strapi CMS project.
 -   **CMS_API_TOKEN:** A Strapi CMS API token enabling this project to **all reading permissions**. For more information, please visit [this guide](https://docs.strapi.io/dev-docs/configurations/api-tokens) for Strapi CMS Api Tokens.
 
+### Cloudflare Turnstile
+Turnstile is used for human verification for form submissions throughout the site.
+
+- **TURNSTILE_SITE_KEY** is a public variable for identifying this site to the API service.  
+- **TURNSTILE_SECRET_KEY** is a server side variable for the API service.
+
 ### Newsletter
 
-This version is using MailChimp for Newsletter email collection using the **Batch Subscribe**, `/lists/${listId}` endpoint. Visit [API Reference Documentation](https://mailchimp.com/developer/marketing/api/lists/batch-subscribe-or-unsubscribe/) for more information.
+This version is using MailChimp for Newsletter email collection using the **Batch Subscribe**, `/lists/${listId}` endpoint. 
+
+Visit the [API Reference Documentation](https://mailchimp.com/developer/marketing/api/lists/batch-subscribe-or-unsubscribe/) for more information.
 
 -   **NEWSLETTER_API_KEY:** An API key connecting to Mailchimp API Service.
 -   **NEWSLETTER_DATA_CENTER:** The Mailchimp data center associated with the API key. For example, `us20`.

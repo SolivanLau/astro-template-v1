@@ -42,8 +42,7 @@ const createQueryUrl = (endpoint, queryParameters) => {
         const url = new URL(`${urlBase}/api/${endpoint}?${query}`);
         return url;
     } catch (error) {
-        console.error(`Error creating query URL: ${error.message}`);
-        console.log(error);
+        console.error(`Error creating query URL: ${error.message}`, error);
     }
 };
 

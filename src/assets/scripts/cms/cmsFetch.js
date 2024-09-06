@@ -2,7 +2,6 @@ import createQueryUrl from "./createQueryUrl";
 
 const cmsFetch = async (endpoint, options) => {
     const url = createQueryUrl(endpoint, options);
-
     // network or cors errors
     try {
         const response = await fetch(url.toString(), {
