@@ -51,18 +51,20 @@ Static assets, like images, can be placed in the `public/` directory.
 
 All commands are run from the root of the project, from a terminal:
 
-| NPM                       | PNPM                | Action                                           |
-| :------------------------ | :------------------ | :----------------------------------------------- |
-| `npm install`             | `pnpm install`      | Installs dependencies                            |
-| `npm run dev`             | `pnpm dev`          | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | `pnpm build`        | Build your production site to `./dist/`          |
-| `npm run preview`         | `pnpm preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`       | `pnpm astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | `pnpm astro --help` | Get help using the Astro CLI                     |
+| NPM                       | PNPM                | YARN                | Action                                           |
+| :------------------------ | :------------------ | :------------------ | :----------------------------------------------- |
+| `npm install`             | `pnpm install`      | `yarn install`      | Installs dependencies                            |
+| `npm run dev`             | `pnpm dev`          | `yarn dev`          | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | `pnpm build`        | `yarn build`        | Build your production site to `./dist/`          |
+| `npm run preview`         | `pnpm preview`      | `yarn preview`      | Preview your build locally, before deploying     |
+| `npm run astro ...`       | `pnpm astro ...`    | `yarn astro ...`    | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | `pnpm astro --help` | `yarn astro --help` | Get help using the Astro CLI                     |
 
-## ENV Variable Configuration
+## 🔒 ENV Variable Configuration
 
-Please include the following `.env` variables in your development and deployment environments for the project to work out of the box. Please look at the included `.env.example` for a template list of variables.
+Please include the following `.env` variables in your development and deployment environments for the project to work out of the box.
+
+See the included `.env.example` for a template list of variables.
 
 ### PREVIEW MODE
 
@@ -74,14 +76,15 @@ Please include the following `.env` variables in your development and deployment
 -   **CMS_API_TOKEN:** A Strapi CMS API token enabling this project to **all reading permissions**. For more information, please visit [this guide](https://docs.strapi.io/dev-docs/configurations/api-tokens) for Strapi CMS Api Tokens.
 
 ### Cloudflare Turnstile
+
 Turnstile is used for human verification for form submissions throughout the site.
 
-- **TURNSTILE_SITE_KEY** is a public variable for identifying this site to the API service.  
-- **TURNSTILE_SECRET_KEY** is a server side variable for the API service.
+-   **TURNSTILE_SITE_KEY** is a public variable for identifying this site to the API service.
+-   **TURNSTILE_SECRET_KEY** is a server side variable for the API service.
 
 ### Newsletter
 
-This version is using MailChimp for Newsletter email collection using the **Batch Subscribe**, `/lists/${listId}` endpoint. 
+This version is using MailChimp for Newsletter email collection using the **Batch Subscribe**, `/lists/${listId}` endpoint.
 
 Visit the [API Reference Documentation](https://mailchimp.com/developer/marketing/api/lists/batch-subscribe-or-unsubscribe/) for more information.
 
