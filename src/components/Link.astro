@@ -2,16 +2,72 @@
 interface LinkProps {
     url: string;
     isLinkExternal?: boolean;
+    type?:
+        | "text--dark"
+        | "text--light"
+        | "button-primary"
+        | "button-secondary"
+        | "button-secondary--white";
 }
 
-const { url, isLinkExternal, ...props } = Astro.props as LinkProps;
+const { url, isLinkExternal, type, ...props } = Astro.props as LinkProps;
+
+const currentUrl = Astro.url.pathname;
 ---
 
 <a
     href={url}
     target={isLinkExternal ? "_blank" : null}
     rel={isLinkExternal ? "noopener noreferrer" : null}
+    aria-current={currentUrl === url ? "page" : null}
     {...props}
+    class={type && type}
 >
     <slot />
 </a>
+
+<style lang="scss">
+    a {
+        transition: all 0.2s ease;
+    }
+
+    .text--light {
+    }
+
+    .text--dark {
+        color: var(--clr-white);
+
+        &[aria-current="page"],
+        &:hover,
+        &:focus {
+            color: var(--clr-brand-accent);
+        }
+    }
+
+    .button-primary,
+    .button-secondary,
+    .button-secondary--white {
+        padding: 8px 16px;
+    }
+
+    .button-primary {
+        background-color: #423a70;
+        color: #ffffff;
+
+        &:hover {
+            background-color: var(--clr-brand-accent);
+        }
+    }
+
+    .button-secondary {
+        background-color: transparent;
+        border: 1px solid #423a70;
+        color: #423a70;
+    }
+
+    .button-secondary--white {
+        background-color: transparent;
+        border: 1px solid var(--clr-white);
+        color: var(--clr-white);
+    }
+</style>

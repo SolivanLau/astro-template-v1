@@ -1,3 +1,6 @@
+@use "@styles/partials/abstracts" as *;
+
+// button styles
 button {
     cursor: pointer;
     border: none;
@@ -9,7 +12,20 @@ button {
     }
 }
 
+// button presets
 .button-primary {
     background-color: #423a70;
     color: #ffffff;
+}
+
+.button-secondary {
+    background-color: transparent;
+    border: 1px solid #423a70;
+    color: #423a70;
+}
+
+.button-secondary--white {
+    background-color: transparent;
+    border: 1px solid var(--clr-white);
+    color: var(--clr-white);
 }

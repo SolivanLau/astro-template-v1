@@ -1,11 +1,11 @@
 ---
 import Link from "@components/Link.astro";
 
-const { menu } = Astro.props;
+const { menu, mobileCta, ...rest } = Astro.props;
 ---
 
-<ul id="menu">
-    {
+<ul id="menu" {...rest}>
+    <!-- {
         menu &&
         // CMS menu
         menu.length > 0 ? (
@@ -30,7 +30,7 @@ const { menu } = Astro.props;
                     return (
                         <li class="sub-menu">
                             <Link url={menuUrl}>{menuTitle}</Link>
-                            <ul>
+                            {/* <ul>
                                 {link.map(({ url, label, isLinkExternal }) => {
                                     return (
                                         <li>
@@ -40,7 +40,7 @@ const { menu } = Astro.props;
                                         </li>
                                     );
                                 })}
-                            </ul>
+                            </ul> */}
                         </li>
                     );
                 }
@@ -59,10 +59,113 @@ const { menu } = Astro.props;
                 </li>
             </>
         )
-    }
+    } -->
+
+    <>
+        <li>
+            <Link url="/" type="text--dark">Home</Link>
+        </li>
+        <li>
+            <Link url="/about" type="text--dark">About</Link>
+        </li>
+        <li>
+            <Link url="/events" type="text--dark">Concert & Events</Link>
+        </li>
+        <li>
+            <Link url="/contact" type="text--dark">Contact Us</Link>
+        </li>
+        <li class="mobile-cta">
+            <Link url="/events" type="button-primary">2024/2025 Season</Link>
+        </li>
+    </>
 </ul>
 
 <style lang="scss">
+    @use "@styles/partials/abstracts" as *;
+
+    .mobile-cta {
+        display: none;
+    }
+
+    ul {
+        display: flex;
+        gap: var(--spc-lg);
+        margin: 0;
+    }
+
+    // Nav Submenu
+    .sub-menu {
+        position: relative;
+
+        > ul {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0px;
+            width: 200px;
+            padding: 25px 10px;
+            background-color: #3d3d3d;
+            opacity: 0;
+            transform: translate(0, 15px);
+            transition:
+                opacity 0.4s ease-in-out 0.2s,
+                transform 0.4s ease-in-out 0.2s;
+            flex-direction: column;
+        }
+
+        &:hover,
+        &:focus {
+            > ul {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+    }
+
+    @include responsive-style(tablet) {
+        // Mobile Menu
+        ul {
+            --menu-width: 70%;
+            // position
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            // dimensions
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: 70%;
+            background-color: var(--clr-black);
+            padding: 30% var(--spc-lg);
+            // layout
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        a {
+            font-size: var(--font-sz-600);
+        }
+
+        .mobile-cta {
+            display: block;
+            width: 100%;
+            margin-top: var(--spc-lg);
+            a {
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+
+    @include responsive-style(mobile) {
+        ul {
+            width: 80%;
+        }
+    }
+</style>
+
+<!-- <style lang="scss">
     @use "@styles/partials/abstracts" as *;
 
     ul {
@@ -70,6 +173,7 @@ const { menu } = Astro.props;
         gap: 40px;
         margin: 0;
     }
+
     // Nav Submenu
     .sub-menu {
         position: relative;
@@ -129,4 +233,4 @@ const { menu } = Astro.props;
             width: 80%;
         }
     }
-</style>
+</style> -->

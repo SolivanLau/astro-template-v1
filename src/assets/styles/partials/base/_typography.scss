@@ -96,8 +96,13 @@ h5,
 h6,
 .title-font {
     font-family: var(--font-fm-title);
+    text-wrap: balance;
+}
+.title-font--display{
+
 }
 
+// Body text
 p,
 a,
 span,
@@ -108,8 +113,8 @@ button,
     font-family: var(--font-fm-body);
     font-size: var(--font-sz-400);
 }
-// FONT-SIZES with  utility classes
 
+// FONT-SIZES with  utility classes
 h6,
 .h6 {
     font-size: var(--font-sz-500);

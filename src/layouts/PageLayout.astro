@@ -36,12 +36,26 @@ const navigationQuery = await cmsFetch("navigation", navigationParameters);
         {seo && <Seo seo={seo} />}
         {
             isTurnstile && (
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer />
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
             )
         }
     </head>
-    <body>
+    <body class="overlay">
         <Navigation data={navigationQuery} />
-        <slot />
+        <div class="content">
+            <slot />
+        </div>
     </body>
 </html>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts" as *;
+
+    // TABLET MEDIA QUERY
+    @include responsive-style(tablet) {
+        // Adjusting content to Fixed Navigation
+        .content {
+            margin-top: 95px;
+        }
+    }
+</style>
