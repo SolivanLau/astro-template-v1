@@ -11,7 +11,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // https://astro.build/config
 export default defineConfig({
     output: "hybrid",
-    adapter: netlify(),
+    adapter: netlify({
+        imageCDN: false,
+    }),
     site: "https://astro-template-v1.netlify.app",
     build: {
         inlineStylesheets: "never",
