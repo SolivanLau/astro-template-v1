@@ -1,0 +1,26 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Link from "@components/Link.astro";
+---
+
+<PageLayout>
+    <main>
+        <h1>Page Not Found</h1>
+        <p>The page you were looking for may have been renamed or removed.</p>
+
+        <p>Take a look at these pages instead:</p>
+
+        <!-- CTA LINKS -->
+        <ul>
+            <li>
+                <Link url="/" type="button-secondary--white">Home</Link>
+            </li>
+            <li>
+                <Link url="/events" type="button-secondary--white">Events</Link>
+            </li>
+            <li>
+                <Link url="/contact" type="button-secondary--white">Contact</Link>
+            </li>
+        </ul>
+    </main>
+</PageLayout>

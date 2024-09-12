@@ -33,7 +33,7 @@ const pageQuery = await cmsFetch("events", queryParameters);
 
             {
                 // ALL Events
-                pageQuery.length > 0 && (
+                pageQuery && pageQuery.length > 0 && (
                     <ul>
                         {pageQuery.map((event) => {
                             const { title, slug }: { title: string; slug: string } =

@@ -50,9 +50,9 @@ const querParameters = {
 };
 
 const pageQuery = await cmsFetch("about-page", querParameters);
-const data = pageQuery.attributes;
+const data = pageQuery?.attributes;
 
-const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery.attributes;
+const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.attributes;
 ---
 
 <PageLayout seo={seo}>

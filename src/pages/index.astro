@@ -6,10 +6,12 @@ import InstagramFeed from "@components/InstagramFeed.astro";
 import Link from "@components/Link.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
 import headerBg from "@images/home-bg-desktop.webp";
+// Testing
+import { Image } from "astro:assets";
 ---
 
-<PageLayout isTurnstile={true}>
-    <Header title="About Us" backgroundImgPath={headerBg} />
+<PageLayout isTurnstile>
+    <Header title="This is the Home Page" backgroundImgPath={headerBg} />
     <main>
         <div class="wrapper">
             <p>
@@ -20,15 +22,23 @@ import headerBg from "@images/home-bg-desktop.webp";
             <h2>Useful Links</h2>
             <ul>
                 <li>
-                    <Link url="/events">Events Page</Link>
+                    <Link url="/events" type="text--light">Events Page</Link>
                 </li>
                 <li>
-                    <Link url="/about">About Page</Link>
+                    <Link url="/about" type="text--light">About Page</Link>
                 </li>
                 <li>
-                    <Link url="/about">Connect Page</Link>
+                    <Link url="/about" type="text--light">Connect Page</Link>
                 </li>
             </ul>
+        </div>
+
+        <div class="wrapper">
+            <h2>Testing</h2>
+
+            <Link url="/">
+                <Image src={headerBg} alt="test" width={600} />
+            </Link>
         </div>
         <EmailForm />
         <InstagramFeed />

@@ -28,16 +28,21 @@ const currentUrl = Astro.url.pathname;
 
 <style lang="scss">
     a {
+        text-decoration: none;
         transition: all 0.2s ease;
     }
 
     .text--light {
+        color: var(--clr-brand-primary);
+        &:hover,
+        &:focus {
+            color: var(--clr-brand-accent);
+        }
     }
 
     .text--dark {
         color: var(--clr-white);
 
-        &[aria-current="page"],
         &:hover,
         &:focus {
             color: var(--clr-brand-accent);
@@ -48,6 +53,7 @@ const currentUrl = Astro.url.pathname;
     .button-secondary,
     .button-secondary--white {
         padding: 8px 16px;
+        text-align: center;
     }
 
     .button-primary {

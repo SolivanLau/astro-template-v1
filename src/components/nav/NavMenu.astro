@@ -81,7 +81,7 @@ const { menu, mobileCta, ...rest } = Astro.props;
 </ul>
 
 <style lang="scss">
-    @use "@styles/partials/abstracts" as *;
+    @use "@styles/partials/abstracts/mixins" as *;
 
     .mobile-cta {
         display: none;
@@ -121,6 +121,18 @@ const { menu, mobileCta, ...rest } = Astro.props;
         }
     }
 
+    .text--dark[aria-current="page"] {
+        color: var(--clr-brand-accent);
+    }
+
+    // MEDIA QUERIES
+
+    // TABLET
+    @include responsive-style(900px) {
+        a {
+            font-size: var(--font-sz-300);
+        }
+    }
     @include responsive-style(tablet) {
         // Mobile Menu
         ul {
@@ -146,7 +158,6 @@ const { menu, mobileCta, ...rest } = Astro.props;
         a {
             font-size: var(--font-sz-600);
         }
-
         .mobile-cta {
             display: block;
             width: 100%;
@@ -158,79 +169,10 @@ const { menu, mobileCta, ...rest } = Astro.props;
         }
     }
 
+    // MOBILE
     @include responsive-style(mobile) {
         ul {
             width: 80%;
         }
     }
 </style>
-
-<!-- <style lang="scss">
-    @use "@styles/partials/abstracts" as *;
-
-    ul {
-        display: flex;
-        gap: 40px;
-        margin: 0;
-    }
-
-    // Nav Submenu
-    .sub-menu {
-        position: relative;
-
-        > ul {
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0px;
-            width: 200px;
-            padding: 25px 10px;
-            background-color: #3d3d3d;
-            opacity: 0;
-            transform: translate(0, 15px);
-            transition:
-                opacity 0.4s ease-in-out 0.2s,
-                transform 0.4s ease-in-out 0.2s;
-            flex-direction: column;
-        }
-
-        &:hover,
-        &:focus {
-            > ul {
-                opacity: 1;
-                transform: translate(0, 0);
-            }
-        }
-    }
-
-    @include responsive-style(tablet) {
-        ul {
-            --menu-width: 70%;
-            // position
-            position: fixed;
-            top: 0px;
-            right: 0px;
-            // dimensions
-            min-height: 100vh;
-            min-height: 100dvh;
-            width: 70%;
-            background-color: blue;
-            // layout
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-            transform: translateX(100%);
-            transition: transform 0.4s ease-in-out;
-        }
-
-        li[aria-current="page"] {
-            font-weight: bold;
-        }
-    }
-
-    @include responsive-style(mobile) {
-        ul {
-            width: 80%;
-        }
-    }
-</style> -->

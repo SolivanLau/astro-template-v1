@@ -98,13 +98,11 @@ h6,
     font-family: var(--font-fm-title);
     text-wrap: balance;
 }
-.title-font--display{
-
-}
 
 // Body text
 p,
 a,
+li,
 span,
 label,
 input,
@@ -139,4 +137,10 @@ h1,
 .h1 {
     font-size: var(--font-sz-1100);
     font-weight: 900;
+}
+
+// DISPLAY FONTS
+
+.title-font--display {
+    font-size: clamp(var(--font-sz-900), 4.116vw + 2.082rem, var(--font-sz-1100));
 }

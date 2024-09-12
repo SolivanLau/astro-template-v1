@@ -5,11 +5,11 @@ import bgImage from "@images/newsletter-bg-desktop.webp";
 import Input from "@components/forms/Input.astro";
 ---
 
-<section class="newsletter background-image__parent">
-    <div class="wrapper">
+<section class="background-image__parent">
+    <div class="wrapper newsletter">
         <!-- Heading -->
         <div class="newsletter__text">
-            <h2 class="h1">Stay Informed</h2>
+            <h2 class="title-font--display">Stay Informed</h2>
             <p class="h6">Get updates on concerts, events, and more!</p>
         </div>
         <!-- Form -->
@@ -55,38 +55,47 @@ import Input from "@components/forms/Input.astro";
 </section>
 
 <style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
     // Background Image
     .background-image__parent {
         background: linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%);
     }
-
     .background-image {
         translate: 38%;
     }
     // Layout
-    .wrapper {
+    .newsletter {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        min-height: 700px;
+        gap: var(--spc-lg) var(--spc-med);
+        padding: var(--spc-xl) 0;
     }
     // Text
     .newsletter__text {
         color: var(--clr-white);
         display: grid;
         gap: var(--spc-sm);
+        text-wrap: balance;
     }
     // Form
     #newsletter__form {
+        --form--padding: 48px;
         background-color: #ffffff;
         color: #1a1a1a;
-        padding: 48px;
+        padding: var(--form--padding);
+        min-width: 350px;
         width: 40%;
         display: grid;
         gap: 32px;
         -webkit-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
         -moz-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
         box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
+
+        & > * {
+            width: 100%;
+        }
         .title {
             display: flex;
             align-items: center;
@@ -162,6 +171,38 @@ import Input from "@components/forms/Input.astro";
             white-space: pre-line;
         }
     }
+
+    // MEDIA QUERIES
+
+    // TABLET
+    @include responsive-style(1030px) {
+        #newsletter__form {
+            --form--padding: var(--spc-lg);
+        }
+    }
+
+    @include responsive-style(950px) {
+        // Layout Shift
+        .newsletter {
+            flex-direction: column;
+        }
+        .newsletter__text {
+            text-align: center;
+        }
+
+        #newsletter__form {
+            min-width: none;
+            width: 100%;
+            max-width: 550px;
+        }
+    }
+
+    @include responsive-style(tablet) {
+        #newsletter__form {
+            --form--padding: var(--spc-med);
+        }
+    }
+    // MOBILE
 </style>
 
 <script>

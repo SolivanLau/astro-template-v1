@@ -1,10 +1,10 @@
 ---
 import Image from "astro/components/Image.astro";
 import Link from "@components/Link.astro";
-
-import logoBackup from "@icons/logos/logo.svg";
 import NavMenu from "./NavMenu.astro";
 import NavMobileButton from "./NavMobileButton.astro";
+import logoBackup from "@images/logos/logo.svg";
+
 const { logo, menu, ctaButton } = Astro.props.data?.attributes || {};
 
 const { imageMedia, description } = logo || {};
@@ -23,30 +23,31 @@ const { imageMedia, description } = logo || {};
                 height={75}
             />
         </Link>
+        <!-- MOBILE MENU BUTTON -->
+        <NavMobileButton class="mobile-menu-button" />
         <!-- MENU -->
         <NavMenu class="navigation-menu" menu={menu} mobileCta={ctaButton} />
 
         <!-- CTA BUTTON -->
-        {
-            ctaButton && (
-                <div class="cta-button">
+        <div class="cta-button">
+            {
+                (
                     <Link
-                        url={ctaButton.linkInfo.url}
-                        isLinkExternal={ctaButton.linkInfo.isLinkExternal}
+                        url={ctaButton ? ctaButton.linkInfo.url : "/events"}
+                        isLinkExternal={ctaButton ? ctaButton.linkInfo.isLinkExternal : false}
                         type="button-primary"
                     >
-                        {ctaButton.linkInfo.label}
+                        {ctaButton ? ctaButton.linkInfo.label : "2024/2025 Season"}
                     </Link>
-                </div>
-            )
-        }
-        <!-- MOBILE MENU BUTTON -->
-        <NavMobileButton class="mobile-menu-button" />
+                )
+            }
+        </div>
     </div>
 </nav>
 
 <style lang="scss">
-    @use "@styles/partials/abstracts" as *;
+    @use "@styles/partials/abstracts/mixins" as *;
+
     // nav styles
     .main-navigation {
         background-color: var(--clr-black);
@@ -54,8 +55,11 @@ const { imageMedia, description } = logo || {};
         position: relative;
         z-index: 999;
 
-        :global(a) {
-            text-decoration: none;
+        // text specific styles
+        :global(.text--dark) {
+            &[aria-current="page"] {
+                color: var(--clr-brand-accent);
+            }
         }
     }
     // layout
@@ -66,9 +70,10 @@ const { imageMedia, description } = logo || {};
         padding: 10px 0px;
     }
 
-    // global styles
+    // MEDIA QUERIES
 
-    // tablet -
+    // TABLET
+
     @include responsive-style(tablet) {
         // Fixed Top Navigation
         .main-navigation {
@@ -89,11 +94,21 @@ const { imageMedia, description } = logo || {};
             display: none;
         }
 
+        .navigation-menu {
+            :global(a) {
+                pointer-events: none;
+                visibility: hidden;
+            }
+        }
         // OPEN states
         .open {
-            // Menu
+            // Menu Open: Links are accessible and visible
             .navigation-menu {
                 transform: translateX(0%);
+                :global(a) {
+                    pointer-events: all;
+                    visibility: visible;
+                }
             }
             // Mobile Menu Button
             :global(.mobile-menu-button span) {

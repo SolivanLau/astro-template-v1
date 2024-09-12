@@ -1,0 +1,236 @@
+---
+import { Image } from "astro:assets";
+import Link from "@components/Link.astro";
+import logo from "@images/logos/logo.svg";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    cmsData?: any;
+}
+
+const { cmsData } = Astro.props;
+---
+
+<footer>
+    <!-- CTA Section -->
+    <section class="wrapper footer__cta">
+        <!-- COMPANY INFO -->
+        <div class="footer__info">
+            <Link url="/">
+                <Image src={logo} alt="Toronto Wind Collective" width={300} />
+            </Link>
+            <h2 class="sr-only">Toronto Wind Collective</h2>
+            <p>A project based ensemble, supporting early musicians and composers.</p>
+            <Link url="/events" type="button-primary">Concerts & Events</Link>
+        </div>
+        <!-- NAVIGATION -->
+        <nav class="footer__nav">
+            <h2>Navigation</h2>
+            <ul class="list">
+                <li>
+                    <Link url="/" type="text--dark">Home</Link>
+                </li>
+                <li>
+                    <Link url="/about" type="text--dark">About</Link>
+                </li>
+                <li>
+                    <Link url="/events" type="text--dark">Concerts & Events</Link>
+                </li>
+                <li>
+                    <Link url="/contact" type="text--dark">Contact Us</Link>
+                </li>
+            </ul>
+        </nav>
+        <!-- CONTACT & SOCIALS -->
+        <div class="footer__contact">
+            <!-- CONTACT -->
+            <div class="contact">
+                <h2>Contact Us</h2>
+                <ul class="list">
+                    <li>
+                        <Link url="mailto:torontowindcollective@gmail.com" type="text--dark">
+                            <Icon name={"email"} />
+                            <p>torontowindcollective@gmail.com</p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Icon name={"location"} />
+                        <p>Based in Toronto, Canada</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- SOCIALS -->
+            <div class="socials">
+                <h2 class="sr-only">Socials</h2>
+                <ul class="list">
+                    <li>
+                        <Link url="https://www.instagram.com/torontowindcollective/" isLinkExternal>
+                            <Icon name={"socials/instagram"} />
+                        </Link>
+                    </li>
+                    <li>
+                        <Link url="https://www.youtube.com/@TorontoWindCollective" isLinkExternal>
+                            <Icon name={"socials/youtube"} />
+                        </Link>
+                    </li>
+                    <li>
+                        <Link url="https://www.facebook.com/@TorontoWindCollective" isLinkExternal>
+                            <Icon name={"socials/facebook"} />
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="wrapper footer__copyright">
+        <p>© Copyright 2024 | Toronto Wind Collective | All Rights Reserved</p>
+        <Link url="/policy" type="text--dark">
+            <p>Privacy Policy</p>
+        </Link>
+    </section>
+</footer>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+    // Typographic Styles
+    h2,
+    h3 {
+        // background-color: var(--clr-brand-primary);
+        font-family: var(--font-fm-body);
+        font-size: var(--font-sz-400);
+        width: fit-content;
+        position: relative;
+        // font-weight: 400;
+        // color: var(--clr-brand-primary);
+        // padding: var(--spc-xs) var(--spc-sm);
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 45%;
+            height: 2px;
+            background-color: var(--clr-brand-accent);
+        }
+    }
+    p,
+    a,
+    li {
+        font-size: var(--font-sz-300);
+    }
+
+    // FOOTER
+    footer {
+        background-color: var(--clr-black);
+        color: var(--clr-white);
+    }
+
+    // CTA
+    .footer__cta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--spc-lg) var(--spc-lg);
+        padding: var(--spc-med) 0 var(--spc-lg);
+    }
+
+    // COMPANY INFO
+    .footer__info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spc-sm);
+        flex-basis: 405px;
+
+        a[class] {
+            font-size: var(--font-sz-500);
+            width: 100%;
+        }
+        a {
+            align-self: flex-start;
+        }
+    }
+    // NAVIGATION
+    .footer__nav {
+        .list {
+            display: grid;
+            gap: var(--spc-xs);
+        }
+    }
+    // CONTACT
+    .footer__contact {
+        .contact .list {
+            display: grid;
+            gap: var(--spc-xs);
+        }
+
+        .contact li,
+        .contact a {
+            display: flex;
+            align-items: center;
+            gap: var(--spc-xs);
+            [data-icon] {
+                font-size: 20px;
+            }
+        }
+
+        .socials .list {
+            display: flex;
+            gap: var(--spc-xs);
+
+            li {
+                background-color: var(--clr-brand-primary);
+                display: grid;
+                place-items: center;
+                width: 40px;
+                height: 40px;
+            }
+            a {
+                vertical-align: top;
+                font-size: 0;
+            }
+            [data-icon] {
+                font-size: 30px;
+                color: white;
+            }
+        }
+    }
+    // COPYRIGHT
+    .footer__copyright {
+        border-top: 1px solid var(--clr-white);
+        padding: var(--spc-med) 0;
+        display: flex;
+        gap: var(--spc-sm);
+        justify-content: space-between;
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    // MEDIA QUERIES
+
+    // TABLET
+    @include responsive-style(905px) {
+        .footer__nav {
+            flex-grow: 1;
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .footer__copyright {
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    // MOBILE
+    @include responsive-style(470px) {
+        .footer__info {
+            a {
+                align-self: center;
+            }
+        }
+    }
+</style>

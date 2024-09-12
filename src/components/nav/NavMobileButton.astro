@@ -11,7 +11,7 @@ const { ...rest } = Astro.props;
 </button>
 
 <style lang="scss">
-    @use "@styles/partials/abstracts" as *;
+    @use "@styles/partials/abstracts/mixins" as *;
 
     button {
         --button-width: 50px;
@@ -102,6 +102,7 @@ const { ...rest } = Astro.props;
     @include responsive-style(tablet) {
         .mobile-menu-button {
             display: block;
+            z-index: 1000;
         }
     }
 </style>
