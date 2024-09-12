@@ -12,10 +12,10 @@ const { title, subtitle, backgroundImgPath, tag } = Astro.props;
 const ParentTag = tag ? tag : "header";
 ---
 
-<ParentTag class={backgroundImgPath ? "background-image__parent" : "header"}>
-    <div class="wrapper">
+<ParentTag class={backgroundImgPath && "background-image__parent"}>
+    <div class="wrapper header">
         <div class="title">
-            <h1>{title}</h1>
+            <h1 class="title-font--display">{title}</h1>
             {subtitle && <p>{subtitle}</p>}
         </div>
     </div>
@@ -33,7 +33,7 @@ const ParentTag = tag ? tag : "header";
 </ParentTag>
 
 <style lang="scss">
-    .wrapper {
+    .header {
         color: var(--clr-white);
         min-height: 450px;
         display: grid;
