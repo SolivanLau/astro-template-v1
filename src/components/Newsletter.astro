@@ -15,7 +15,7 @@ import Input from "@components/forms/Input.astro";
         <!-- Form -->
         <form id="newsletter__form">
             <div class="title">
-                <h3 class="h6 body-font">Join Our Mailing List</h3>
+                <h3 class="h5 body-font">Join Our Mailing List</h3>
                 <Icon name="mail" />
             </div>
             <!-- Inputs -->
@@ -80,109 +80,44 @@ import Input from "@components/forms/Input.astro";
         text-wrap: balance;
     }
     // Form
-    #newsletter__form {
-        --form--padding: 48px;
-        background-color: #ffffff;
-        color: #1a1a1a;
-        padding: var(--form--padding);
+    form {
         min-width: 350px;
         width: 40%;
-        display: grid;
         gap: 32px;
-        -webkit-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
-        -moz-box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
-        box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
 
-        & > * {
-            width: 100%;
-        }
         .title {
             display: flex;
             align-items: center;
             gap: 12px;
-            // TEMPORARY MARGIN REMOVAL: MOVE TO GLOBALS
-            h3 {
-                margin: 0;
-            }
             [data-icon="mail"] {
                 font-size: 30px;
             }
         }
     }
 
-    // inputs
-    .inputs {
-        display: grid;
-        gap: 12px;
-    }
-
-    // submit button
+    // inputs & response layout
+    .inputs,
     .response {
         display: grid;
         gap: 12px;
-        button[type="submit"] {
-            width: 100%;
-        }
-    }
-    // status text
-    .status {
-        min-height: 72px;
-        padding: 16px 12px;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 700;
-        opacity: 0;
-        transition: 0.3s ease-in-out opacity;
-        // SUCCESS STYLES
-        color: #255634;
-        border: 2px hsla(138, 35%, 38%, 0.399) solid;
-        background-color: #c9f6d7;
-
-        [data-icon] {
-            font-size: 26px;
-        }
-
-        [data-icon="error"] {
-            display: none;
-        }
-
-        // ERROR RESPONSE
-        &.error {
-            color: #78140b;
-            border: 2px hsla(5, 35%, 38%, 0.37) solid;
-            background-color: #f6d0c9;
-
-            [data-icon="success"] {
-                display: none;
-            }
-            [data-icon="error"] {
-                display: block;
-            }
-        }
-
-        // RESPONSE ANIMATION
-        &.respond {
-            opacity: 1;
-        }
-
-        .status__message {
-            white-space: pre-line;
-        }
     }
 
     // MEDIA QUERIES
 
     // TABLET
-    @include responsive-style(1030px) {
-        #newsletter__form {
-            --form--padding: var(--spc-lg);
-        }
-    }
+
 
     @include responsive-style(950px) {
         // Layout Shift
+
+        .background-image__parent {
+            background: linear-gradient(-20deg, rgba(66, 58, 112, 17%) 0%, #695c7c 85%);
+        }
+
+        .background-image {
+            translate: 0;
+            object-position: 40% 70%;
+        }
         .newsletter {
             flex-direction: column;
         }
@@ -190,19 +125,33 @@ import Input from "@components/forms/Input.astro";
             text-align: center;
         }
 
-        #newsletter__form {
-            min-width: none;
+        form {
+            min-width: 0;
             width: 100%;
             max-width: 550px;
+            .title {
+                justify-content: center;
+            }
         }
     }
 
     @include responsive-style(tablet) {
-        #newsletter__form {
-            --form--padding: var(--spc-med);
+        h3 {
+            font-size: var(--font-sz-500);
         }
     }
-    // MOBILE
+    @include responsive-style(mobile) {
+        .newsletter {
+            gap: var(--spc-med);
+        }
+        form {
+            gap: var(--spc-med);
+        }
+
+        h3 {
+            font-size: var(--font-sz-400);
+        }
+    }
 </style>
 
 <script>

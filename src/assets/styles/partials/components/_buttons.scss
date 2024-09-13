@@ -1,5 +1,3 @@
-@use "@styles/partials/abstracts" as *;
-
 // button styles
 button {
     cursor: pointer;
@@ -12,10 +10,23 @@ button {
     }
 }
 
-// button presets
+// button preset classes
+
+.button-primary,
+.button-secondary,
+.button-secondary--white {
+    padding: 8px 16px;
+    text-align: center;
+    font-size: var(--font-sz-500);
+}
+
 .button-primary {
     background-color: #423a70;
     color: #ffffff;
+
+    &:hover {
+        background-color: var(--clr-brand-accent);
+    }
 }
 
 .button-secondary {

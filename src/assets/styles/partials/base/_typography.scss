@@ -142,5 +142,6 @@ h1,
 // DISPLAY FONTS
 
 .title-font--display {
-    font-size: clamp(var(--font-sz-900), 4.116vw + 2.082rem, var(--font-sz-1100));
+    // clamp changes between 500px and 1280px
+    font-size: clamp(var(--font-sz-900), 4.644vw + 1.66rem, var(--font-sz-1100));
 }

@@ -1,0 +1,96 @@
+@use "@styles/partials/abstracts/mixins" as *;
+
+// FORM
+form {
+    // scoped variable
+    --form--padding: 48px;
+    // styles
+    padding: var(--form--padding);
+    background-color: var(--clr-white);
+
+    // box-shadow
+    @include box-shadow(5px 4px 3.3px 0px rgba(0, 0, 0, 0.25));
+
+    // Layout
+    display: grid;
+
+    .inputs * {
+        min-width: 0;
+    }
+}
+
+// submit button
+button[type="submit"] {
+    width: 100%;
+}
+
+// status text
+.status {
+    min-height: 72px;
+    padding: 16px 12px;
+    font-size: var(--font-sz-300);
+    font-weight: 700;
+
+    // Layout
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    // transition
+    transition: 0.3s ease-in-out opacity;
+    opacity: 0;
+    // SUCCESS STYLES: Default
+    color: #255634;
+    border: 2px hsla(138, 35%, 38%, 0.399) solid;
+    background-color: #c9f6d7;
+
+    // ICONS: astro icons
+    [data-icon] {
+        font-size: 26px;
+    }
+
+    [data-icon="error"] {
+        display: none;
+    }
+
+    // ERROR RESPONSE
+    &.error {
+        color: #78140b;
+        border: 2px hsla(5, 35%, 38%, 0.37) solid;
+        background-color: #f6d0c9;
+
+        [data-icon="success"] {
+            display: none;
+        }
+        [data-icon="error"] {
+            display: block;
+        }
+    }
+
+    // RESPONSE ANIMATION
+    &.respond {
+        opacity: 1;
+    }
+    // allows for \n for line breaks for .textContent. Prevents dangerous .innerHTML
+    .status__message {
+        white-space: pre-line;
+    }
+}
+
+// MEDIA QUERIES
+
+@include responsive-style(1030px) {
+    form {
+        --form--padding: var(--spc-lg);
+    }
+}
+@include responsive-style(tablet) {
+    form {
+        --form--padding: var(--spc-lg) var(--spc-med);
+    }
+}
+
+@include responsive-style(mobile) {
+    form {
+        --form--padding: var(--spc-med) var(--spc-sm);
+    }
+}

@@ -1,7 +1,178 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
+import Header from "@layouts/Header.astro";
+import Title from "@components/Title.astro";
+import Link from "@components/Link.astro";
+import { Icon } from "astro-icon/components";
+import ContactForm from "@components/ContactForm.astro";
+import Newsletter from "@components/Newsletter.astro";
+import tempBg from "@images/home-bg-desktop.webp";
+import { Image } from "astro:assets";
 ---
 
-<PageLayout>
-    <h1>Contact</h1>
+<PageLayout isTurnstile>
+    <Header title="Contact Us" backgroundImgPath={tempBg} />
+    <main>
+        <section>
+            <div class="wrapper">
+                <Title TagName="h2" title="Let's Work Together" topper="Get in Touch" />
+                <div class="contact">
+                    <!-- TEXT -->
+                    <div class="contact__text">
+                        <!-- IMAGE  -->
+                        <Image
+                            src={tempBg}
+                            alt="Toronto Wind Collective"
+                            height={200}
+                            widths={[1200, 600]}
+                        />
+                        <div class="text">
+                            <p>
+                                The The Toronto Wind Collective is looking to spotlight Canadian
+                                Talent:
+                            </p>
+
+                            <ul>
+                                <li>Commissioning Composers for Wind Ensemble Music</li>
+                                <li>Musicians & Players to rehearse and debut new works</li>
+                                <li>Long term organizational support</li>
+                            </ul>
+
+                            <p>
+                                Feel free to send an <strong>email</strong>, or fill out the contact
+                                form! We look forward to collaborating with you!
+                            </p>
+                        </div>
+
+                        <ul class="socials">
+                            <li>
+                                <Link url="mailto:torontowindcollective@gmail.com" isLinkExternal>
+                                    <div class="social">
+                                        <div class="icon-container">
+                                            <Icon name="socials/email" />
+                                        </div>
+                                        <h3 class="h6 body-font">
+                                            Email <span> torontowindcollective@gmail.com</span>
+                                        </h3>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    url="https://www.instagram.com/torontowindcollective/"
+                                    isLinkExternal
+                                >
+                                    <div class="social">
+                                        <div class="icon-container">
+                                            <Icon name="socials/instagram" />
+                                        </div>
+                                        <h3 class="h6 body-font">
+                                            Instagram <span>
+                                                instagram.com/torontowindcollective</span
+                                            >
+                                        </h3>
+                                    </div>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- FORM -->
+                    <ContactForm class="contact__form" />
+                </div>
+            </div>
+        </section>
+
+        <Newsletter />
+    </main>
 </PageLayout>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+    .wrapper {
+        display: grid;
+        gap: var(--spc-lg);
+        padding-block: var(--spc-xl);
+    }
+    .contact {
+        display: flex;
+        gap: var(--spc-med) var(--spc-lg);
+        justify-content: space-between;
+    }
+
+    .contact__form,
+    .contact__text {
+        width: 50%;
+    }
+
+    .contact__text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spc-med);
+    }
+    .socials {
+        display: grid;
+        gap: var(--spc-med);
+        .social {
+            display: flex;
+            gap: var(--spc-xs);
+            align-items: center;
+        }
+
+        .icon-container {
+            --icon-size: 30px;
+            display: grid;
+            place-items: center;
+            width: calc(var(--icon-size) + 15px);
+            height: calc(var(--icon-size) + 15px);
+            border: 2px solid var(--clr-brand-primary);
+
+            [data-icon] {
+                font-size: var(--icon-size);
+                color: var(--clr-brand-primary);
+            }
+        }
+        h3 {
+            font-size: var(--font-sz-400);
+            width: fit-content;
+            color: var(--clr-black);
+        }
+
+        span {
+            display: block;
+            font-size: var(--font-sz-300);
+            font-weight: 400;
+            color: #767676;
+        }
+    }
+    // MEDIA QUERIES
+
+    @include responsive-style(1030px) {
+        .contact {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact__form,
+        .contact__text {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .contact__text {
+            img {
+                width: 100%;
+            }
+
+            .text {
+                max-width: 700px;
+            }
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .socials {
+            justify-content: center;
+        }
+    }
+</style>

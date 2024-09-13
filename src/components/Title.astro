@@ -2,14 +2,15 @@
 interface Props {
     topper?: string;
     title: string;
+    TagName: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-const { topper, title } = Astro.props;
+const { topper, title, TagName } = Astro.props;
 ---
 
 <div>
     {topper && <span class="topper">{topper}</span>}
-    <h2 class="title">{title}</h2>
+    <TagName class="title">{title}</TagName>
 </div>
 
 <style lang="scss">
@@ -26,5 +27,6 @@ const { topper, title } = Astro.props;
     .title {
         font-size: var(--font-sz-900);
         font-weight: 700;
+        margin-top: -10px;
     }
 </style>
