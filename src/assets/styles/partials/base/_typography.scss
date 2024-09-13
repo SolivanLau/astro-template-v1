@@ -108,8 +108,9 @@ label,
 input,
 button,
 .body-font {
+    --fluid-font-size: clamp(var(--font-sz-300), 1.493vw + 0.534rem, var(--font-sz-400));
     font-family: var(--font-fm-body);
-    font-size: var(--font-sz-400);
+    font-size: var(--fluid-font-size);
 }
 
 // FONT-SIZES with  utility classes

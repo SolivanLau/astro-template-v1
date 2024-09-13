@@ -73,6 +73,11 @@ const { imageMedia, description } = logo || {};
     // MEDIA QUERIES
 
     // TABLET
+    @include responsive-style(900px) {
+        .cta-button .button-primary {
+            font-size: var(--font-sz-400);
+        }
+    }
 
     @include responsive-style(tablet) {
         // Fixed Top Navigation
@@ -94,6 +99,7 @@ const { imageMedia, description } = logo || {};
             display: none;
         }
 
+        // disabling link interactivity when closed
         .navigation-menu {
             :global(a) {
                 pointer-events: none;

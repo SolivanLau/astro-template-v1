@@ -15,7 +15,7 @@ import { Image } from "astro:assets";
     <main>
         <section>
             <div class="wrapper">
-                <Title TagName="h2" title="Let's Work Together" topper="Get in Touch" />
+                <Title tagName="h2" title="Let's Work Together" topper="Get in Touch" />
                 <div class="contact">
                     <!-- TEXT -->
                     <div class="contact__text">
@@ -51,7 +51,7 @@ import { Image } from "astro:assets";
                                         <div class="icon-container">
                                             <Icon name="socials/email" />
                                         </div>
-                                        <h3 class="h6 body-font">
+                                        <h3 class="body-font">
                                             Email <span> torontowindcollective@gmail.com</span>
                                         </h3>
                                     </div>
@@ -162,6 +162,8 @@ import { Image } from "astro:assets";
         .contact__text {
             img {
                 width: 100%;
+                aspect-ratio: 21/9;
+                height: auto;
             }
 
             .text {
@@ -173,6 +175,17 @@ import { Image } from "astro:assets";
     @include responsive-style(tablet) {
         .socials {
             justify-content: center;
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .socials {
+            h3 {
+                font-size: var(--font-sz-300);
+            }
+            span {
+                font-size: var(--font-sz-200);
+            }
         }
     }
 </style>

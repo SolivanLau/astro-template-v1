@@ -3,10 +3,10 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
-        "dev": "dotenvx run -- astro dev",
-        "start": "dotenvx run -- astro dev",
+        "dev": "dotenvx run -f .env.development -- astro dev",
         "check": "dotenvx run -- astro check",
-        "build": "dotenvx run -- astro build",
+        "start": "dotenvx run -- astro dev",
+        "build": "astro check && dotenvx run -- astro build",
         "preview": "dotenvx run -- astro preview",
         "astro": "astro",
         "format": "pnpm exec prettier . --write"
@@ -15,7 +15,7 @@
         "@astrojs/check": "^0.9.2",
         "@astrojs/netlify": "^5.5.0",
         "@astrojs/partytown": "^2.1.1",
-        "@dotenvx/dotenvx": "^1.6.4",
+        "@dotenvx/dotenvx": "^1.14.1",
         "astro": "^4.13.2",
         "astro-icon": "^1.1.0",
         "qs": "^6.13.0",

@@ -74,6 +74,7 @@
 //
 .overlay--active {
     overflow: hidden;
+
     &::before {
         opacity: 1;
         pointer-events: all;
