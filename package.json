@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "scripts": {
         "dev": "dotenvx run -f .env.development -- astro dev",
-        "check": "dotenvx run -- astro check",
+        "check": "dotenvx run -f .env.production -- astro check",
         "start": "dotenvx run -- astro dev",
         "build": "astro check && dotenvx run -- astro build",
         "preview": "dotenvx run -- astro preview",

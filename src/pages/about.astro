@@ -67,6 +67,7 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
             <div class="wrapper">
                 <article class="mission__text">
                     <Title
+                        tagName="h2"
                         title={missionStatement.title.title ||
                             "Championing Local Musicians & Composers"}
                         topper={missionStatement.title.subtitle || "Our Mission"}
@@ -83,6 +84,7 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
         <section class="services">
             <div class="wrapper">
                 <Title
+                    tagName="h2"
                     title={services.title.title || "Premiering Canadian Wind Music"}
                     topper={services.title.subtitle || "What We Do"}
                 />
