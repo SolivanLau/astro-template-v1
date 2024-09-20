@@ -66,12 +66,9 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
         <section class="mission">
             <div class="wrapper">
                 <article class="mission__text">
-                    <Title
-                        tagName="h2"
-                        title={missionStatement.title.title ||
-                            "Championing Local Musicians & Composers"}
-                        topper={missionStatement.title.subtitle || "Our Mission"}
-                    />
+                    <Title tagName="h2" topper={missionStatement.title.subtitle || "Our Mission"}>
+                        {missionStatement.title.title || "Championing Local Musicians & Composers"}
+                    </Title>
 
                     <BlockRenderer html={missionStatement.text}>
                         <p>this is backup content</p>
@@ -83,11 +80,9 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
         <!-- SERVICES -->
         <section class="services">
             <div class="wrapper">
-                <Title
-                    tagName="h2"
-                    title={services.title.title || "Premiering Canadian Wind Music"}
-                    topper={services.title.subtitle || "What We Do"}
-                />
+                <Title tagName="h2" topper={services.title.subtitle || "What We Do"}
+                    >{services.title.title || "Our Services"}</Title
+                >
 
                 <BlockRenderer html={services.text}>
                     <p>

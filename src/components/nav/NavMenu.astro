@@ -1,84 +1,92 @@
 ---
 import Link from "@components/Link.astro";
+import SubMenu from "./SubMenu.astro";
 
-const { menu, mobileCta, ...rest } = Astro.props;
+interface Props {
+    cmsData: {
+        menu?: any;
+        ctaButton?: any;
+    };
+    class?: string;
+    [key: string]: any;
+}
+
+const { cmsData, class: className, ...rest } = Astro.props;
+
+const { menu, ctaButton } = cmsData || {};
 ---
 
-<ul id="menu" {...rest}>
-    <!-- {
-        menu &&
-        // CMS menu
-        menu.length > 0 ? (
-            menu.map((item) => {
-                // Regular Link
-                if (item.__component === "shared.link") {
-                    return (
-                        <li>
-                            <Link
-                                url={item.url}
-                                isLinkExternal={item.isLinkExternal}
-                                class="menu-link"
-                            >
-                                {item.label}
-                            </Link>
-                        </li>
-                    );
-                }
-                // Submenu
-                if (item.__component === "navigation.link-sub-menu") {
-                    const { menuTitle, menuUrl, link } = item;
-                    return (
-                        <li class="sub-menu">
-                            <Link url={menuUrl}>{menuTitle}</Link>
-                            {/* <ul>
-                                {link.map(({ url, label, isLinkExternal }) => {
-                                    return (
-                                        <li>
-                                            <Link url={url} isLinkExternal={isLinkExternal}>
-                                                {label}
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul> */}
-                        </li>
-                    );
-                }
-            })
-        ) : (
-            // Default menu
-            <>
-                <li>
-                    <Link url="/about">About</Link>
-                </li>
-                <li>
-                    <Link url="/things">Things</Link>
-                </li>
-                <li>
-                    <Link url="/connect">Connect</Link>
-                </li>
-            </>
+<div class:list={["menu__container", className]} {...rest}>
+    <ul class="menu__list">
+        {
+            menu &&
+            // CMS menu
+            menu.length > 0 ? (
+                menu.map((link) => {
+                    // Regular Link
+                    if (link.__component === "shared.link") {
+                        return (
+                            <li>
+                                <Link
+                                    url={link.url}
+                                    isLinkExternal={link.isLinkExternal}
+                                    type="text--dark"
+                                >
+                                    {link.label}
+                                </Link>
+                            </li>
+                        );
+                    }
+                    // Submenu
+                    if (link.__component === "navigation.link-sub-menu") {
+                        return (
+                            <li class="sub-menu">
+                                <SubMenu cmsData={{ ...link }} />
+                            </li>
+                        );
+                    }
+                })
+            ) : (
+                // Default menu
+                <>
+                    <li>
+                        <Link url="/" type="text--dark">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link url="/about" type="text--dark">
+                            About
+                        </Link>
+                    </li>
+                    <li>
+                        <Link url="/events" type="text--dark">
+                            Concert & Events
+                        </Link>
+                    </li>
+                    <li>
+                        <Link url="/contact" type="text--dark">
+                            Contact Us
+                        </Link>
+                    </li>
+                </>
+            )
+        }
+    </ul>
+    <!-- mobile cta -->
+    {
+        (
+            <Link
+                url={ctaButton ? ctaButton.url : "/events"}
+                isLinkExternal={ctaButton ? ctaButton.isLinkExternal : false}
+                type="button-primary"
+                class="mobile-cta"
+            >
+                {ctaButton ? ctaButton.label : "2024/2025 Season"}
+            </Link>
         )
-    } -->
-
-    <>
-        <li>
-            <Link url="/" type="text--dark">Home</Link>
-        </li>
-        <li>
-            <Link url="/about" type="text--dark">About</Link>
-        </li>
-        <li>
-            <Link url="/events" type="text--dark">Concert & Events</Link>
-        </li>
-        <li>
-            <Link url="/contact" type="text--dark">Contact Us</Link>
-        </li>
-        <li class="mobile-cta">
-            <Link url="/events" type="button-primary">2024/2025 Season</Link>
-        </li>
-    </>
-</ul>
+    }
+</div>
 
 <style lang="scss">
     @use "@styles/partials/abstracts/mixins" as *;
@@ -87,38 +95,11 @@ const { menu, mobileCta, ...rest } = Astro.props;
         display: none;
     }
 
-    ul {
+    // desktop menu
+    .menu__list {
         display: flex;
         gap: var(--spc-lg);
         margin: 0;
-    }
-
-    // Nav Submenu: NEED UPDATES
-    .sub-menu {
-        position: relative;
-
-        > ul {
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0px;
-            width: 200px;
-            padding: 25px 10px;
-            background-color: #3d3d3d;
-            opacity: 0;
-            transform: translate(0, 15px);
-            transition:
-                opacity 0.4s ease-in-out 0.2s,
-                transform 0.4s ease-in-out 0.2s;
-            flex-direction: column;
-        }
-
-        &:hover,
-        &:focus {
-            > ul {
-                opacity: 1;
-                transform: translate(0, 0);
-            }
-        }
     }
 
     .text--dark[aria-current="page"] {
@@ -129,40 +110,54 @@ const { menu, mobileCta, ...rest } = Astro.props;
 
     // TABLET
     @include responsive-style(900px) {
-        a {
-            font-size: var(--font-sz-300);
+        .menu__list {
+            :global(a) {
+                font-size: var(--font-sz-300);
+            }
         }
-        
     }
     @include responsive-style(tablet) {
         // Mobile Menu
-        ul {
+
+        .menu__container {
             --menu-width: 70%;
             // position
             position: fixed;
             bottom: 0px;
             right: 0px;
             // dimensions
+            width: var(--menu-width);
             min-height: 100vh;
             min-height: 100dvh;
-            width: 70%;
-            background-color: var(--clr-black);
-            padding: 30% var(--spc-lg);
-            // layout
+            padding: 120px var(--spc-med) var(--spc-xl);
+            display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: start;
-            overflow-y: auto;
+            justify-content: start;
+            gap: var(--spc-xl);
+            background-color: var(--clr-black);
             transform: translateX(100%);
             transition: transform 0.4s ease-in-out;
         }
-        a {
-            font-size: var(--font-sz-600);
+        .menu__list {
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            max-height: 350px;
+            // layout
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: var(--spc-med);
+            align-items: start;
+            overflow-y: auto;
+
+            :global(a) {
+                font-size: var(--font-sz-600);
+            }
         }
+
         .mobile-cta {
             display: block;
             width: 100%;
-            margin-top: var(--spc-lg);
             a {
                 display: block;
                 text-align: center;
@@ -172,12 +167,16 @@ const { menu, mobileCta, ...rest } = Astro.props;
 
     // MOBILE
     @include responsive-style(mobile) {
-        ul {
-            width: 80%;
-        }
+        .menu__container {
+            --menu-width: 80%;
+            :global(a) {
+                font-size: var(--font-sz-400);
+            }
+            .menu__list {
+                margin-top: var(--spc-xl);
 
-        a {
-            font-size: var(--font-sz-500);
+                max-height: 250px;
+            }
         }
     }
 </style>

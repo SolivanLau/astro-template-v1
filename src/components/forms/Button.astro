@@ -1,0 +1,37 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    type?:
+        | "text--dark"
+        | "text--light"
+        | "button-primary"
+        | "button-secondary"
+        | "button-secondary--white";
+    [key: string]: any;
+}
+
+const { type, ...rest } = Astro.props;
+---
+
+<button class:list={[type, "button--loader"]} {...rest}>
+    <slot />
+    <Icon name="loader" />
+</button>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    .button--loader {
+        [data-icon="loader"] {
+            display: none;
+        }
+        &:disabled {
+            cursor: progress;
+
+            [data-icon="loader"] {
+                display: block;
+            }
+        }
+    }
+</style>

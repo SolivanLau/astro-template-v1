@@ -1,3 +1,4 @@
+@use "@styles/partials/abstracts/mixins" as *;
 // Local Font Imports
 /* playfair-display-regular - latin */
 @font-face {
@@ -79,7 +80,8 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+ul {
     margin: 0;
 }
 // accessible font size
@@ -144,5 +146,5 @@ h1,
 
 .title-font--display {
     // clamp changes between 500px and 1280px
-    font-size: clamp(var(--font-sz-900), 4.644vw + 1.66rem, var(--font-sz-1100));
+    font-size: clamp(var(--font-sz-800), calc(4.644vw + 1.66rem), var(--font-sz-1100));
 }

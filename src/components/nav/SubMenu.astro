@@ -1,0 +1,197 @@
+---
+import Link from "@components/Link.astro";
+import { Icon } from "astro-icon/components";
+interface Props {
+    cmsData: {
+        menuTitle: string;
+        menuUrl: string;
+        link: [
+            {
+                url: string;
+                label: string;
+                isLinkExternal: boolean;
+            },
+        ];
+    };
+}
+
+const { menuTitle, menuUrl, link } = Astro.props.cmsData;
+
+console.log(menuTitle, menuUrl, link);
+---
+
+<div class="dropdown">
+    <div class="dropdown__title">
+        {
+            menuUrl ? (
+                <Link url={menuUrl} type="text--dark">
+                    {menuTitle}
+                    <Icon name="chevron-down" class="dropdown__icon" />
+                </Link>
+            ) : (
+                <div>
+                    {menuTitle}
+                    <Icon name="chevron-down" class="dropdown__icon" />
+                </div>
+            )
+        }
+
+        <button class="dropdown__mobile-button">
+            <Icon name="chevron-down" />
+        </button>
+    </div>
+    <div class="dropdown__menu">
+        <ul class="dropdown__list">
+            {
+                link.map((link) => (
+                    <li>
+                        <Link url={link.url} isLinkExternal={link.isLinkExternal} type="text--dark">
+                            {link.label}
+                        </Link>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    // Drop down container
+    .dropdown {
+        position: relative;
+
+        // Drop down Icon
+        .dropdown__icon {
+            transition: transform 0.2s ease-in-out;
+        }
+        a,
+        .dropdown__title {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        // Hover and focus
+        &:hover,
+        &:focus-within {
+            .dropdown__icon {
+                transform: rotate(180deg);
+            }
+            .dropdown__menu,
+            + .dropdown__menu {
+                transform: translate(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    // Menu
+    .dropdown__menu {
+        --gap: 10px;
+        position: absolute;
+        left: 0px;
+        top: calc(100% + var(--gap));
+        min-width: 130px;
+        background-color: var(--clr-black);
+        padding: var(--spc-med) var(--spc-med) var(--spc-lg);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(0, -10px);
+        transition:
+            opacity 0.1s ease-in-out,
+            transform 0.1s ease-in-out;
+
+        &::before {
+            content: " ";
+            position: absolute;
+            width: 150%;
+            height: calc(100% + var(--gap));
+            padding: var(--spc-xl);
+            // border: 1px solid var(--clr-brand-accent);
+            top: calc(-1 * var(--gap));
+            left: -25%;
+            z-index: -1;
+        }
+    }
+
+    // mobile button
+
+    .dropdown__mobile-button {
+        display: none;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    @include responsive-style(tablet) {
+        // button switches in for icon
+        .dropdown__mobile-button {
+            display: block;
+            background-color: transparent;
+            padding: 0;
+
+            [data-icon] {
+                font-size: 25px;
+                transition: transform 0.2s ease-in-out;
+            }
+
+            &.dropdown__menu--open [data-icon] {
+                transform: rotate(180deg);
+            }
+        }
+
+        .dropdown__icon {
+            display: none;
+        }
+
+        .dropdown__title {
+            display: flex;
+            gap: var(--spc-xs);
+        }
+        // Menu
+        .dropdown__menu {
+            // disabling desktop absolute - relative relationship
+            transform: translate(0);
+            opacity: 1;
+            pointer-events: auto;
+            position: static;
+            min-width: 0;
+            padding: 0;
+            &::before {
+                display: none;
+            }
+        }
+
+        .dropdown__menu {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease;
+
+            & > ul {
+                overflow: hidden;
+                padding: 0 0 0 var(--spc-sm);
+                display: grid;
+                gap: var(--spc-xs);
+            }
+            // open state
+            &.dropdown__menu--open {
+                grid-template-rows: 1fr;
+            }
+        }
+    }
+</style>
+
+<script>
+    const dropdownButtons = document.querySelectorAll(
+        ".dropdown__mobile-button",
+    ) as NodeListOf<HTMLButtonElement>;
+
+    dropdownButtons.forEach((button) => {
+        const menu = button.closest(".dropdown").querySelector(".dropdown__menu");
+
+        button.addEventListener("click", () => {
+            button.classList.toggle("dropdown__menu--open");
+            menu.classList.toggle("dropdown__menu--open");
+        });
+    });
+</script>

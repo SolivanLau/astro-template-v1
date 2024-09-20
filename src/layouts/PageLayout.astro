@@ -9,8 +9,9 @@ import Seo from "@components/head/Seo.astro";
 interface Props {
     seo?: any;
     isTurnstile?: boolean;
+    class?: string;
 }
-const { seo, isTurnstile } = Astro.props;
+const { seo, isTurnstile, class: className, ...rest } = Astro.props;
 
 const navigationParameters = {
     populate: {
@@ -42,8 +43,8 @@ const navigationQuery = await cmsFetch("navigation", navigationParameters);
         }
     </head>
     <body class="page-layout overlay">
-        <Navigation data={navigationQuery} />
-        <div class="content">
+        <Navigation cmsData={navigationQuery} />
+        <div class:list={["content", className]} {...rest}>
             <slot />
         </div>
         <Footer />
@@ -63,6 +64,9 @@ const navigationQuery = await cmsFetch("navigation", navigationParameters);
     // TABLET MEDIA QUERY
     @include responsive-style(tablet) {
         // Adjusting content to Fixed Navigation
+        html {
+            scroll-padding-top: 95px;
+        }
         .content {
             margin-top: 95px;
         }

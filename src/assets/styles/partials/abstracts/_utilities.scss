@@ -1,10 +1,15 @@
 @use "@styles/partials/abstracts/mixins" as *;
 // content wrapper
-.wrapper {
+.wrapper,
+.wrapper--sm {
     --max-width: 1280px;
     --gutter-width: 40px;
     width: min(var(--max-width), 100% - var(--gutter-width));
     margin-inline: auto;
+}
+
+.wrapper--sm {
+    --max-width: 768px;
 }
 
 // stack
@@ -71,12 +76,48 @@
     }
 }
 
-//
 .overlay--active {
     overflow: hidden;
 
     &::before {
         opacity: 1;
         pointer-events: all;
+    }
+}
+
+// FLOW: creating natural rhythm and spacing for text layouts
+.flow {
+    & > * + * {
+        margin-top: var(--flow-space, 1em);
+    }
+}
+
+// UNIFORM PADDING
+.section__padding {
+    // For most text and component sections
+    // --padding--min: var(--spc-lg);
+    // --padding--max: var(--spc-xl);
+    // --padding--preferred: 3.636vw + 1.091rem;
+
+    --padding--min: var(--spc-lg);
+    --padding--max: var(--spc-xl);
+    --padding--preferred: 3.636vw + 1.091rem;
+    
+    // growth for current min and max vals range: 400px and 1280px
+    // padding-block-start: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
+
+    // &:not(.section__padding:has(~ .section__padding)) {
+    //     padding-block-end: clamp(
+    //         var(--padding--min),
+    //         var(--padding--preferred),
+    //         var(--padding--max)
+    //     );
+    // }
+    // for headers
+    &--lg {
+        --padding--min: var(--spc-lg);
+        --padding--max: var(--spc-2xl);
+        --padding--preferred: 10.909vw + -0.727rem;
+        padding-block: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
     }
 }

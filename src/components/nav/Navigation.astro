@@ -5,7 +5,7 @@ import NavMenu from "./NavMenu.astro";
 import NavMobileButton from "./NavMobileButton.astro";
 import logoBackup from "@images/logos/logo.svg";
 
-const { logo, menu, ctaButton } = Astro.props.data?.attributes || {};
+const { logo, menu, ctaButton } = Astro.props.cmsData?.attributes || {};
 
 const { imageMedia, description } = logo || {};
 ---
@@ -26,18 +26,18 @@ const { imageMedia, description } = logo || {};
         <!-- MOBILE MENU BUTTON -->
         <NavMobileButton class="mobile-menu-button" />
         <!-- MENU -->
-        <NavMenu class="navigation-menu" menu={menu} mobileCta={ctaButton} />
+        <NavMenu class="navigation-menu" cmsData={{ menu, ctaButton }} />
 
         <!-- CTA BUTTON -->
         <div class="cta-button">
             {
                 (
                     <Link
-                        url={ctaButton ? ctaButton.linkInfo.url : "/events"}
-                        isLinkExternal={ctaButton ? ctaButton.linkInfo.isLinkExternal : false}
+                        url={ctaButton ? ctaButton.url : "/events"}
+                        isLinkExternal={ctaButton ? ctaButton.isLinkExternal : false}
                         type="button-primary"
                     >
-                        {ctaButton ? ctaButton.linkInfo.label : "2024/2025 Season"}
+                        {ctaButton ? ctaButton.label : "2024/2025 Season"}
                     </Link>
                 )
             }

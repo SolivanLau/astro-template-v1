@@ -1,7 +1,8 @@
 ---
-interface LinkProps {
+interface Props {
     url: string;
     isLinkExternal?: boolean;
+    class?: string;
     type?:
         | "text--dark"
         | "text--light"
@@ -10,7 +11,7 @@ interface LinkProps {
         | "button-secondary--white";
 }
 
-const { url, isLinkExternal, type, ...props } = Astro.props as LinkProps;
+const { url, isLinkExternal, type, class: className, ...rest } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
 ---
@@ -20,8 +21,8 @@ const currentUrl = Astro.url.pathname;
     target={isLinkExternal ? "_blank" : null}
     rel={isLinkExternal ? "noopener noreferrer" : null}
     aria-current={currentUrl === url ? "page" : null}
-    {...props}
-    class={type && type}
+    {...rest}
+    class:list={[type, className]}
 >
     <slot />
 </a>
@@ -48,5 +49,4 @@ const currentUrl = Astro.url.pathname;
             color: var(--clr-brand-accent);
         }
     }
-
 </style>

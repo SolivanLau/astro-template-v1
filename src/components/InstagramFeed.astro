@@ -1,13 +1,18 @@
 ---
-import Link from "./Link.astro";
+import Title from "@components/Title.astro";
+import Link from "@components/Link.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<section class="instagram">
+<section class="instagram section__padding">
     <div class="wrapper">
-        <h2>Instagram Feed</h2>
-        <p>
-            Check out our <Link url="https://instagram.com" isLinkExternal="true">instagram</Link>
-        </p>
+        <Title tagName="h2" topper="Join Our Community">Follow Us On Instagram</Title>
+        <Link class="cta" url="https://www.instagram.com/torontowindcollective/" isLinkExternal>
+            <Icon name="socials/instagram" />
+            <p>instagram/torontowindcollective</p>
+        </Link>
+    </div>
+    <div class="wrapper">
         <ul class="instagram_gallery"></ul>
     </div>
 </section>
@@ -15,6 +20,16 @@ import Link from "./Link.astro";
 <style lang="scss">
     @use "@styles/partials/" as *;
 
+    .cta {
+        display: flex;
+        align-items: center;
+        gap: var(--spc-xs);
+        padding: var(--spc-med) 0;
+
+        [data-icon] {
+            font-size: 40px;
+        }
+    }
     .instagram_gallery {
         display: grid;
         grid-template-columns: repeat(4, 1fr);

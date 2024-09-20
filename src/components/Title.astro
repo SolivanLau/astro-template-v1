@@ -1,37 +1,37 @@
 ---
 interface Props {
     topper?: string;
-    title: string;
     tagName: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-const { topper, title, tagName } = Astro.props;
+const { topper, tagName } = Astro.props;
 
 const Tag = tagName || "h2";
 ---
 
 <div>
     {topper && <span class="topper">{topper}</span>}
-    <Tag class="title">{title}</Tag>
+    <Tag class="title">
+        <slot />
+    </Tag>
 </div>
 
 <style lang="scss">
     div {
         display: grid;
+        font-weight: 700;
+        margin-bottom: 0.6em;
     }
 
     .topper {
         --fluid-font-sz: clamp(var(--font-sz-300), 0.513vw + 0.84rem, var(--font-sz-400));
         color: var(--clr-brand-primary);
         font-size: var(--fluid-font-sz);
-        font-weight: 700;
         text-transform: uppercase;
     }
     .title {
         --fluid-font-sz: clamp(var(--font-sz-700), 1.95vw + 1.551rem, var(--font-sz-900));
         font-size: var(--fluid-font-sz);
-        font-weight: 700;
-        margin-top: -10px;
+        margin-top: -6px;
     }
-    
 </style>

@@ -1,12 +1,11 @@
 {
     "name": "astro-template-v1",
-    "type": "module",
     "version": "0.0.1",
     "scripts": {
         "dev": "dotenvx run -f .env.development -- astro dev",
         "check": "dotenvx run -f .env.production -- astro check",
         "start": "dotenvx run -- astro dev",
-        "build": "astro check && dotenvx run -- astro build",
+        "build": "astro check && dotenvx run -f .env.production -- astro build",
         "preview": "dotenvx run -- astro preview",
         "astro": "astro",
         "format": "pnpm exec prettier . --write"
@@ -24,8 +23,11 @@
     "devDependencies": {
         "@types/node": "^22.1.0",
         "@types/qs": "^6.9.15",
+        "autoprefixer": "^10.4.20",
+        "cssnano": "^7.0.6",
+        "postcss": "^8.4.47",
         "prettier": "^3.3.3",
         "prettier-plugin-astro": "^0.14.1",
-        "sass": "^1.77.8"
+        "sass": "^1.79.2"
     }
 }

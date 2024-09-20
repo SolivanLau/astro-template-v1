@@ -7,14 +7,30 @@ import { Picture } from "astro:assets";
  * @prop {string} title - the main title for the header
  * @prop {string} [subtitle] - the subtitle for the header
  * @prop {ImageMetadata} [backgroundImgPath] - the image data for the background image
- * @prop {"div" | "section"} [tag] - the type of element to use for the header
+ * @prop {"div" | "section"} [tag] - the type of element to use for the header. Otherwise, defaults to use a <header>
  */
-const { title, subtitle, backgroundImgPath, tag } = Astro.props;
 
-const ParentTag = tag ? tag : "header";
+interface Props {
+    title: string;
+    subtitle?: string;
+    backgroundImgPath?: ImageMetadata;
+    tagName?: "div" | "section";
+    class?: string;
+    [key: string]: any;
+}
+const { title, subtitle, backgroundImgPath, tagName, class: className } = Astro.props;
+
+const Tag = tagName ? tagName : "header";
 ---
 
-<ParentTag class={backgroundImgPath ? "background background-image__parent " : "background"}>
+<Tag
+    class:list={[
+        backgroundImgPath && "background-image__parent",
+        "background",
+        "section__padding--lg",
+        className,
+    ]}
+>
     <div class="wrapper header">
         <div class="title">
             <h1 class="title-font--display">{title}</h1>
@@ -32,9 +48,12 @@ const ParentTag = tag ? tag : "header";
             />
         )
     }
-</ParentTag>
+</Tag>
 
 <style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    // full background
     .background {
         background: var(--clr-brand-secondary);
     }
@@ -50,9 +69,17 @@ const ParentTag = tag ? tag : "header";
     // LAYOUT
     .header {
         color: var(--clr-white);
-        padding-block: 150px;
         display: grid;
         align-items: center;
         gap: var(--spc-med);
+    }
+
+    @include responsive-style(mobile) {
+        .background-image__parent {
+            background: linear-gradient(281deg, rgba(66, 58, 112, 17%) 0%, #695c7c 50%);
+        }
+        .background-image {
+            translate: 20%;
+        }
     }
 </style>

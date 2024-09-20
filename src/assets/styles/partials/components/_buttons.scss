@@ -1,9 +1,13 @@
-// button styles
+// Global button styles
 button {
     cursor: pointer;
     border: none;
     padding: 12px 16px;
     transition: background-color 0.1s ease-in-out;
+
+    .loader {
+        display: none;
+    }
     &:disabled {
         background-color: #dddddd;
         cursor: pointer;
@@ -37,6 +41,8 @@ button {
 
 .button-secondary--white {
     background-color: transparent;
-    border: 1px solid var(--clr-white);
+    border: 3px solid var(--clr-white);
     color: var(--clr-white);
 }
+
+// loading state

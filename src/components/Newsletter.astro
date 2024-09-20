@@ -5,7 +5,7 @@ import bgImage from "@images/newsletter-bg-desktop.webp";
 import Input from "@components/forms/Input.astro";
 ---
 
-<section class="background-image__parent">
+<section class="background-image__parent section__padding">
     <div class="wrapper newsletter">
         <!-- Heading -->
         <div class="newsletter__text">
@@ -70,7 +70,6 @@ import Input from "@components/forms/Input.astro";
         justify-content: space-between;
         align-items: center;
         gap: var(--spc-lg) var(--spc-med);
-        padding: var(--spc-xl) 0;
     }
     // Text
     .newsletter__text {
@@ -105,7 +104,6 @@ import Input from "@components/forms/Input.astro";
     // MEDIA QUERIES
 
     // TABLET
-
 
     @include responsive-style(950px) {
         // Layout Shift
