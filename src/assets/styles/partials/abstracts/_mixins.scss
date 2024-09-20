@@ -2,17 +2,19 @@
 // media query mixin
 @mixin responsive-style($breakpoint) {
     @if $breakpoint == tablet {
-        @media (max-width: 768px) {
+        @media (max-width: #{rem(768)}) {
             @content;
         }
     } @else if $breakpoint == mobile {
-        @media (max-width: 400px) {
+        @media (max-width: #{rem(400)}) {
+            @content;
+        }
+    } @else if math.is-unitless($breakpoint) {
+        @media (max-width: #{rem($breakpoint)}) {
             @content;
         }
     } @else {
-        @media (max-width: $breakpoint) {
-            @content;
-        }
+        @error "responsive-style() only accepts unitless values. Current value: #{$breakpoint}";
     }
 }
 

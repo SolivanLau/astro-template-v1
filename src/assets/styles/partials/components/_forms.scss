@@ -1,7 +1,7 @@
 @use "@styles/partials/abstracts/mixins" as *;
 
 // FORM
-form {
+.form {
     // scoped variable
     --form--padding: #{rem(48)};
     // styles
@@ -14,7 +14,7 @@ form {
     // Layout
     display: grid;
 
-    .inputs * {
+    &__inputs * {
         min-width: 0;
     }
 }
@@ -26,7 +26,7 @@ button[type="submit"] {
 
 // status text
 .status {
-    min-height: 72px;
+    min-height: 105px;
     padding: 16px 12px;
     font-size: var(--font-sz-300);
     font-weight: 700;
@@ -34,7 +34,7 @@ button[type="submit"] {
     // Layout
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--spc-sm);
     // transition
     transition: 0.3s ease-in-out opacity;
     opacity: 0;
@@ -78,19 +78,19 @@ button[type="submit"] {
 
 // MEDIA QUERIES
 
-@include responsive-style(1030px) {
-    form {
+@include responsive-style(1030) {
+    .form {
         --form--padding: var(--spc-lg);
     }
 }
 @include responsive-style(tablet) {
-    form {
+    .form {
         --form--padding: var(--spc-lg) var(--spc-med);
     }
 }
 
 @include responsive-style(mobile) {
-    form {
+    .form {
         --form--padding: var(--spc-med) var(--spc-sm);
     }
 }

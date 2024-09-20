@@ -14,13 +14,12 @@ import Button from "@components/forms/Button.astro";
             <p class="h6">Get updates on concerts, events, and more!</p>
         </div>
         <!-- Form -->
-        <form id="newsletter__form">
-            <div class="title">
+        <form class="form newsletter__form">
+            <div class="newsletter__form__title">
                 <h3 class="h5 body-font">Join Our Mailing List</h3>
                 <Icon name="mail" />
             </div>
-            <!-- Inputs -->
-            <div class="inputs">
+            <div class="form__inputs newsletter__form__inputs">
                 <Input inputType="email" name="Email" id="email" />
                 <Input inputType="text" name="First Name" id="first-name" />
                 <Input inputType="text" name="Last Name" id="last-name" />
@@ -33,7 +32,7 @@ import Button from "@components/forms/Button.astro";
                 </div>
             </div>
 
-            <div class="response">
+            <div class="form__response newsletter__form__response">
                 <Button type="button--primary" htmlType="submit" isLoader>Sign Up</Button>
                 <div class="status">
                     <div class="status__icon">
@@ -71,42 +70,42 @@ import Button from "@components/forms/Button.astro";
         justify-content: space-between;
         align-items: center;
         gap: var(--spc-lg) var(--spc-med);
-    }
-    // Text
-    .newsletter__text {
-        color: var(--clr-white);
-        display: grid;
-        gap: var(--spc-sm);
-        text-wrap: balance;
-    }
-    // Form
-    form {
-        min-width: 350px;
-        width: 40%;
-        gap: 32px;
+        // Text
+        &__text {
+            color: var(--clr-white);
+            display: grid;
+            gap: var(--spc-sm);
+            text-wrap: balance;
+        }
 
-        .title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            [data-icon="mail"] {
-                font-size: 30px;
+        // Form
+        &__form {
+            min-width: 350px;
+            width: 40%;
+            gap: 32px;
+
+            &__title {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                [data-icon="mail"] {
+                    font-size: 30px;
+                }
+            }
+            // inputs & response layout
+            &__inputs,
+            &__response {
+                display: grid;
+                gap: 12px;
             }
         }
-    }
-
-    // inputs & response layout
-    .inputs,
-    .response {
-        display: grid;
-        gap: 12px;
     }
 
     // MEDIA QUERIES
 
     // TABLET
 
-    @include responsive-style(950px) {
+    @include responsive-style(950) {
         // Layout Shift
 
         .background-image__parent {
@@ -117,19 +116,21 @@ import Button from "@components/forms/Button.astro";
             translate: 0;
             object-position: 40% 70%;
         }
+
         .newsletter {
             flex-direction: column;
-        }
-        .newsletter__text {
-            text-align: center;
-        }
 
-        form {
-            min-width: 0;
-            width: 100%;
-            max-width: 550px;
-            .title {
-                justify-content: center;
+            &__text {
+                text-align: center;
+            }
+            &__form {
+                min-width: 0;
+                width: 100%;
+                max-width: 550px;
+
+                &__title {
+                    justify-content: center;
+                }
             }
         }
     }
@@ -142,9 +143,9 @@ import Button from "@components/forms/Button.astro";
     @include responsive-style(mobile) {
         .newsletter {
             gap: var(--spc-med);
-        }
-        form {
-            gap: var(--spc-med);
+            &__form {
+                gap: var(--spc-med);
+            }
         }
 
         h3 {
@@ -156,7 +157,7 @@ import Button from "@components/forms/Button.astro";
 <script>
     declare const turnstile: any;
 
-    const newsletterForms = document.querySelectorAll("#newsletter__form");
+    const newsletterForms = document.querySelectorAll(".newsletter__form");
 
     // Newsletter Submission
     newsletterForms.forEach((form) => {
