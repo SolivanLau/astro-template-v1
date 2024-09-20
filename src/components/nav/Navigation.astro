@@ -35,7 +35,7 @@ const { imageMedia, description } = logo || {};
                     <Link
                         url={ctaButton ? ctaButton.url : "/events"}
                         isLinkExternal={ctaButton ? ctaButton.isLinkExternal : false}
-                        type="button-primary"
+                        type="button--primary"
                     >
                         {ctaButton ? ctaButton.label : "2024/2025 Season"}
                     </Link>
@@ -74,8 +74,8 @@ const { imageMedia, description } = logo || {};
 
     // TABLET
     @include responsive-style(900px) {
-        .cta-button .button-primary {
-            font-size: var(--font-sz-400);
+        .cta-button .button--primary {
+            font-size: var(--font-sz-300);
         }
     }
 

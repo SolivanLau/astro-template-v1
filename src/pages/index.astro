@@ -6,13 +6,13 @@ import InstagramFeed from "@components/InstagramFeed.astro";
 import Link from "@components/Link.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
 import headerBg from "@images/home-bg-desktop.webp";
-// Testing
+import Button from "@components/forms/Button.astro";
 ---
 
 <PageLayout isTurnstile>
     <Header title="This is the Home Page" backgroundImgPath={headerBg} />
     <main>
-        <div class="wrapper">
+        <div class="wrapper flow">
             <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim cupiditate aliquam at
                 consectetur quas facere consequuntur mollitia adipisci commodi ea praesentium nam,
@@ -30,8 +30,13 @@ import headerBg from "@images/home-bg-desktop.webp";
                     <Link url="/about" type="text--light">Connect Page</Link>
                 </li>
             </ul>
-        </div>
 
+            <h2>Buttons</h2>
+
+            <Button type="button--primary" isLoader>Primary</Button>
+            <Button type="button--secondary" isLoader>Secondary</Button>
+            <Button type="button--secondary-white" isLoader>Secondary White</Button>
+        </div>
 
         <EmailForm />
         <InstagramFeed />

@@ -5,33 +5,27 @@ interface Props {
     type?:
         | "text--dark"
         | "text--light"
-        | "button-primary"
-        | "button-secondary"
-        | "button-secondary--white";
+        | "button--primary"
+        | "button--secondary"
+        | "button--secondary-white";
+    class?: string;
+    htmlType?: "submit" | "reset" | "button";
+    isLoader?: boolean;
     [key: string]: any;
 }
 
-const { type, ...rest } = Astro.props;
+const { type, class: className, htmlType, isLoader, ...rest } = Astro.props;
+
+// if type is button, add global button class
+const classTypes = type && type.includes("button") ? `button ${type}` : type;
 ---
 
-<button class:list={[type, "button--loader"]} {...rest}>
+<button
+    class:list={[classTypes, className, isLoader && "button--loader"]}
+    type={htmlType || "button"}
+    {...rest}
+>
     <slot />
-    <Icon name="loader" />
+    {isLoader && <Icon name="loader" class="button__loader" />}
 </button>
 
-<style lang="scss">
-    @use "@styles/partials/abstracts/mixins" as *;
-
-    .button--loader {
-        [data-icon="loader"] {
-            display: none;
-        }
-        &:disabled {
-            cursor: progress;
-
-            [data-icon="loader"] {
-                display: block;
-            }
-        }
-    }
-</style>

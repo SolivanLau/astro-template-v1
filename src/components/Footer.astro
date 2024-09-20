@@ -21,7 +21,7 @@ const { cmsData } = Astro.props;
             </Link>
             <h2 class="sr-only">Toronto Wind Collective</h2>
             <p>A project based ensemble, supporting early musicians and composers.</p>
-            <Link url="/events" type="button-primary">Concerts & Events</Link>
+            <Link url="/events" type="button--primary">Concerts & Events</Link>
         </div>
         <!-- NAVIGATION -->
         <nav class="footer__nav">
@@ -65,17 +65,29 @@ const { cmsData } = Astro.props;
                 <h2 class="sr-only">Socials</h2>
                 <ul class="list">
                     <li>
-                        <Link url="https://www.instagram.com/torontowindcollective/" isLinkExternal>
+                        <Link
+                            url="https://www.instagram.com/torontowindcollective/"
+                            isLinkExternal
+                            type="button--primary"
+                        >
                             <Icon name={"socials/instagram"} title="instagram" />
                         </Link>
                     </li>
                     <li>
-                        <Link url="https://www.youtube.com/@TorontoWindCollective" isLinkExternal>
+                        <Link
+                            url="https://www.youtube.com/@TorontoWindCollective"
+                            isLinkExternal
+                            type="button--primary"
+                        >
                             <Icon name={"socials/youtube"} title="youtube" />
                         </Link>
                     </li>
                     <li>
-                        <Link url="https://www.facebook.com/@TorontoWindCollective" isLinkExternal>
+                        <Link
+                            url="https://www.facebook.com/@TorontoWindCollective"
+                            isLinkExternal
+                            type="button--primary"
+                        >
                             <Icon name={"socials/facebook"} title="facebook" />
                         </Link>
                     </li>
@@ -96,14 +108,10 @@ const { cmsData } = Astro.props;
     // Typographic Styles
     h2,
     h3 {
-        // background-color: var(--clr-brand-primary);
         font-family: var(--font-fm-body);
         font-size: var(--font-sz-400);
         width: fit-content;
         position: relative;
-        // font-weight: 400;
-        // color: var(--clr-brand-primary);
-        // padding: var(--spc-xs) var(--spc-sm);
 
         &::after {
             content: "";
@@ -182,15 +190,16 @@ const { cmsData } = Astro.props;
             gap: var(--spc-xs);
 
             li {
-                background-color: var(--clr-brand-primary);
-                display: grid;
-                place-items: center;
-                width: 40px;
-                height: 40px;
             }
             a {
+                background-color: var(--clr-brand-primary);
                 vertical-align: top;
                 font-size: 0;
+                width: 40px;
+                height: 40px;
+                display: grid;
+                place-items: center;
+                padding: 0;
             }
             [data-icon] {
                 font-size: 30px;

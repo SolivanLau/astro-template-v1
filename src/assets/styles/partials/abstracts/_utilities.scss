@@ -102,9 +102,9 @@
     --padding--min: var(--spc-lg);
     --padding--max: var(--spc-xl);
     --padding--preferred: 3.636vw + 1.091rem;
-    
+
     // growth for current min and max vals range: 400px and 1280px
-    // padding-block-start: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
+    padding-block: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
 
     // &:not(.section__padding:has(~ .section__padding)) {
     //     padding-block-end: clamp(

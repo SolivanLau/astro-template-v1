@@ -1,3 +1,4 @@
+@use "sass:math";
 // media query mixin
 @mixin responsive-style($breakpoint) {
     @if $breakpoint == tablet {
@@ -15,9 +16,13 @@
     }
 }
 
-@mixin box-shadow($shadow) {
-    -webkit-box-shadow: $shadow;
-    -moz-box-shadow: $shadow;
-    box-shadow: $shadow;
-}
+// SCSS Function to convert a px to rem
+// example: font-size: rem(16px) -> 1rem
+// example: --variable: #{rem(16)} -> 1rem
 
+@function rem($pixel) {
+    @if math.is-unitless($pixel) {
+        @return math.div($pixel, 16) + rem;
+    }
+    @error "rem() only accepts unitless values. Value: #{$pixel}";
+}

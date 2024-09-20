@@ -3,6 +3,7 @@ import { Picture } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import bgImage from "@images/newsletter-bg-desktop.webp";
 import Input from "@components/forms/Input.astro";
+import Button from "@components/forms/Button.astro";
 ---
 
 <section class="background-image__parent section__padding">
@@ -33,7 +34,7 @@ import Input from "@components/forms/Input.astro";
             </div>
 
             <div class="response">
-                <button class="button-primary" type="submit">Sign Up</button>
+                <Button type="button--primary" htmlType="submit" isLoader>Sign Up</Button>
                 <div class="status">
                     <div class="status__icon">
                         <Icon name="success" />

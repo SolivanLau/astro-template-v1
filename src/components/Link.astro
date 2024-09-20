@@ -6,14 +6,16 @@ interface Props {
     type?:
         | "text--dark"
         | "text--light"
-        | "button-primary"
-        | "button-secondary"
-        | "button-secondary--white";
+        | "button--primary"
+        | "button--secondary"
+        | "button--secondary-white";
 }
 
 const { url, isLinkExternal, type, class: className, ...rest } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
+// if type is button, add global button class
+const classTypes = type && type.includes("button") ? `button ${type}` : type;
 ---
 
 <a
@@ -22,7 +24,7 @@ const currentUrl = Astro.url.pathname;
     rel={isLinkExternal ? "noopener noreferrer" : null}
     aria-current={currentUrl === url ? "page" : null}
     {...rest}
-    class:list={[type, className]}
+    class:list={[classTypes, className]}
 >
     <slot />
 </a>

@@ -3,13 +3,13 @@
 // FORM
 form {
     // scoped variable
-    --form--padding: 48px;
+    --form--padding: #{rem(48)};
     // styles
     padding: var(--form--padding);
     background-color: var(--clr-white);
 
     // box-shadow
-    @include box-shadow(5px 4px 3.3px 0px rgba(0, 0, 0, 0.25));
+    box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
 
     // Layout
     display: grid;
