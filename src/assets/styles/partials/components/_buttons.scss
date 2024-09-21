@@ -1,6 +1,8 @@
 @use "@styles/partials/abstracts/mixins" as *;
 // Global button styles
-
+button {
+    border: none;
+}
 .button {
     // Default Button Styles
     --_padding: #{rem(8)} #{rem(16)};

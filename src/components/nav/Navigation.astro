@@ -10,7 +10,7 @@ const { logo, menu, ctaButton } = Astro.props.cmsData?.attributes || {};
 const { imageMedia, description } = logo || {};
 ---
 
-<nav class="main-navigation" role="navigation">
+<nav class="navigation__main" role="navigation">
     <div class="wrapper">
         <!-- LOGO -->
         <Link url="/">
@@ -49,7 +49,7 @@ const { imageMedia, description } = logo || {};
     @use "@styles/partials/abstracts/mixins" as *;
 
     // nav styles
-    .main-navigation {
+    .navigation__main {
         background-color: var(--clr-black);
         color: var(--clr-white);
         position: relative;
@@ -81,7 +81,7 @@ const { imageMedia, description } = logo || {};
 
     @include responsive-style(tablet) {
         // Fixed Top Navigation
-        .main-navigation {
+        .navigation__main {
             position: fixed;
             width: 100%;
             top: 0px;
@@ -147,7 +147,7 @@ const { imageMedia, description } = logo || {};
 </style>
 
 <script>
-    const nav = document.querySelector(".main-navigation");
+    const nav = document.querySelector(".navigation__main");
     const mobileMenuButton = document.querySelector(".mobile-menu-button");
 
     mobileMenuButton.addEventListener("click", () => {

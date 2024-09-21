@@ -2,36 +2,73 @@
 interface Props {
     topper?: string;
     tagName: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    type?: "title--primary" | "title--secondary";
+    class?: string;
+    [key: string]: any;
 }
 
-const { topper, tagName } = Astro.props;
+const { topper, tagName, type, class: className, ...rest } = Astro.props;
 
 const Tag = tagName || "h2";
 ---
 
-<div>
-    {topper && <span class="topper">{topper}</span>}
-    <Tag class="title">
+<div class:list={["title", type || "title--primary", className]} {...rest}>
+    {topper && type !== "title--secondary" && <span class="title__topper">{topper}</span>}
+    <Tag class="title__text">
         <slot />
     </Tag>
+    {topper && type == "title--secondary" && <span class="title__topper">{topper}</span>}
 </div>
 
 <style lang="scss">
-    div {
+    .title {
+        --_title-font-sz: clamp(var(--font-sz-700), 1.95vw + 1.551rem, var(--font-sz-900));
+        --_title-font: var(--font-fm-title);
+        --_topper-font-sz: clamp(var(--font-sz-300), 0.513vw + 0.84rem, var(--font-sz-400));
+        --_topper-font: var(--font-fm-body);
+
+        // Applied to container in order for .flow utility to work similarly
         display: grid;
         font-weight: 700;
-        margin-bottom: 0.6em;
-    }
+        font-size: var(--_title-font-sz);
 
-    .topper {
-        --fluid-font-sz: clamp(var(--font-sz-300), 0.513vw + 0.84rem, var(--font-sz-400));
-        color: var(--clr-brand-primary);
-        font-size: var(--fluid-font-sz);
-        text-transform: uppercase;
-    }
-    .title {
-        --fluid-font-sz: clamp(var(--font-sz-700), 1.95vw + 1.551rem, var(--font-sz-900));
-        font-size: var(--fluid-font-sz);
-        margin-top: -6px;
+        // Title text
+        &__text {
+            font-size: var(--_title-font-sz);
+        }
+
+        // Topper or subtitle
+        &__topper {
+            font-size: var(--_topper-font-sz);
+        }
+
+        // MODIFIERS
+        &--primary {
+            --_title-font-sz: clamp(var(--font-sz-700), 1.95vw + 1.551rem, var(--font-sz-900));
+            --_topper-font-sz: clamp(var(--font-sz-300), 0.513vw + 0.84rem, var(--font-sz-400));
+
+            .title__text {
+                margin-block-start: -6px;
+            }
+            .title__topper {
+                text-transform: uppercase;
+                color: var(--clr-brand-primary);
+            }
+        }
+
+        &--secondary {
+            --_title-font-sz: clamp(var(--font-sz-500), 1.2vw + 1.2rem, var(--font-sz-700));
+            --_topper-font-sz: clamp(var(--font-sz-300), 0.513vw + 0.84rem, var(--font-sz-400));
+
+            .title__text {
+                color: var(--clr-brand-primary);
+            }
+
+            .title__topper {
+                margin-block-start: -4px;
+                padding-block-end: 4px;
+                border-bottom: 1px solid rgba(26, 26, 26, 0.32);
+            }
+        }
     }
 </style>

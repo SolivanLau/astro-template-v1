@@ -1,11 +1,17 @@
 ---
 import type { GetStaticPaths } from "astro";
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
+import { Icon } from "astro-icon/components";
+import Link from "@components/Link.astro";
+import { Image } from "astro:assets";
 import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import Title from "@components/Title.astro";
-import { Icon } from "astro-icon/components";
-import Link from "@components/Link.astro";
+import Newsletter from "@components/Newsletter.astro";
+
+// TESTING IMAGES
+import poster from "@images/poster-mosaic.png";
+import headshot from "@images/shameran-khamo-headshot.jpg";
 
 export const getStaticPaths = (async () => {
     const queryParameters = {
@@ -36,60 +42,68 @@ export const getStaticPaths = (async () => {
 const { title, details, about, performanceMedia, seo } = Astro.props;
 ---
 
-<PageLayout seo={seo}>
-    <main>
+<PageLayout seo={seo} isTurnstile>
+    <main class="event">
         <Header title={title} />
         <!-- EVENT INFO -->
-        <section class="event__info">
-            <div class="wrapper">
+        <section>
+            <div class="event__info wrapper">
+                <!-- POSTER -->
+                <figure class="event__info__poster">
+                    <Image
+                        src={poster}
+                        alt="Toronto Wind Collective Mosaic Poster"
+                        widths={[1200, 512]}
+                    />
+                </figure>
                 <!-- DETAILS -->
                 <article class="event__info__text">
-                    <section class="event__info__text__details section__padding">
+                    <!-- DATE AND TIME -->
+                    <div class="event__info__text__details">
                         <h2 class="sr-only">Event Details</h2>
                         <ul class="details">
-                            <li class="detail detail__date">
+                            <li class="details__item">
                                 <Icon name="calendar" />
-                                <p>November 15, 2023</p>
+                                <time>November 15, 2023</time>
                             </li>
-                            <li class="detail detail__time">
+                            <li class="details__item">
                                 <Icon name="clock" />
-                                <p>8:00pm - 9:30pm</p>
+                                <span>
+                                    <time>8:00pm </time>
+                                    &nbsp;-&nbsp;
+                                    <time datetime="">9:30pm</time>
+                                </span>
                             </li>
-                            <li class="detail detail__location">
+                            <li class="details__item">
                                 <Icon name="location" />
-                                <p>Heliconian Club, 35 Hazelton Ave.</p>
+                                <address>Heliconian Club, 35 Hazelton Ave.</address>
                             </li>
                         </ul>
-                        <Link url="/" type="button-secondary--white" class="detail__cta">
-                            Learn More
-                        </Link>
-                    </section>
-
-                    <section class="event__info__text__about section__padding">
+                        <Link url="/" type="button--secondary-white" class="cta"> Learn More </Link>
+                    </div>
+                    <!-- ABOUT -->
+                    <div class="event__info__text__about flow">
                         <Title tagName="h2">About</Title>
                         <!-- TEXT TO BE REPLACED BY CMS -->
-                        <div class="flow">
-                            <p>
-                                The Toronto Wind Collective presents their newest commission,
-                                “Mosaic” by Shameran Khamo (She/Her). This unique event brings
-                                together the diverse musical voices of Toronto, weaving them into a
-                                rich tapestry of sound that reflects the city's multicultural
-                                spirit.
-                            </p>
-                            <p>
-                                “Mosaic” is a musical composition that unites Middle Eastern and
-                                Filipino musical influences, representing the fusion of cultural
-                                heritage and symbolizing the prominence and fusion of heritage as
-                                one navigates the inner journey of self-discovery.
-                            </p>
-                            <p>
-                                In addition to the premiering this piece we'll be doing concert talk
-                                with the composer at Heliconian Club.
-                            </p>
-                        </div>
-                        <button class="button">Hello</button>
-                    </section>
-                    <section class="event__info__text__program section__padding">
+                        <p>
+                            The Toronto Wind Collective presents their newest commission, “Mosaic”
+                            by Shameran Khamo (She/Her). This unique event brings together the
+                            diverse musical voices of Toronto, weaving them into a rich tapestry of
+                            sound that reflects the city's multicultural spirit.
+                        </p>
+                        <p>
+                            “Mosaic” is a musical composition that unites Middle Eastern and
+                            Filipino musical influences, representing the fusion of cultural
+                            heritage and symbolizing the prominence and fusion of heritage as one
+                            navigates the inner journey of self-discovery.
+                        </p>
+                        <p>
+                            In addition to the premiering this piece we'll be doing concert talk
+                            with the composer at Heliconian Club.
+                        </p>
+                    </div>
+                    <!-- PROGRAM -->
+                    <div class="event__info__text__program flow">
                         <Title tagName="h2">Program</Title>
                         <!-- PROGRAM TO BE REPLACED BY CMS -->
                         <ul class="program flow">
@@ -106,65 +120,284 @@ const { title, details, about, performanceMedia, seo } = Astro.props;
                                 <span>Katahj Copley</span>
                             </li>
                         </ul>
-                    </section>
-                    <!-- POSTER -->
-                    <section class="event__info__poster"></section>
+                    </div>
                 </article>
-
-                <!-- Watch and Listen -->
-                <section class="event__videos"></section>
-
-                <!-- FEATURED GUESTS -->
-                <section class="event__featured"></section>
             </div>
         </section>
+
+        <!-- Watch and Listen -->
+        <section class="event__videos"></section>
+
+        <!-- FEATURED GUESTS -->
+        <section class="event__featured section__padding">
+            <div class="wrapper">
+                <Title tagName="h2" topper="Mosaic">Featured Guests</Title>
+            </div>
+            <!-- GUEST 1 -->
+            <article class="event__featured__guest wrapper">
+                <!-- IMAGE TO BE REPLACED BY CMS -->
+                <Image
+                    src={headshot}
+                    width={400}
+                    height={400}
+                    alt="Shameran Khamo: Composer - Mosaic"
+                    class="event__featured__guest__img"
+                />
+
+                <!-- TEXT TO BE REPLACED BY CMS -->
+                <div class="flow">
+                    <Title tagName="h3" topper="Composer - Mosaic" type="title--secondary">
+                        Shameran Khamo
+                    </Title>
+                    <p>
+                        Shameran Khamo is a composer and musician. Khamo compositions has recently
+                        been selected for Continuum's annual summer music mentorship project.
+                    </p>
+                    <p>
+                        “Mosaic” is a musical composition that unites Middle Eastern and Filipino
+                        musical influences, representing the fusion of cultural heritage and
+                        symbolizing the prominence and fusion of heritage as one navigates the inner
+                        journey of self-discovery. It underscores the limitations of societal
+                        labels, the pressure to assimilate, and the need to break free from
+                        arbitrary standards. The composition advocates for celebrating complex
+                        individuality in a world shaped by classification and colonization,
+                        envisioning a harmonious norm where acknowledging our multifaceted
+                        identities prevails.
+                    </p>
+                </div>
+            </article>
+            <!-- GUEST 2 -->
+            <article class="event__featured__guest wrapper">
+                <!-- IMAGE TO BE REPLACED BY CMS -->
+                <Image
+                    src={headshot}
+                    width={400}
+                    height={400}
+                    alt="Shameran Khamo: Composer - Mosaic"
+                    class="event__featured__guest__img"
+                />
+
+                <!-- TEXT TO BE REPLACED BY CMS -->
+                <div class="flow">
+                    <Title tagName="h3" topper="Composer - Mosaic" type="title--secondary">
+                        Shameran Khamo
+                    </Title>
+                    <p>
+                        Shameran Khamo is a composer and musician. Khamo compositions has recently
+                        been selected for Continuum's annual summer music mentorship project.
+                    </p>
+                    <p>
+                        “Mosaic” is a musical composition that unites Middle Eastern and Filipino
+                        musical influences, representing the fusion of cultural heritage and
+                        symbolizing the prominence and fusion of heritage as one navigates the inner
+                        journey of self-discovery. It underscores the limitations of societal
+                        labels, the pressure to assimilate, and the need to break free from
+                        arbitrary standards. The composition advocates for celebrating complex
+                        individuality in a world shaped by classification and colonization,
+                        envisioning a harmonious norm where acknowledging our multifaceted
+                        identities prevails.
+                    </p>
+                </div>
+            </article>
+            <!-- GUEST 3 -->
+            <article class="event__featured__guest wrapper">
+                <!-- IMAGE TO BE REPLACED BY CMS -->
+                <Image
+                    src={headshot}
+                    width={400}
+                    height={400}
+                    alt="Shameran Khamo: Composer - Mosaic"
+                    class="event__featured__guest__img"
+                />
+
+                <!-- TEXT TO BE REPLACED BY CMS -->
+                <div class="flow">
+                    <Title tagName="h3" topper="Composer - Mosaic" type="title--secondary">
+                        Shameran Khamo
+                    </Title>
+                    <p>
+                        Shameran Khamo is a composer and musician. Khamo compositions has recently
+                        been selected for Continuum's annual summer music mentorship project.
+                    </p>
+                    <p>
+                        “Mosaic” is a musical composition that unites Middle Eastern and Filipino
+                        musical influences, representing the fusion of cultural heritage and
+                        symbolizing the prominence and fusion of heritage as one navigates the inner
+                        journey of self-discovery. It underscores the limitations of societal
+                        labels, the pressure to assimilate, and the need to break free from
+                        arbitrary standards. The composition advocates for celebrating complex
+                        individuality in a world shaped by classification and colonization,
+                        envisioning a harmonious norm where acknowledging our multifaceted
+                        identities prevails.
+                    </p>
+                </div>
+            </article>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <Newsletter />
     </main>
 </PageLayout>
 
 <style lang="scss">
     @use "@styles/partials/abstracts/mixins" as *;
 
-    // EVENT INFO
+    // EVENT INFO: Poster and Text
 
-    // Details
-    .event__info__text__details {
-        background-color: var(--clr-brand-primary);
-        color: var(--clr-white);
-        padding: 20px;
+    .event__info {
         display: grid;
-        gap: var(--spc-xs);
-        grid-template-columns: repeat(2, auto);
+        grid-template-columns: minmax(400px, 60%) minmax(300px, 550px);
+        gap: var(--spc-med);
+        margin-block-start: clamp(-4rem, -5.909vw + 0.727rem, -0.75rem);
+        padding-block-end: var(--spc-xl);
 
-        .details {
+        &__poster {
+            grid-area: 1 / 2;
             display: grid;
-            gap: var(--spc-xs);
-        }
-
-        .detail {
-            display: flex;
-            align-items: center;
-            gap: var(--spc-xs);
-            &__cta {
-                align-self: end;
-                justify-self: end;
-                font-size: var(--font-sz-400);
+            > img {
+                object-fit: contain;
+                object-position: top;
+                width: 100%;
+                height: fit-content;
+                position: sticky;
+                top: var(--spc-med);
             }
         }
 
-        a {
-        }
-        [data-icon] {
-            font-size: 20px;
+        &__text {
+            grid-area: 1 / 1;
+            display: grid;
+            gap: var(--spc-lg);
+
+            // TEXT
+            &__details {
+                background-color: var(--clr-brand-primary);
+                color: var(--clr-white);
+                padding: 20px;
+                display: grid;
+                gap: var(--spc-sm);
+                grid-template-columns: repeat(2, auto);
+
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                .details {
+                    display: grid;
+                    gap: var(--spc-xs);
+                    flex: 6 1 300px;
+                    &__item {
+                        display: flex;
+                        align-items: center;
+                        gap: var(--spc-xs);
+                    }
+                }
+
+                .cta {
+                    flex: 1 180px;
+                    align-self: end;
+                    font-size: var(--font-sz-400);
+                }
+
+                a {
+                }
+                [data-icon] {
+                    font-size: 20px;
+                }
+            }
+
+            // Program
+            &__program {
+                max-width: 500px;
+
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
         }
     }
 
-    // Program
-    .program {
-        max-width: 500px;
+    @include responsive-style(tablet) {
+        .event__info {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            gap: var(--spc-lg);
 
-        li {
-            display: flex;
-            justify-content: space-between;
+            &__poster {
+                aspect-ratio: unset;
+                grid-area: 1 / 1;
+                width: 100%;
+                max-width: 400px;
+                justify-self: center;
+
+                img {
+                }
+            }
+
+            &__text {
+                grid-area: 2 / 1;
+            }
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .event__info {
+            &__poster {
+                max-width: 300px;
+            }
+
+            &__text {
+                gap: var(--spc-med);
+            }
+        }
+    }
+
+    // FEATURED GUESTS
+    .event__featured {
+        background-color: var(--clr-beige);
+        display: grid;
+        gap: var(--spc-lg);
+
+        &__guest {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--spc-lg);
+
+            // even child gets different layout (excludes first child aka title)
+            &:nth-child(2n + 3) {
+                grid-template-columns: 2fr 1fr;
+
+                .event__featured__guest__img {
+                    grid-area: 1 / 2;
+                }
+            }
+
+            &__img {
+                aspect-ratio: 1 / 1;
+                width: 100%;
+                min-width: 300px;
+                max-width: 400px;
+                height: fit-content;
+                object-position: top center;
+            }
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .event__featured {
+            &__guest,
+            &__guest:nth-child(2n + 3) {
+                grid-template-columns: 1fr;
+
+                .event__featured__guest__img {
+                    grid-area: 1 / 1;
+                    position: static;
+                    width: 100%;
+                    max-width: none;
+                    aspect-ratio: 16/9;
+                }
+            }
         }
     }
 </style>
