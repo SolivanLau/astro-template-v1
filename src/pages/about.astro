@@ -7,6 +7,7 @@ import cmsFetch from "@assets/scripts/cms/cmsFetch";
 import BlockRenderer from "@components/BlockRenderer.astro";
 // Assets
 import headerBg from "@images/home-bg-desktop.webp";
+import Banner from "@components/Banner.astro";
 
 // CMS Query
 const querParameters = {
@@ -63,9 +64,9 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
     />
     <main>
         <!-- MISSION SECTION -->
-        <section class="mission">
+        <section class="mission section__padding">
             <div class="wrapper">
-                <article class="mission__text">
+                <article class="flow">
                     <Title tagName="h2" topper={missionStatement.title.subtitle || "Our Mission"}>
                         {missionStatement.title.title || "Championing Local Musicians & Composers"}
                     </Title>
@@ -78,20 +79,25 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
         </section>
 
         <!-- SERVICES -->
-        <section class="services">
+        <section class="services section__padding">
             <div class="wrapper">
-                <Title tagName="h2" topper={services.title.subtitle || "What We Do"}
-                    >{services.title.title || "Our Services"}</Title
-                >
+                <article class="flow">
+                    <Title tagName="h2" topper={services.title.subtitle || "What We Do"}
+                        >{services.title.title || "Our Services"}</Title
+                    >
 
-                <BlockRenderer html={services.text}>
-                    <p>
-                        The collective works with early career musicians to write, workshop, record,
-                        and premeire wind compositions!
-                    </p>
-                </BlockRenderer>
+                    <BlockRenderer html={services.text}>
+                        <p>
+                            The collective works with early career musicians to write, workshop,
+                            record, and premeire wind compositions!
+                        </p>
+                    </BlockRenderer>
+                </article>
             </div>
         </section>
+
+        <!-- CTA BANNER -->
+        <Banner> testing </Banner>
     </main>
 </PageLayout>
 
