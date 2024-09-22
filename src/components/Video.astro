@@ -1,0 +1,129 @@
+---
+import { Icon } from "astro-icon/components";
+import Link from "./Link.astro";
+
+interface Props {
+    cmsData?: any;
+}
+
+// TO DO:
+// extract regular video url to fit api embed
+// CMS data integration for video title, description, cta
+const { cmsData } = Astro.props;
+---
+
+<div class="video">
+    <h2>Watch & Listen</h2>
+
+    <div class="video__embed">
+        <!-- TO DO: extract regular video url to fit api embed -->
+        <iframe
+            width="1000"
+            height="563"
+            src="https://www.youtube.com/embed/LLK78htrbOQ?si=NjXDnntgIKEoZKEC"
+            title="YouTube video player"
+            allow="encrypted-media; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            loading="lazy"
+            allowfullscreen></iframe>
+    </div>
+
+    <div class="flow">
+        <h3>Ephemeral Bliss</h3>
+        <p>Commissioned and premiered on May 24th 2023</p>
+    </div>
+
+    <div class="video__cta">
+        <ul class="video__socials">
+            <li>
+                <Link
+                    url="https://www.instagram.com/torontowindcollective/"
+                    type="text--dark"
+                    isLinkExternal
+                >
+                    <Icon name="socials/instagram" />
+                    <p>instagram/torontowindcollective</p>
+                </Link>
+            </li>
+            <li>
+                <Link
+                    url="https://www.youtube.com/@torontowindcollective"
+                    type="text--dark"
+                    isLinkExternal
+                >
+                    <Icon name="socials/youtube" />
+                    <p>youtube.com/@TorontoWindCollective</p>
+                </Link>
+            </li>
+        </ul>
+        <Link url="/events" type="button--secondary-white" class="cta">
+            See More Concerts & Events
+        </Link>
+    </div>
+</div>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    .video {
+        color: var(--clr-white);
+        text-align: center;
+
+        &__embed {
+            iframe {
+                aspect-ratio: 16 / 9;
+                height: fit-content;
+                width: 100%;
+                max-width: 1000px;
+            }
+            margin-block: var(--spc-lg);
+        }
+        &__cta {
+            margin-block: var(--spc-lg);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--spc-med);
+
+            .cta {
+                align-self: flex-end;
+                flex: 1 300px;
+            }
+        }
+
+        &__socials {
+            flex: 6 2;
+            display: grid;
+            gap: var(--spc-xs);
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: var(--spc-xs);
+                font-weight: 700;
+            }
+
+            [data-icon] {
+                font-size: 30px;
+            }
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .video__cta {
+            .cta {
+                font-size: var(--font-sz-400);
+            }
+        }
+
+        .video__socials {
+            justify-content: center;
+            a {
+                gap: 4px;
+            }
+            p {
+                font-size: var(--font-sz-200);
+            }
+        }
+    }
+</style>

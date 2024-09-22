@@ -7,7 +7,9 @@ import { Image } from "astro:assets";
 import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import Title from "@components/Title.astro";
+import Video from "@components/Video.astro";
 import Newsletter from "@components/Newsletter.astro";
+import DividerLayout from "@layouts/DividerLayout.astro";
 
 // TESTING IMAGES
 import poster from "@images/poster-mosaic.png";
@@ -40,6 +42,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { title, details, about, performanceMedia, seo } = Astro.props;
+// TO DO:
+// CMS DATA for  details, about, performanceMedia
 ---
 
 <PageLayout seo={seo} isTurnstile>
@@ -126,7 +130,14 @@ const { title, details, about, performanceMedia, seo } = Astro.props;
         </section>
 
         <!-- Watch and Listen -->
-        <section class="event__videos"></section>
+        <DividerLayout
+            dividerTopFileName="dividers/tear-top"
+            dividerBottomFileName="dividers/tear-bottom"
+            bgColorBottom="beige"
+            color="brand-primary"
+        >
+            <Video />
+        </DividerLayout>
 
         <!-- FEATURED GUESTS -->
         <section class="event__featured section__padding">

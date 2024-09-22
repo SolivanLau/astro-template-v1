@@ -26,14 +26,17 @@ interface Props {
     textarea?: boolean;
     id: string;
     name: string;
+    class?: string;
     [key: string]: any;
 }
 
-const { inputType, textarea, id, name, ...rest } = Astro.props as Props;
+const { inputType, textarea, class: className, id, name, ...rest } = Astro.props as Props;
 ---
 
-<div class="form-input">
-    <label class={textarea && "textarea"} for={id}>{name}</label>
+<div class:list={[className, "form-input"]} {...rest}>
+    <label class:list={["form-input__label", textarea && "form-input__label--textarea"]} for={id}
+        >{name}</label
+    >
     {
         textarea ? (
             <textarea name={id} id={id} {...rest} />
@@ -44,6 +47,7 @@ const { inputType, textarea, id, name, ...rest } = Astro.props as Props;
 </div>
 
 <style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
     .form-input {
         position: relative;
         min-width: 0;
@@ -54,7 +58,7 @@ const { inputType, textarea, id, name, ...rest } = Astro.props as Props;
         cursor: text;
     }
 
-    label {
+    .form-input__label {
         min-width: 0;
         position: absolute;
         top: 50%;
@@ -63,7 +67,7 @@ const { inputType, textarea, id, name, ...rest } = Astro.props as Props;
         font-weight: 700;
         transition: all 0.2s ease-in-out;
 
-        &.textarea {
+        &--textarea {
             top: 20px;
         }
     }
@@ -87,8 +91,14 @@ const { inputType, textarea, id, name, ...rest } = Astro.props as Props;
         top: 22%;
         font-size: 16px;
 
-        &.textarea {
+        &.form-input__label--textarea {
             top: 10px;
+        }
+    }
+
+    @include responsive-style(mobile) {
+        textarea {
+            min-height: 150px;
         }
     }
 </style>

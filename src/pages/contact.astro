@@ -14,7 +14,7 @@ import { Image } from "astro:assets";
     <Header title="Contact Us" backgroundImgPath={tempBg} />
     <main>
         <section>
-            <div class="wrapper">
+            <div class="wrapper section__padding">
                 <Title tagName="h2" topper="Get in Touch"> Let's Work Together </Title>
                 <div class="contact">
                     <!-- TEXT -->
@@ -25,8 +25,9 @@ import { Image } from "astro:assets";
                             alt="Toronto Wind Collective"
                             height={200}
                             widths={[1200, 600]}
+                            loading="eager"
                         />
-                        <div class="text">
+                        <div class="flow">
                             <p>
                                 The The Toronto Wind Collective is looking to spotlight Canadian
                                 Talent:
@@ -44,34 +45,34 @@ import { Image } from "astro:assets";
                             </p>
                         </div>
 
-                        <ul class="socials">
+                        <ul class="contact__socials">
                             <li>
-                                <Link url="mailto:torontowindcollective@gmail.com" isLinkExternal>
-                                    <div class="social">
-                                        <div class="icon-container">
-                                            <Icon name="socials/email" />
-                                        </div>
-                                        <h3 class="body-font">
-                                            Email <span> torontowindcollective@gmail.com</span>
-                                        </h3>
+                                <Link
+                                    url="mailto:torontowindcollective@gmail.com"
+                                    isLinkExternal
+                                    class="contact__socials__item"
+                                >
+                                    <div class="icon-container">
+                                        <Icon name="socials/email" />
                                     </div>
+                                    <h3 class="body-font">
+                                        Email <span> torontowindcollective@gmail.com</span>
+                                    </h3>
                                 </Link>
                             </li>
                             <li>
                                 <Link
                                     url="https://www.instagram.com/torontowindcollective/"
                                     isLinkExternal
+                                    class="contact__socials__item"
                                 >
-                                    <div class="social">
-                                        <div class="icon-container">
-                                            <Icon name="socials/instagram" />
-                                        </div>
-                                        <h3 class="h6 body-font">
-                                            Instagram <span>
-                                                instagram.com/torontowindcollective</span
-                                            >
-                                        </h3>
+                                    <div class="icon-container">
+                                        <Icon name="socials/instagram" />
                                     </div>
+                                    <h3 class="h6 body-font">
+                                        Instagram
+                                        <span> instagram.com/torontowindcollective</span>
+                                    </h3>
                                 </Link>
                             </li>
                         </ul>
@@ -89,60 +90,56 @@ import { Image } from "astro:assets";
 
 <style lang="scss">
     @use "@styles/partials/abstracts/mixins" as *;
-    .wrapper {
-        display: grid;
-        gap: var(--spc-lg);
-        padding-block: var(--spc-xl);
-    }
     .contact {
         display: flex;
         gap: var(--spc-med) var(--spc-lg);
         justify-content: space-between;
-    }
-
-    .contact__form,
-    .contact__text {
-        width: 50%;
-    }
-
-    .contact__text {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spc-med);
-    }
-    .socials {
-        display: grid;
-        gap: var(--spc-med);
-        .social {
+        &__form,
+        &__text {
+            width: 50%;
+        }
+        &__text {
             display: flex;
-            gap: var(--spc-xs);
-            align-items: center;
+            flex-direction: column;
+            gap: var(--spc-med);
         }
 
-        .icon-container {
-            --icon-size: 30px;
+        &__socials {
             display: grid;
-            place-items: center;
-            width: calc(var(--icon-size) + 15px);
-            height: calc(var(--icon-size) + 15px);
-            border: 2px solid var(--clr-brand-primary);
+            gap: var(--spc-med);
+            padding-block-start: var(--spc-lg);
 
-            [data-icon] {
-                font-size: var(--icon-size);
-                color: var(--clr-brand-primary);
+            &__item {
+                display: flex;
+                gap: var(--spc-xs);
+                align-items: center;
             }
-        }
-        h3 {
-            font-size: var(--font-sz-400);
-            width: fit-content;
-            color: var(--clr-black);
-        }
 
-        span {
-            display: block;
-            font-size: var(--font-sz-300);
-            font-weight: 400;
-            color: #767676;
+            .icon-container {
+                --icon-size: 30px;
+                display: grid;
+                place-items: center;
+                width: calc(var(--icon-size) + 15px);
+                height: calc(var(--icon-size) + 15px);
+                border: 2px solid var(--clr-brand-primary);
+
+                [data-icon] {
+                    font-size: var(--icon-size);
+                    color: var(--clr-brand-primary);
+                }
+            }
+            h3 {
+                font-size: var(--font-sz-400);
+                width: fit-content;
+                color: var(--clr-black);
+            }
+
+            span {
+                display: block;
+                font-size: var(--font-sz-300);
+                font-weight: 400;
+                color: #767676;
+            }
         }
     }
     // MEDIA QUERIES
@@ -151,35 +148,34 @@ import { Image } from "astro:assets";
         .contact {
             flex-direction: column;
             align-items: center;
-        }
-
-        .contact__form,
-        .contact__text {
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .contact__text {
-            img {
+            &__form,
+            &__text {
                 width: 100%;
-                aspect-ratio: 21/9;
-                height: auto;
+                max-width: 1000px;
             }
 
-            .text {
-                max-width: 700px;
+            &__text {
+                img {
+                    width: 100%;
+                    aspect-ratio: 21/9;
+                    height: auto;
+                }
+
+                .text {
+                    max-width: 700px;
+                }
             }
         }
     }
 
     @include responsive-style(tablet) {
-        .socials {
+        .contact__socials {
             justify-content: center;
         }
     }
 
     @include responsive-style(mobile) {
-        .socials {
+        .contact__socials {
             h3 {
                 font-size: var(--font-sz-300);
             }

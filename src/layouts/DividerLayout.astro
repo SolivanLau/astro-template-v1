@@ -1,41 +1,105 @@
 ---
 import { Icon } from "astro-icon/components";
+
 interface Props {
     dividerTopFileName: string;
     dividerBottomFileName: string;
-    dividerColor?: string;
-    color: string;
+    bgColorTop?: string;
+    bgColorBottom?: string;
+    color: "brand-primary" | "brand-secondary" | "beige";
+    class?: string;
+    [key: string]: any;
 }
 
-const { dividerTopFileName, dividerBottomFileName, dividerColor, color } = Astro.props as Props;
+const {
+    dividerTopFileName,
+    dividerBottomFileName,
+    color,
+    bgColorTop,
+    bgColorBottom,
+    class: className,
+    ...rest
+} = Astro.props as Props;
 ---
 
-<section>
-    <Icon name={dividerTopFileName} />
-    <div class="content">
+<section class:list={["divider", color && `divider--${color}`, className]} {...rest}>
+    <Icon
+        name={dividerTopFileName}
+        class={`divider__icon divider__icon-top divider__icon-top--${bgColorTop}`}
+    />
+    <div class="divider__content">
         <div class="wrapper">
             <slot />
         </div>
     </div>
-    <Icon name={dividerBottomFileName} />
+    <Icon
+        name={dividerBottomFileName}
+        class={`divider__icon divider__icon-bottom divider__icon-bottom--${bgColorBottom}`}
+    />
 </section>
 
-<style define:vars={{ dividerColor, color }}>
-    section {
+<style lang="scss">
+    .divider {
+        --_divider-color: var(--clr-brand-primary);
+        --_bg-color-top: transparent;
+        --_bg-color-bottom: transparent;
+
         display: flex;
         flex-direction: column;
-    }
+        // SVG DIVIDERS
+        &__icon {
+            width: 100%;
+            height: auto;
+            color: var(--_divider-color);
 
-    [data-icon] {
-        width: 100%;
-        height: auto;
-        fill: var(--dividerColor);
-        fill: var(--color);
-        color: var(--color);
-    }
-    .content {
-        background-color: var(--color);
-        padding: 32px 0;
-        margin: -1px 0;
+            &-top {
+                background-color: var(--_bg-color-top);
+            }
+            &-bottom {
+                background-color: var(--_bg-color-bottom);
+            }
+        }
+        // CONTENT
+        &__content {
+            background-color: var(--_divider-color);
+            padding: 32px 0;
+            margin-block-start: -1px;
+        }
+
+        // DIVIDER COLOR MODIFIERS
+        &--beige {
+            --_divider-color: var(--clr-beige);
+        }
+        &--brand-primary {
+            --_divider-color: var(--clr-brand-primary);
+        }
+        &--brand-secondary {
+            --_divider-color: var(--clr-brand-secondary);
+        }
+
+        // BG COLOR MODIFIERS
+        .divider__icon-top {
+            &--beige {
+                --_bg-color-top: var(--clr-beige);
+            }
+            &--brand-primary {
+                --_bg-color-top: var(--clr-brand-primary);
+            }
+            &--brand-secondary {
+                --_bg-color-top: var(--clr-brand-secondary);
+            }
+        }
+
+        .divider__icon-bottom {
+            &--beige {
+                --_bg-color-bottom: var(--clr-beige);
+            }
+            &--brand-primary {
+                --_bg-color-bottom: var(--clr-brand-primary);
+            }
+            &--brand-secondary {
+                --_bg-color-bottom: var(--clr-brand-secondary);
+            }
+        }
     }
 </style>

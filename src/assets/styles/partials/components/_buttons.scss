@@ -85,8 +85,9 @@ button {
         --_loader: var(--clr-white);
         &:hover:not(:disabled),
         &:focus-visible:not(:disabled) {
-            --_border: var(--clr-brand-primary);
-            --_color: var(--clr-brand-primary);
+            filter: brightness(100%);
+            --_border: var(--clr-brand-accent);
+            --_color: var(--clr-brand-accent);
         }
     }
 }
