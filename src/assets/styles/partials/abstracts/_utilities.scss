@@ -12,6 +12,10 @@
     --max-width: 768px;
 }
 
+.text-wrap {
+    max-width: 76ch;
+}
+
 // stack
 .stack {
     display: grid;
@@ -55,7 +59,7 @@
     height: 100%;
     top: 0px;
     right: 0px;
-    z-index: -2;
+    z-index: -10;
     object-fit: cover;
 }
 
@@ -87,26 +91,72 @@
 
 // FLOW: creating natural rhythm and spacing for text layouts
 .flow {
-    & > * + * {
-        margin-top: var(--flow-space, 1em);
+    & > * + *,
+    img {
+        margin-top: var(--_flow-space, 1em);
+    }
+
+    img {
+        --_flow-space: 2em;
     }
 }
 
-// UNIFORM PADDING
+// REPONSIVE PADDING
 .section__padding {
     // For most layout component sections
-    --padding--min: var(--spc-lg);
-    --padding--max: var(--spc-xl);
-    --padding--preferred: 3.636vw + 1.091rem;
+    --_padding--min: var(--spc-lg);
+    --_padding--max: var(--spc-xl);
+    --_padding--preferred: 3.636vw + 1.091rem;
 
     // growth for current min and max vals range: 400px and 1280px
-    padding-block: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
+    padding-block: clamp(var(--_padding--min), var(--_padding--preferred), var(--_padding--max));
 
     // for headers
     &--lg {
-        --padding--min: var(--spc-lg);
-        --padding--max: var(--spc-2xl);
-        --padding--preferred: 10.909vw + -0.727rem;
-        padding-block: clamp(var(--padding--min), var(--padding--preferred), var(--padding--max));
+        --_padding--min: var(--spc-lg);
+        --_padding--max: var(--spc-2xl);
+        --_padding--preferred: 10.909vw + -0.727rem;
+        padding-block: clamp(
+            var(--_padding--min),
+            var(--_padding--preferred),
+            var(--_padding--max)
+        );
+    }
+
+    &--extra {
+        --_padding--min: var(--spc-lg);
+        --_padding--max: var(--spc-xl);
+        --_padding--preferred: 3.636vw + 1.091rem;
+
+        // growth for current min and max vals range: 400px and 1280px
+        padding-block: clamp(
+            var(--_padding--min),
+            var(--_padding--preferred),
+            var(--_padding--max)
+        );
+        &-top {
+            --_padding--min: var(--spc-lg);
+            --_padding--max: var(--spc-xl);
+            --_padding--preferred: 3.636vw + 1.091rem;
+
+            // growth for current min and max vals range: 400px and 1280px
+            padding-block-start: clamp(
+                var(--_padding--min),
+                var(--_padding--preferred),
+                var(--_padding--max)
+            );
+        }
+        &-bottom {
+            --_padding--min: var(--spc-lg);
+            --_padding--max: var(--spc-xl);
+            --_padding--preferred: 3.636vw + 1.091rem;
+
+            // growth for current min and max vals range: 400px and 1280px
+            padding-block-end: clamp(
+                var(--_padding--min),
+                var(--_padding--preferred),
+                var(--_padding--max)
+            );
+        }
     }
 }

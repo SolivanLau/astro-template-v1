@@ -18,6 +18,25 @@
     }
 }
 
+// pseudo element mixin:
+@mixin pseudo($type, $content: "", $position: absolute) {
+    @if $type == before {
+        &::before {
+            content: $content;
+            position: $position;
+            @content;
+        }
+    } @else if $type == after {
+        &::after {
+            content: $content;
+            position: $position;
+            @content;
+        }
+    } @else {
+        @warn "pseudo() only accepts 'before' or 'after' as a type. Current type: #{$type}";
+    }
+}
+
 // SCSS Function to convert a px to rem
 // example: font-size: rem(16px) -> 1rem
 // example: --variable: #{rem(16)} -> 1rem

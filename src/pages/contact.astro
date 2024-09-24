@@ -1,4 +1,6 @@
 ---
+// Scripts
+// Layouts & Components
 import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import Title from "@components/Title.astro";
@@ -6,8 +8,9 @@ import Link from "@components/Link.astro";
 import { Icon } from "astro-icon/components";
 import ContactForm from "@components/ContactForm.astro";
 import Newsletter from "@components/Newsletter.astro";
-import tempBg from "@images/home-bg-desktop.webp";
 import { Image } from "astro:assets";
+// Assets
+import tempBg from "@images/home-bg-desktop.webp";
 ---
 
 <PageLayout isTurnstile>
@@ -18,7 +21,7 @@ import { Image } from "astro:assets";
                 <Title tagName="h2" topper="Get in Touch"> Let's Work Together </Title>
                 <div class="contact">
                     <!-- TEXT -->
-                    <div class="contact__text">
+                    <div class="contact__text flow">
                         <!-- IMAGE  -->
                         <Image
                             src={tempBg}
@@ -27,23 +30,20 @@ import { Image } from "astro:assets";
                             widths={[1200, 600]}
                             loading="eager"
                         />
-                        <div class="flow">
-                            <p>
-                                The The Toronto Wind Collective is looking to spotlight Canadian
-                                Talent:
-                            </p>
+                        <p>
+                            The The Toronto Wind Collective is looking to spotlight Canadian Talent:
+                        </p>
 
-                            <ul>
-                                <li>Commissioning Composers for Wind Ensemble Music</li>
-                                <li>Musicians & Players to rehearse and debut new works</li>
-                                <li>Long term organizational support</li>
-                            </ul>
+                        <ul>
+                            <li>Commissioning Composers for Wind Ensemble Music</li>
+                            <li>Musicians & Players to rehearse and debut new works</li>
+                            <li>Long term organizational support</li>
+                        </ul>
 
-                            <p>
-                                Feel free to send an <strong>email</strong>, or fill out the contact
-                                form! We look forward to collaborating with you!
-                            </p>
-                        </div>
+                        <p>
+                            Feel free to send an <strong>email</strong>, or fill out the contact
+                            form! We look forward to collaborating with you!
+                        </p>
 
                         <ul class="contact__socials">
                             <li>
@@ -94,14 +94,16 @@ import { Image } from "astro:assets";
         display: flex;
         gap: var(--spc-med) var(--spc-lg);
         justify-content: space-between;
+        // Page Layout
         &__form,
         &__text {
             width: 50%;
         }
+
+        // TEXT: Banner, cms text, socials
         &__text {
             display: flex;
             flex-direction: column;
-            gap: var(--spc-med);
         }
 
         &__socials {

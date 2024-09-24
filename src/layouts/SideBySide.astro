@@ -1,0 +1,29 @@
+---
+import type { Props as TitleProps } from "@components/Title.astro";
+import Title from "@components/Title.astro";
+import Link from "@components/Link.astro";
+import { Picture } from "astro:assets";
+interface Props {
+    title: TitleProps;
+    class: string;
+    [key: string]: any;
+}
+
+const { title, class: className, ...rest } = Astro.props;
+---
+
+<section class:list={["side-by-side", "section__padding", className]} {...rest}>
+    <div class="side-by-side__content wrapper">
+        <!-- TEXT -->
+        <div class="side-by-side__text">
+            <!-- TITLE -->
+            <Title {...title} />
+            <!-- CONTENT -->
+            <div class="flow">
+                <slot />
+            </div>
+        </div>
+        <!-- IMAGE Gallery -->
+        <ul class="side-by-side__img"></ul>
+    </div>
+</section>

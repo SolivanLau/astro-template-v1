@@ -20,21 +20,13 @@ interface Props {
 const { title, subtitle, backgroundImgPath, class: className, ...rest } = Astro.props;
 ---
 
-<Banner backgroundImgPath={backgroundImgPath} tagName="header">
-    <div class:list={["header", className]} {...rest}>
-        <div class="title">
-            <h1 class="title-font--display">{title}</h1>
-            {subtitle && <p>{subtitle}</p>}
-        </div>
-    </div>
+<Banner
+    backgroundImgPath={backgroundImgPath}
+    backgroundImgPosition="right"
+    tagName="header"
+    class:list={["header", className]}
+    {...rest}
+>
+    <h1 class="title-font--display">{title}</h1>
+    {subtitle && <p>{subtitle}</p>}
 </Banner>
-
-<style lang="scss">
-    // LAYOUT
-    .header {
-        color: var(--clr-white);
-        display: grid;
-        align-items: center;
-        gap: var(--spc-med);
-    }
-</style>

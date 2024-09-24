@@ -4,10 +4,22 @@ import { Icon } from "astro-icon/components";
 import bgImage from "@images/newsletter-bg-desktop.webp";
 import Input from "@components/forms/Input.astro";
 import Button from "@components/forms/Button.astro";
+
+interface Props {
+    class?: string;
+    extraPadding?: "top" | "bottom" | "both";
+    [key: string]: any;
+}
+
+const { class: className, extraPadding, ...rest } = Astro.props;
+
+const extraPaddingClass = extraPadding
+    ? `section__padding--extra${extraPadding !== "both" ? `-${extraPadding}` : null}`
+    : null;
 ---
 
-<section class="background-image__parent section__padding">
-    <div class="wrapper newsletter">
+<section class:list={["background__image-parent", "section__padding", className]} {...rest}>
+    <div class:list={["wrapper", "newsletter", extraPaddingClass]}>
         <!-- Heading -->
         <div class="newsletter__text">
             <h2 class="title-font--display">Stay Informed</h2>
@@ -46,7 +58,7 @@ import Button from "@components/forms/Button.astro";
     </div>
     <!-- Background Image -->
     <Picture
-        class="background-image"
+        class="background__image"
         src={bgImage}
         alt="Toronto Wind Collective Rehearsal Shot"
         width={1920}
@@ -58,10 +70,10 @@ import Button from "@components/forms/Button.astro";
     @use "@styles/partials/abstracts/mixins" as *;
 
     // Background Image
-    .background-image__parent {
+    .background__image-parent {
         background: linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%);
     }
-    .background-image {
+    .background__image {
         translate: 38%;
     }
     // Layout
@@ -108,11 +120,11 @@ import Button from "@components/forms/Button.astro";
     @include responsive-style(950) {
         // Layout Shift
 
-        .background-image__parent {
+        .background__image-parent {
             background: linear-gradient(-20deg, rgba(66, 58, 112, 17%) 0%, #695c7c 85%);
         }
 
-        .background-image {
+        .background__image {
             translate: 0;
             object-position: 40% 70%;
         }

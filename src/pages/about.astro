@@ -1,13 +1,24 @@
 ---
-// Components and Scripts
-import PageLayout from "@layouts/PageLayout.astro";
-import Header from "@layouts/Header.astro";
-import Title from "@components/Title.astro";
+// CMS Scripts
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
 import BlockRenderer from "@components/BlockRenderer.astro";
-// Assets
-import headerBg from "@images/home-bg-desktop.webp";
+// Components
+import PageLayout from "@layouts/PageLayout.astro";
+import Header from "@layouts/Header.astro";
 import Banner from "@components/Banner.astro";
+import DividerLayout from "@layouts/DividerLayout.astro";
+import Title from "@components/Title.astro";
+import Link from "@components/Link.astro";
+import { Icon } from "astro-icon/components";
+import Picture from "astro/components/Picture.astro";
+import Newsletter from "@components/Newsletter.astro";
+// Assets
+import missionBanner from "@images/about/mission-banner.png";
+import headerBg from "@images/home-bg-desktop.webp";
+import composer from "@images/about/composer.jpg";
+import musician from "@images/about/musician.jpg";
+import conductor from "@images/about/conductor.jpg";
+// TEMP
 
 // CMS Query
 const querParameters = {
@@ -56,7 +67,7 @@ const data = pageQuery?.attributes;
 const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.attributes;
 ---
 
-<PageLayout seo={seo}>
+<PageLayout seo={seo} isTurnstile>
     <Header
         backgroundImgPath={headerBg}
         title={header.title.title || "About Us"}
@@ -74,6 +85,13 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
                     <BlockRenderer html={missionStatement.text}>
                         <p>this is backup content</p>
                     </BlockRenderer>
+
+                    <Picture
+                        src={missionBanner}
+                        alt="Toronto Wind Collective Performance"
+                        widths={[2000, 1000]}
+                        formats={["webp", "jpg"]}
+                    />
                 </article>
             </div>
         </section>
@@ -97,11 +115,282 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
         </section>
 
         <!-- CTA BANNER -->
-        <Banner> testing </Banner>
+        <Banner backgroundImgPath={headerBg} backgroundImgPosition="left" class="cta-banner">
+            <h2 class="title-font--display">Hear Us Live!</h2>
+            <Link url="/events" type="button--secondary-white" class="cta-banner__Link">
+                2024/25 Concert Season
+            </Link>
+        </Banner>
+
+        <!-- TEAM -->
+        <DividerLayout
+            dividerTopFileName="dividers/tear-top"
+            dividerBottomFileName="dividers/tear-bottom"
+            color="beige"
+            class="team"
+        >
+            <!-- TITLE & TEXT -->
+            <div class="team__text">
+                <Title tagName="h2" topper="Who We Are" class="team__text__title"
+                    >A Project Based Ensemble</Title
+                >
+                <div class="team__text__description">
+                    <p>
+                        The Toronto Wind Collective is made up of local musicians in the Greater
+                        Toronto Area who bring new compositions to our concert seasons.The
+                        collective consists of 3 types of musicians:
+                    </p>
+                </div>
+            </div>
+
+            <!-- MEMBERS -->
+            <ol class="team__members">
+                <!-- COMPOSER -->
+                <li class="team__members-card background__image-parent">
+                    <Icon name="feather" />
+                    <h3 class="h4">Composers</h3>
+                    <p>Write and workshop new wind music for chamber and small wind ensembles.</p>
+                    <Picture
+                        class="background__image"
+                        src={composer}
+                        alt="composer"
+                        widths={[1000]}
+                        formats={["webp", "jpg"]}
+                    />
+                </li>
+
+                <!-- MUSICIANS -->
+                <li class="team__members-card background__image-parent">
+                    <Icon name="trumpet" />
+                    <h3 class="h4">Musicians</h3>
+                    <p>Rehearse, record, and perform new works for the Toronto Community!</p>
+                    <Picture
+                        class="background__image"
+                        src={musician}
+                        alt="composer"
+                        widths={[1000, 500]}
+                        formats={["webp", "jpg"]}
+                    />
+                </li>
+                <!-- CONDUCTORS -->
+                <li class="team__members-card background__image-parent">
+                    <Icon name="wand" />
+                    <h3 class="h4">Conductors</h3>
+                    <p>Collaborate with composers and musicians to bring each piece to life!</p>
+                    <Picture
+                        class="background__image"
+                        src={conductor}
+                        alt="composer"
+                        widths={[1000]}
+                        formats={["webp", "jpg"]}
+                    />
+                </li>
+            </ol>
+
+            <!-- CTA -->
+            <div class="team__cta">
+                <p class="h6 cta">
+                    We are currently looking for wind musicians and composers to collaborate for our
+                    upcoming season!
+                </p>
+
+                <Link url="/contact" type="button--primary">Join the Collective</Link>
+            </div>
+        </DividerLayout>
+
+        <!-- NEWSLETTER -->
+        <Newsletter extraPadding="top" class="newsletter" />
     </main>
+
+    <section class="test background__image-parent"></section>
 </PageLayout>
 
-<script define:vars={{ data, header, missionStatement, services, ctaBanner, team }}>
-    // console.log(data);
-    console.log(missionStatement);
-</script>
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+    // MISSION
+    .mission {
+        img {
+            object-fit: contain;
+            height: fit-content;
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .mission img {
+            object-fit: cover;
+            aspect-ratio: 6 /4;
+            height: fit-content;
+        }
+    }
+
+    // SERVICES
+
+    // CTA BANNER
+    .cta-banner {
+        --_gradient-position: linear-gradient(-80.193deg, #695c7c 50%, rgba(66, 58, 112, 17%) 99%);
+        .content {
+            gap: var(--spc-med);
+        }
+        &__Link {
+            justify-self: start;
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .cta-banner {
+            .content {
+                gap: var(--spc-xs);
+            }
+            &__Link {
+                justify-self: end;
+                font-size: var(--font-sz-300);
+            }
+        }
+    }
+
+    // TEAM
+    .team {
+        // overlap banner
+        margin-block-start: calc(var(--spc-xl) * -1);
+
+        .content {
+            display: grid;
+            gap: var(--spc-xl);
+        }
+
+        &__text {
+            display: flex;
+            align-items: end;
+            flex-wrap: wrap;
+            gap: var(--spc-sm) var(--spc-lg);
+
+            &__title {
+                min-width: clamp(rem(290), 17.578vw + 9.688rem, rem(380));
+                width: 30%;
+            }
+
+            &__description {
+                min-width: 440px;
+                width: 60%;
+                flex-grow: 1;
+            }
+        }
+
+        // Card Layout
+        &__members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: var(--spc-med) clamp(var(--spc-med), 3.125vw + -0.5rem, var(--spc-lg));
+        }
+
+        // CARDS
+        &__members-card {
+            flex: 1 1 280px;
+            display: grid;
+            grid-template-rows: subgrid;
+            gap: var(--spc-xs);
+            width: 100%;
+            height: fit-content;
+            padding: var(--spc-xl) var(--spc-med);
+            text-align: center;
+            color: var(--clr-white);
+
+            // ICON
+            [data-icon] {
+                color: var(--clr-black);
+                justify-self: center;
+                font-size: 65px;
+                background-color: var(--clr-white);
+                padding: var(--spc-med);
+                border-radius: 50%;
+            }
+
+            // Image Overlay
+            &::after {
+                content: " ";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #2c1a43d1;
+                background-color: #39294dda;
+                background-color: rgba(46, 33, 64, 0.819);
+                z-index: -1;
+            }
+            // all images will turn to grayscale
+            .background__image {
+                filter: grayscale(1);
+                object-position: top center;
+            }
+
+            // even cards get shifted down
+            &:nth-child(even) {
+                margin-block-start: clamp(0rem, 18.286vw + -10.629rem, var(--spc-xl));
+            }
+        }
+
+        &__cta {
+            display: grid;
+            gap: var(--spc-lg);
+            justify-content: center;
+            text-align: center;
+            p {
+                max-width: 600px;
+                font-weight: 700;
+            }
+            a {
+                justify-self: center;
+            }
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .team {
+            // overlapping banner adjustments
+            margin-block-start: clamp(
+                calc(var(--spc-lg) * -1),
+                4.348vw + -0.087rem,
+                calc(var(--spc-med) * -1)
+            );
+            // content gap
+            .content {
+                gap: var(--spc-lg);
+            }
+
+            // TEXT
+            &__text__description {
+                min-width: 0;
+            }
+
+            // CARDS
+            &__members-card {
+                padding: var(--spc-lg) var(--spc-sm);
+            }
+        }
+    }
+
+    @include responsive-style(600) {
+        .team {
+            &__members {
+                flex-direction: column;
+            }
+            &__members-card {
+                flex: 1 1 content;
+            }
+        }
+    }
+    @include responsive-style(mobile) {
+        .team {
+            &__text__title,
+            &__text__description {
+                min-width: 0;
+                width: 100%;
+            }
+        }
+    }
+
+    // NEWSLETTER
+    .newsletter {
+        margin-block-start: calc(var(--spc-xl) * -1);
+    }
+</style>

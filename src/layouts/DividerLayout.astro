@@ -25,16 +25,24 @@ const {
 <section class:list={["divider", color && `divider--${color}`, className]} {...rest}>
     <Icon
         name={dividerTopFileName}
-        class={`divider__icon divider__icon-top divider__icon-top--${bgColorTop}`}
+        class:list={[
+            "divider__icon",
+            "divider__icon-top",
+            bgColorTop && `divider__icon-top--${bgColorTop}`,
+        ]}
     />
-    <div class="divider__content">
-        <div class="wrapper">
+    <div class="divider__content section__padding">
+        <div class="content wrapper" {...rest}>
             <slot />
         </div>
     </div>
     <Icon
         name={dividerBottomFileName}
-        class={`divider__icon divider__icon-bottom divider__icon-bottom--${bgColorBottom}`}
+        class:list={[
+            "divider__icon",
+            "divider__icon-bottom",
+            bgColorTop && `divider__icon-bottom--${bgColorTop}`,
+        ]}
     />
 </section>
 
@@ -43,15 +51,16 @@ const {
         --_divider-color: var(--clr-brand-primary);
         --_bg-color-top: transparent;
         --_bg-color-bottom: transparent;
-
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        position: relative;
+        // z-index: 10;
         // SVG DIVIDERS
         &__icon {
             width: 100%;
             height: auto;
             color: var(--_divider-color);
-
+            position: relative; // Added this line
+            z-index: 1; // Added this line
             &-top {
                 background-color: var(--_bg-color-top);
             }
@@ -62,8 +71,9 @@ const {
         // CONTENT
         &__content {
             background-color: var(--_divider-color);
-            padding: 32px 0;
             margin-block-start: -1px;
+            position: relative; // Added this line
+            z-index: 1; // Added this line
         }
 
         // DIVIDER COLOR MODIFIERS

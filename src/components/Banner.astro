@@ -17,12 +17,12 @@ const {
     tagName,
     noWrapper,
     class: className,
+    ...rest
 } = Astro.props;
 
 const Tag = tagName ? tagName : "section";
 
 // TODO:
-// finish --img-left position
 // start --img-center position
 ---
 
@@ -34,17 +34,13 @@ const Tag = tagName ? tagName : "section";
         "section__padding--lg",
         className,
     ]}
+    {...rest}
 >
     <!-- CONTENT: with optional wrapper -->
-    {
-        noWrapper ? (
-            <slot />
-        ) : (
-            <div class="wrapper">
-                <slot />
-            </div>
-        )
-    }
+
+    <div class:list={["content", noWrapper ? "" : "wrapper"]} {...rest}>
+        <slot />
+    </div>
 
     <!-- OPTIONAL BACKGROUND IMAGE -->
     {
@@ -69,22 +65,33 @@ const Tag = tagName ? tagName : "section";
     // full background
     .background {
         background: var(--clr-brand-secondary);
-    }
-    // Background Image
-    .background__image-parent {
-        --_gradient-position: var(--clr-brand-secondary);
-        --_img-position: ;
 
-        background: var(
-            --_gradient-position,
-            linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%)
-        );
+        // Background Image: Modifiers
+        &__image-parent {
+            --_gradient-position: var(--clr-brand-secondary);
+            --_img-position: 0;
+            --_content-position: ;
 
-        .background__image {
-            translate: var(--_img-position, 0);
+            background: var(
+                --_gradient-position,
+                linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%)
+            );
+
+            .background__image {
+                object-position: top;
+                translate: var(--_img-position, 0);
+            }
+
+            .content {
+                display: grid;
+                justify-content: var(--_content-position, normal);
+                color: var(--clr-white);
+            }
         }
+    }
 
-        // MODIFIERS
+    .background__image-parent {
+        // MODIFIERS: Background Image
         &--img-right {
             --_gradient-position: linear-gradient(
                 -85.41deg,
@@ -92,11 +99,19 @@ const Tag = tagName ? tagName : "section";
                 #695c7c 58%
             );
             --_img-position: 30%;
+
+            --_content-position: start;
         }
 
         &--img-left {
-            --_gradient-position: linear-gradient(281deg, rgba(66, 58, 112, 17%) 0%, #695c7c 50%);
-            --_img-position: 0;
+            --_gradient-position: linear-gradient(
+                -92.193deg,
+                #695c7c 50%,
+                rgba(66, 58, 112, 17%) 99%
+            );
+
+            --_img-position: -30%;
+            --_content-position: end;
         }
     }
 
@@ -104,7 +119,7 @@ const Tag = tagName ? tagName : "section";
     @include responsive-style(mobile) {
         .background__image-parent {
             &--img-left {
-                --_img-position: 0;
+                --_img-position: -20%;
             }
 
             &--img-right {
