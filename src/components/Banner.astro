@@ -68,18 +68,17 @@ const Tag = tagName ? tagName : "section";
 
         // Background Image: Modifiers
         &__image-parent {
-            --_gradient-position: var(--clr-brand-secondary);
+            --_background: var(--clr-brand-secondary);
             --_img-position: 0;
             --_content-position: ;
 
             background: var(
-                --_gradient-position,
+                --_background,
                 linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%)
             );
 
             .background__image {
                 object-position: top;
-                translate: var(--_img-position, 0);
             }
 
             .content {
@@ -93,7 +92,7 @@ const Tag = tagName ? tagName : "section";
     .background__image-parent {
         // MODIFIERS: Background Image
         &--img-right {
-            --_gradient-position: linear-gradient(
+            --_background: linear-gradient(
                 -85.41deg,
                 rgba(66, 58, 112, 17%) 0%,
                 #695c7c 58%
@@ -104,7 +103,7 @@ const Tag = tagName ? tagName : "section";
         }
 
         &--img-left {
-            --_gradient-position: linear-gradient(
+            --_background: linear-gradient(
                 -92.193deg,
                 #695c7c 50%,
                 rgba(66, 58, 112, 17%) 99%
@@ -123,7 +122,7 @@ const Tag = tagName ? tagName : "section";
             }
 
             &--img-right {
-                --_gradient-position: linear-gradient(
+                --_background: linear-gradient(
                     281deg,
                     rgba(66, 58, 112, 17%) 0%,
                     #695c7c 50%

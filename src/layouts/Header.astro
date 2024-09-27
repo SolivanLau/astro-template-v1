@@ -30,3 +30,9 @@ const { title, subtitle, backgroundImgPath, class: className, ...rest } = Astro.
     <h1 class="title-font--display">{title}</h1>
     {subtitle && <p>{subtitle}</p>}
 </Banner>
+
+<style lang="scss">
+    .header {
+        color: var(--clr-white);
+    }
+</style>

@@ -1,33 +1,81 @@
 ---
+export const prerender = false;
+// CMS Scripts
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
-import Layout from "@layouts/PageLayout.astro";
+import { getCurrentSeason, parseDate } from "@assets/scripts/lib/time";
+// Layouts & Components
+import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
-import bgHeader from "@images/events-bg.png";
 import Title from "@components/Title.astro";
+import Newsletter from "@components/Newsletter.astro";
+// ASSETS
+import bgHeader from "@images/events-bg.png";
+interface EventDetails {
+    date: string;
+}
+interface Event {
+    attributes: {
+        details: EventDetails;
+        title: string;
+        slug: string;
+    };
+}
+// QUERY PARAMS
 const queryParameters = {
     fields: ["title", "slug"],
     populate: {
         poster: "*",
         details: {
-            populate: {
-                dateTime: "*",
-            },
+            populate: "*",
         },
     },
 };
+// CMS PAGE QUERY
 const pageQuery = await cmsFetch("events", queryParameters);
+
+// GET CURRENT SEASON
+const currentDate = new Date();
+const { seasonStartYear, seasonEndYear, seasonStart, seasonEnd } = getCurrentSeason(currentDate);
+
+// SORTED EVENTS -> DOM
+let upcomingEvents = [];
+let pastEvents = [];
+
+pageQuery.forEach((event) => {
+    const eventDate = new Date(event.attributes.details.date);
+
+    if (eventDate >= seasonStart) {
+        upcomingEvents.push(event);
+    }
+
+    if (eventDate < currentDate) {
+        pastEvents.push(event);
+    }
+});
+
+// SORTED EVENTS
+upcomingEvents.sort(
+    (a: Event, b: Event) =>
+        parseDate(a.attributes.details.date).getTime() -
+        parseDate(b.attributes.details.date).getTime(),
+);
+pastEvents.sort(
+    (a: Event, b: Event) =>
+        parseDate(b.attributes.details.date).getTime() -
+        parseDate(a.attributes.details.date).getTime(),
+);
 ---
 
-<Layout>
+<PageLayout isTurnstile>
     <Header title="Concert & Events" backgroundImgPath={bgHeader} />
     <main>
         <!-- CURRENT EVENTS -->
         <section class="wrapper section__padding">
-            <Title tagName="h2" topper="2024/25 Season">Upcoming Concerts & Events</Title>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/connect">Connect Page</a></li>
-            </ul>
+            <Title
+                tagName="h2"
+                topper={seasonStartYear + "/" + seasonEndYear.toString().slice(2) + " Season"}
+                >Upcoming Concerts & Events</Title
+            >
         </section>
 
         <!-- ALL EVENTS -->
@@ -35,11 +83,10 @@ const pageQuery = await cmsFetch("events", queryParameters);
             <Title tagName="h2" topper="Our Projects">Past Concerts</Title>
             {
                 // ALL Events
-                pageQuery && pageQuery.length > 0 && (
+                pastEvents && pastEvents.length > 0 && (
                     <ul>
-                        {pageQuery.map((event) => {
-                            const { title, slug }: { title: string; slug: string } =
-                                event.attributes;
+                        {pastEvents.map((event) => {
+                            const { title, slug, poster, details } = event.attributes;
                             return (
                                 <li>
                                     <a href={`/events/${slug}`}>{title}</a>
@@ -50,7 +97,10 @@ const pageQuery = await cmsFetch("events", queryParameters);
                 )
             }
         </section>
+
+        <!-- NEWSLETTER -->
+        <Newsletter />
     </main>
-</Layout>
+</PageLayout>
 
 <style lang="scss"></style>

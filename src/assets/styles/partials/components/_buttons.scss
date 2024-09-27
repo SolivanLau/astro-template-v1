@@ -60,7 +60,8 @@ button {
     &--primary,
     &--secondary,
     &--secondary-white {
-        --_font-sz: var(--font-sz-500);
+        // --_font-sz: var(--font-sz-500);
+        --_font-sz: clamp(var(--font-sz-300), 1.036vw + 0.741rem, var(--font-sz-500));;
     }
     &--primary {
         --_background: var(--clr-brand-primary);

@@ -1,0 +1,115 @@
+---
+import Link from "@components/Link.astro";
+import { Picture } from "astro:assets";
+
+import bgImage from "@images/hero.webp";
+---
+
+<header class="hero section__padding background__image-parent">
+    <div class="hero__content wrapper">
+        <!-- TITLE -->
+        <div class="hero__title flow section__padding--extra-top">
+            <h1 class="title-font--display">
+                <span>Empowering Local Music & Compositions</span>
+                Toronto Wind Collective
+            </h1>
+            <p>A Project based ensemble championing early wind composers and musicians.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="hero__cta section__padding--extra-bottom">
+            <Link url="/events" type="button--primary">2024/25 Season</Link>
+            <Link url="/about" type="button--secondary-white">Learn What We Do</Link>
+        </div>
+    </div>
+
+    <!-- BACKGROUND IMAGE -->
+    <Picture
+        src={bgImage}
+        alt="Toronto Wind Collective"
+        class="background__image"
+        widths={[2000, 1200, 600]}
+        fallbackFormat="jpg"
+    />
+</header>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    .hero {
+        min-height: clamp(rem(400), 22.727vw + 19.318rem, rem(750));
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+
+        // LAYOUT
+        &__content {
+        }
+
+        // TITLE
+        &__title {
+            --_max-width: 80ch;
+            text-align: center;
+
+            color: var(--clr-white);
+            // topper
+            span,
+            p {
+                margin-inline: auto;
+                max-width: var(--_max-width);
+            }
+            span {
+                display: block;
+                color: var(--clr-brand-accent);
+                text-transform: uppercase;
+            }
+        }
+
+        // CTA
+        &__cta {
+            margin-block: var(--spc-lg);
+            display: flex;
+            justify-content: center;
+            gap: var(--spc-sm) var(--spc-med);
+        }
+    }
+    // BACKGROUND IMAGE
+    .background__image-parent {
+        @include pseudo(before) {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse 30% 60% at 30% 20%, #5b583c -100%, #1a1a1a 62%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0%) 0%, rgba(0, 0, 0, 48%) 100%);
+
+            background-size: 100% 200%;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            z-index: -1;
+        }
+    }
+
+    .background__image {
+        object-position: 0 clamp(rem(-340), -53.125vw + 42.5rem, rem(0));
+        scale: 1;
+    }
+
+    @include responsive-style(tablet) {
+        .background__image {
+            object-position: center;
+            scale: 1.2;
+        }
+    }
+
+    @include responsive-style(mobile) {
+        .hero {
+            &__cta {
+                margin-block: var(--spc-med);
+                flex-direction: column;
+            }
+        }
+    }
+</style>

@@ -1,11 +1,14 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
 import Link from "@components/Link.astro";
+import Picture from "astro/components/Picture.astro";
+
+import bgImage from "@images/404-bg.webp";
 ---
 
-<PageLayout class="page--404">
-    <main>
-        <div class="wrapper--sm flow">
+<PageLayout>
+    <main class="background__image-parent section__padding">
+        <div class="page--404 wrapper--sm flow">
             <h1 class="title-font--display">Page Not Found</h1>
             <p>The page you were looking for may have been renamed or removed.</p>
             <p>Take a look at these pages instead:</p>
@@ -23,36 +26,63 @@ import Link from "@components/Link.astro";
                 </li>
             </ul>
         </div>
+
+        <Picture src={bgImage} alt="404 Background" class="background__image" />
     </main>
 </PageLayout>
 
 <style lang="scss">
     @use "@styles/partials/abstracts/mixins" as *;
+
+    .background__image-parent {
+        --_background: linear-gradient(-60deg, rgba(66, 58, 112, 0.17) 0%, #695c7c 55%);
+        background: var(--_background);
+    }
+
+    .background__image {
+        object-position: left;
+        translate: 25%;
+        filter: grayscale(1) brightness(30%);
+    }
+
+    main {
+        min-height: clamp(rem(500), 58.594vw + 3.125rem, rem(800));
+        display: grid;
+        text-align: center;
+        place-items: end;
+    }
+
     .page--404 {
-        background-color: var(--clr-brand-secondary);
         color: var(--clr-white);
     }
-    main {
-        height: 100%;
-        min-height: 500px;
-        text-align: center;
-        display: grid;
-        place-items: center;
-    }
     .cta {
+        margin-block-start: var(--spc-xl);
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: var(--spc-med);
     }
 
+    @include responsive-style(tablet) {
+        .background__image-parent {
+            --_background: linear-gradient(-65deg, rgba(66, 58, 112, 0.17) -10%, #695c7c 65%);
+        }
+        .background__image {
+            translate: 0;
+        }
+    }
     @include responsive-style(mobile) {
         .cta {
             flex-direction: column;
+            margin-block-start: var(--spc-lg);
+
             li,
             a {
                 width: 100%;
             }
+        }
+        .background__image {
+            object-position: 15% 0;
         }
     }
 </style>

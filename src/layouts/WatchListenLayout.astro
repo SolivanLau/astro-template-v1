@@ -1,0 +1,28 @@
+---
+import type { Props as DividerProps } from "@layouts/DividerLayout.astro";
+import type { Props as VideoProps } from "@components/Video.astro";
+
+import DividerLayout from "@layouts/DividerLayout.astro";
+import Video from "@components/Video.astro";
+
+interface Props {
+    divider?: DividerProps;
+    video: VideoProps;
+    class?: string;
+    [key: string]: any;
+}
+
+const { divider, video, class: className, ...rest } = Astro.props;
+---
+
+<!-- Watch and Listen -->
+<DividerLayout
+    dividerTopFileName="dividers/tear-top"
+    dividerBottomFileName="dividers/tear-bottom"
+    bgColorBottom={divider?.bgColorBottom || null}
+    color="brand-primary"
+    class={className}
+    {...rest}
+>
+    <Video url={video.url} />
+</DividerLayout>

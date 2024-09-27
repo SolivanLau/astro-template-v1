@@ -1,36 +1,63 @@
 ---
+// scripts
+import constructYoutubeUrl from "@scripts/lib/youtube";
+// Layouts and Components
 import { Icon } from "astro-icon/components";
 import Link from "./Link.astro";
+import { Image } from "astro:assets";
 
-interface Props {
-    cmsData?: any;
+// assets
+export interface Props {
+    url: string;
+    piece?: any;
 }
 
-// TO DO:
-// extract regular video url to fit api embed
-// CMS data integration for video title, description, cta
-const { cmsData } = Astro.props;
+const { piece, url } = Astro.props;
+
+// constructed youtube url
+const { embedUrl, imageUrl, watchUrl } = constructYoutubeUrl(url);
+// piece
+const { name, composer, description }: { name: string; composer: string; description: string } =
+    piece ?? {};
 ---
 
 <div class="video">
     <h2>Watch & Listen</h2>
 
-    <div class="video__embed">
-        <!-- TO DO: extract regular video url to fit api embed -->
+    <div class="video__embed-container background__image-parent">
         <iframe
+            class="video__embed"
             width="1000"
             height="563"
-            src="https://www.youtube.com/embed/LLK78htrbOQ?si=NjXDnntgIKEoZKEC"
+            src={embedUrl && embedUrl}
             title="YouTube video player"
             allow="encrypted-media; picture-in-picture; web-share"
+            sandbox="allow-scripts allow-same-origin allow-presentation"
             referrerpolicy="strict-origin-when-cross-origin"
             loading="lazy"
             allowfullscreen></iframe>
-    </div>
 
+        <Link url={watchUrl} isLinkExternal class="background__image">
+            <Image
+                class="video__image-backup"
+                src={imageUrl}
+                alt="Toronto Wind Collective - Ephemeral Bliss"
+                width={1000}
+                height={563}
+            />
+            <Icon name="youtube-play" />
+        </Link>
+    </div>
     <div class="flow">
-        <h3>Ephemeral Bliss</h3>
-        <p>Commissioned and premiered on May 24th 2023</p>
+        {
+            name && (
+                <h3>
+                    {composer && `${composer.toUpperCase()} - `}
+                    {name}
+                </h3>
+            )
+        }
+        {description && <p>{description}</p>}
     </div>
 
     <div class="video__cta">
@@ -69,14 +96,36 @@ const { cmsData } = Astro.props;
         color: var(--clr-white);
         text-align: center;
 
-        &__embed {
-            iframe {
-                aspect-ratio: 16 / 9;
-                height: fit-content;
-                width: 100%;
-                max-width: 1000px;
-            }
+        // embed
+        &__embed-container {
             margin-block: var(--spc-lg);
+            margin-inline: auto;
+            position: relative;
+        }
+
+        &__embed-container,
+        &__embed,
+        &__image-backup {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            max-width: 1000px;
+            height: fit-content;
+        }
+
+        [data-icon="youtube-play"] {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+        }
+        // backup external link
+        &__image {
+            position: relative;
+
+            &-backup {
+                filter: brightness(0.5);
+            }
         }
         &__cta {
             margin-block: var(--spc-lg);

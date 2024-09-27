@@ -1,0 +1,167 @@
+---
+// Components
+import Link from "@components/Link.astro";
+import Picture from "astro/components/Picture.astro";
+// Assets
+// TEMPORARY
+import concertImage from "@images/newsletter-bg-desktop.webp";
+import concertImage2 from "@images/events-bg.png";
+import concertImage3 from "@images/404-bg.webp";
+
+interface Props {
+    gridType?: "events--primary" | "events--highlight";
+    events?: any[];
+    class?: string;
+    [key: string]: any;
+}
+
+const { events, gridType = "events--primary", class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["grid", gridType, className]} {...rest}>
+    <!-- HIGHLIGHT CARD -->
+    <div class="card card--highlight grid__item--highlight">
+        <Link class="card__img" url="/events">
+            <Picture src={concertImage} alt="concert" />
+        </Link>
+        <div class="card__information">
+            <div class="card__text">
+                <h3 class="card__title h4">Highlighted</h3>
+                <p>
+                    <span class="card__type">Video Premiere </span>
+                    <span class="card__date"> | December 21</span>
+                </p>
+            </div>
+
+            <Link url="/events" type="button--secondary-white" class="card__cta"
+                >Event Information</Link
+            >
+        </div>
+    </div>
+
+    <!-- EVENTS CARD -->
+    <div class="card card__events grid__item">
+        <Link class="card__img" url="/events">
+            <Picture src={concertImage2} alt="concert" class="card__img" />
+        </Link>
+        <div class="card__information">
+            <div class="card__text">
+                <h3 class="card__title h4">Welcome to the Collective</h3>
+                <p>
+                    <span class="card__type">Video Premiere </span>
+                    <span class="card__date"> | December 21</span>
+                </p>
+            </div>
+
+            <Link url="/events" type="button--secondary-white" class="card__cta"
+                >Event Information</Link
+            >
+        </div>
+    </div>
+    <!-- EVENTS CARD -->
+    <div class="card card__events grid__item">
+        <Link class="card__img" url="/events">
+            <Picture src={concertImage3} alt="concert" class="card__img" />
+        </Link>
+
+        <div class="card__information">
+            <div class="card__text">
+                <h3 class="card__title h4">Mosaic</h3>
+                <p>
+                    <span class="card__type">Video Premiere </span>
+                    <span class="card__date"> | December 21</span>
+                </p>
+            </div>
+
+            <Link url="/events" type="button--secondary-white" class="card__cta"
+                >Event Information</Link
+            >
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+    // CARD Move to its own component
+    // Grid
+    .grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(2, auto);
+        gap: var(--spc-lg);
+        padding-block: var(--spc-lg);
+    }
+
+    .grid__item {
+        grid-column: 2;
+    }
+
+    .grid__item--highlight {
+        grid-column: 1;
+        grid-row: 1 / 3;
+    }
+
+    // .card {
+    //     // display: grid;
+    //     // grid-template-rows: 1fr;
+
+    //     display: flex;
+    //     flex-direction: column;
+    //     height: 100%;
+    //     overflow: hidden;
+    // }
+    // .card__img {
+    //     // height: 100%;
+    //     aspect-ratio: 1 / 1;
+    //     height: fit-content;
+    //     filter: brightness(70%);
+
+    //     &:hover,
+    //     &:focus-visible {
+    //         scale: 1.09;
+    //     }
+    // }
+
+    // .card__information {
+    //     flex-shrink: 0;
+    //     align-self: end;
+
+    //     // layout
+    //     display: flex;
+    //     justify-content: space-between;
+    //     flex-wrap: wrap;
+    //     gap: var(--spc-sm);
+    //     align-items: end;
+    //     // dimensions
+    //     // Styles
+    //     padding: var(--spc-sm);
+    //     background-color: var(--clr-brand-primary);
+    //     color: var(--clr-white);
+    //     // extra element
+    //     position: relative;
+
+    //     @include pseudo(before) {
+    //         --_shape-height: 50px;
+
+    //         width: 100%;
+    //         height: 100%;
+    //         top: calc((-1 * var(--_shape-height)) + 1px);
+    //         left: 0;
+    //         max-height: 50px;
+    //         background-color: var(--clr-brand-primary);
+    //         clip-path: polygon(8% 70%, 80% 96%, 100% 100%, 0% 100%);
+    //     }
+    // }
+
+    // .card__cta {
+    //     min-width: 150px;
+
+    //     @include responsive-style(mobile) {
+    //         width: 100%;
+    //     }
+    // }
+    // .card__title,
+    // .card__type {
+    //     text-transform: uppercase;
+    // }
+</style>

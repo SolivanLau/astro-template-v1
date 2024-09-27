@@ -1,52 +1,77 @@
 ---
+// Scripts
+// Layouts
 import PageLayout from "@layouts/PageLayout.astro";
-import Header from "@layouts/Header.astro";
-import EmailForm from "@components/Newsletter.astro";
-import InstagramFeed from "@components/InstagramFeed.astro";
-import Link from "@components/Link.astro";
+import WatchListenLayout from "@layouts/WatchListenLayout.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
-import headerBg from "@images/home-bg-desktop.webp";
-import Button from "@components/forms/Button.astro";
+import Newsletter from "@components/Newsletter.astro";
+import InstagramFeed from "@components/InstagramFeed.astro";
+import SideBySide from "@layouts/SideBySide.astro";
+// Components
+import Hero from "@layouts/Hero.astro";
+import Link from "@components/Link.astro";
+import Title from "@components/Title.astro";
+import EventGallery from "@components/EventGalleryHighlight.astro";
+import { Picture } from "astro:assets";
 ---
 
 <PageLayout isTurnstile>
-    <Header title="This is the Home Page" backgroundImgPath={headerBg} />
+    <Hero />
     <main>
-        <div class="wrapper flow">
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim cupiditate aliquam at
-                consectetur quas facere consequuntur mollitia adipisci commodi ea praesentium nam,
-                quos impedit eligendi natus ex, tempore et quaerat?
-            </p>
-            <h2>Useful Links</h2>
-            <ul>
-                <li>
-                    <Link url="/events" type="text--light">Events Page</Link>
-                </li>
-                <li>
-                    <Link url="/about" type="text--light">About Page</Link>
-                </li>
-                <li>
-                    <Link url="/about" type="text--light">Connect Page</Link>
-                </li>
-            </ul>
-
-            <h2>Buttons</h2>
-
-            <Button type="button--primary" isLoader>Primary</Button>
-            <Button type="button--secondary" isLoader>Secondary</Button>
-            <Button type="button--secondary-white" isLoader>Secondary White</Button>
-        </div>
-
-        <EmailForm />
-        <InstagramFeed />
-
         <DividerLayout
-            dividerTopFileName="dividers/tear-top"
-            dividerBottomFileName="dividers/tear-bottom"
+            dividerTopFileName="dividers/splatter-top"
+            dividerBottomFileName="dividers/splatter-bottom"
             color="beige"
+            class="events"
         >
-            <h2>HELLO. TESTING DIVIDER</h2>
+            <Title tagName="h2" topper="2024/25 Season">Concert & Events</Title>
+            <EventGallery gridType="events--highlight" />
         </DividerLayout>
+
+        <!-- WHO WE ARE -->
+        <SideBySide title={{ tagName: "h2", topper: "Who We Are" }}>
+            <Fragment slot="title">We Perform New Wind Music</Fragment>
+            <p>
+                The Toronto Wind Collective collaborates with early career musicians and composers
+                to bring new Wind Ensemble music to the Greater Toronto Community.
+            </p>
+            <p>
+                As a non-profit arts organization, the Toronto Wind Collective works for and with
+                musicians in the Greater Toronto Area.
+            </p>
+            <p>
+                <strong>
+                    We are currently looking for musicians and composers to collaborate with!
+                </strong>
+            </p>
+            <Link url="/about" type="button--primary" slot="cta">Learn How We Collaborate</Link>
+            <Link url="/contact" type="button--secondary" slot="cta">Collaborate With Us</Link>
+        </SideBySide>
+        <!-- WATCH AND LISTEN -->
+        <WatchListenLayout video={{ url: "https://www.youtube.com/watch?v=3KQj4XMWiOA" }} />
+        <!-- INSTAGRAM FEED -->
+        <InstagramFeed />
+        <!-- NEWSLETTER -->
+        <Newsletter />
     </main>
 </PageLayout>
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    // Section placements
+    .events {
+        margin-block-start: clamp(calc(-1 * rem(145)), -8.789vw + -2.031rem, calc(-1 * rem(100)));
+
+        @include responsive-style(mobile) {
+            // margin-block-start: calc(-1 * var(--spc-xl));
+            margin-block-start: clamp(
+                calc(-1 * rem(100)),
+                -7.031vw + -0.625rem,
+                calc(-1 * rem(64))
+            );
+        }
+    }
+    .newsletter--home {
+        margin-block-start: calc(-1 * var(--spc-xl));
+    }
+</style>
