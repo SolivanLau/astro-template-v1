@@ -6,13 +6,28 @@
  * @param {string} data - The date string to be converted
  * @returns {string} The human-readable date string
  */
-export const formatDate = (data: string): string => {
+export const formatDate = (data: string, type: "long" | "short" = "long"): string => {
     const date = new Date(data);
-    return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
+    let options: Intl.DateTimeFormatOptions;
+
+    switch (type) {
+        case "long":
+            options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+            break;
+        case "short":
+            options = {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+            };
+            break;
+    }
+
+    return date.toLocaleDateString("en-US", options);
 };
 
 /**

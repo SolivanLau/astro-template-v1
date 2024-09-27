@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 // scripts
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
 import { formatDate, formatTime } from "@assets/scripts/lib/time";
+import { generateGoogleMapsLink } from "@assets/scripts/lib/googleMaps.ts";
 // Layouts
 import PageLayout from "@layouts/PageLayout.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
@@ -61,33 +62,7 @@ interface Props {
 
 const { title, subtitle, poster, details, about, program, youtubeVideo, seo } = Astro.props;
 
-const googleMapsLink = (location: {
-    addressLineOne: string;
-    addressLineTwo: string;
-    city: string;
-    stateOrProvince: string;
-    postalCode: string;
-}): string => {
-    const baseUrl = "https://www.google.com/maps/search/?api=1&query=";
-
-    // Concatenate address parts into single query string
-
-    const addressComponents = [
-        location.addressLineOne,
-        location.addressLineTwo,
-        location.city,
-        location.stateOrProvince,
-        location.postalCode,
-    ].filter((component) => component != null);
-
-    const queryString = addressComponents.join(" ");
-
-    // Encode the full query string
-    const encodedQueryString = encodeURIComponent(queryString);
-    return `${baseUrl}${encodedQueryString}`;
-};
-
-const mapsLink = googleMapsLink(details?.location);
+const mapsLink = generateGoogleMapsLink(details?.location);
 // TO DO:
 // CMS DATA for  details
 ---
@@ -342,7 +317,6 @@ const mapsLink = googleMapsLink(details?.location);
                 position: sticky;
                 top: var(--spc-med);
             }
-
         }
 
         &__text {
@@ -414,7 +388,6 @@ const mapsLink = googleMapsLink(details?.location);
             gap: var(--spc-lg);
 
             &__poster {
-                aspect-ratio: 3 / 4;
                 grid-area: 1 / 1;
                 width: 100%;
                 max-width: 400px;

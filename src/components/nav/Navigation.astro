@@ -1,5 +1,5 @@
 ---
-import Image from "astro/components/Image.astro";
+import { Picture } from "astro:assets";
 import Link from "@components/Link.astro";
 import NavMenu from "./NavMenu.astro";
 import NavMobileButton from "./NavMobileButton.astro";
@@ -14,11 +14,13 @@ const { imageMedia, description } = logo || {};
     <div class="wrapper">
         <!-- LOGO -->
         <Link url="/">
-            <Image
+            <Picture
                 class="logo"
                 src={logoBackup}
                 loading="eager"
                 alt="Toronto Wind Collective logo"
+                widths={[600]}
+                sizes="(max-width: 768px) 300px, 600px"
                 width={150}
                 height={75}
             />
