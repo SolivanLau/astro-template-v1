@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/admin" 
-  to = "https://strapi-production-2381.up.railway.app/admin" # to strapi admin
-  status = 200 # ok code
-  force = true # ensure to always redirect
