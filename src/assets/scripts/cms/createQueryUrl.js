@@ -5,7 +5,7 @@ const createQueryUrl = (endpoint, queryParameters) => {
 
     endpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
 
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = import.meta.env.PROD;
     console.log(`checking production mode ${isProduction}`);
     const urlBase = isProduction ? process.env.CMS_URL : "http://localhost:1337";
     console.log(`url base is ${urlBase}`);
