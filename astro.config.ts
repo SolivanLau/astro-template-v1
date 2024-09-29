@@ -10,9 +10,6 @@ export default defineConfig({
     adapter: netlify({
         imageCDN: false,
     }),
-    // redirects: {
-    //     "/admin": "https://strapi-production-2381.up.railway.app/admin/:splat",
-    // },
     site: "https://astro-template-v1.netlify.app",
     build: {
         inlineStylesheets: "never",
