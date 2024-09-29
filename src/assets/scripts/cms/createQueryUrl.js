@@ -6,9 +6,9 @@ const createQueryUrl = (endpoint, queryParameters) => {
     endpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
 
     const isProduction = process.env.NODE_ENV === "production";
-
+    console.log(`checking production mode ${isProduction}`);
     const urlBase = isProduction ? process.env.CMS_URL : "http://localhost:1337";
-
+    console.log(`url base is ${urlBase}`);
     console.log(
         `Creating cms query url for: ${endpoint.toUpperCase()}. ${isProduction ? "Production CMS" : "Localhost CMS"}`,
     );
