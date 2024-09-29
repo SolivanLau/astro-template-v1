@@ -2,6 +2,7 @@
     "name": "astro-template-v1",
     "version": "0.0.1",
     "scripts": {
+        "dotenvx": "dotenvx",
         "dev": "dotenvx run -f .env.development -- astro dev",
         "check": "dotenvx run -f .env.production -- astro check",
         "build": "astro check && dotenvx run -- astro build",

@@ -3,6 +3,7 @@ import fetchFavicons from "./src/assets/scripts/prebuild/fetchFavicons";
 import partytown from "@astrojs/partytown";
 import icon from "astro-icon";
 import netlify from "@astrojs/netlify";
+import dotenvx from "@dotenvx/dotenvx";
 
 // https://astro.build/config
 export default defineConfig({
