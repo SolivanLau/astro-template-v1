@@ -1,11 +1,15 @@
 ---
-import { readdirSync } from "fs";
-const faviconDir = "public";
+import { readdirSync, existsSync } from "fs";
+import { resolve } from "path";
+
+// Check if 'public' directory exists - otherwise will check / for SSR
+const publicPath = resolve(process.cwd(), "public");
+const faviconDir = existsSync(publicPath) ? publicPath : resolve(process.cwd(), "/");
 const faviconRegex = /^favicon-([^-]+)-(\d+)x\2\.(png|ico|svg)$/;
 
 const checkForCMSFavicons = async () => {
     try {
-        console.log("Searching for local favicons");
+        console.log(`Searching for local favicons at ${faviconDir}`);
         const files = readdirSync(faviconDir);
 
         const cmsFiles = files.filter((file) => faviconRegex.test(file));
