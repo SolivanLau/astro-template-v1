@@ -37,8 +37,6 @@ const queryParameters = {
 // CMS PAGE QUERY
 const pageQuery = await cmsFetch("events", queryParameters);
 
-console.log(pageQuery[0].attributes.eventType);
-
 // GET CURRENT SEASON
 const currentDate = new Date();
 const { seasonStartYear, seasonEndYear, seasonStart, seasonEnd } = getCurrentSeason(currentDate);
@@ -47,29 +45,32 @@ const { seasonStartYear, seasonEndYear, seasonStart, seasonEnd } = getCurrentSea
 let upcomingEvents = [];
 let pastEvents = [];
 
-pageQuery.forEach((event) => {
-    const eventDate = new Date(event.attributes.details.date);
+if (pageQuery && pageQuery.length > 0) {
+    // ORGANIZE EVENTS BY PAST OR UPCOMING
+    pageQuery.forEach((event) => {
+        const eventDate = new Date(event.attributes.details.date);
 
-    if (eventDate >= seasonStart) {
-        upcomingEvents.push(event);
-    }
+        if (eventDate >= seasonStart) {
+            upcomingEvents.push(event);
+        }
 
-    if (eventDate < currentDate) {
-        pastEvents.push(event);
-    }
-});
+        if (eventDate < currentDate) {
+            pastEvents.push(event);
+        }
+    });
 
-// SORTED EVENTS
-upcomingEvents.sort(
-    (a: Event, b: Event) =>
-        parseDate(a.attributes.details.date).getTime() -
-        parseDate(b.attributes.details.date).getTime(),
-);
-pastEvents.sort(
-    (a: Event, b: Event) =>
-        parseDate(b.attributes.details.date).getTime() -
-        parseDate(a.attributes.details.date).getTime(),
-);
+    // SORTING EACH LIST BY DATE
+    upcomingEvents.sort(
+        (a: Event, b: Event) =>
+            parseDate(a.attributes.details.date).getTime() -
+            parseDate(b.attributes.details.date).getTime(),
+    );
+    pastEvents.sort(
+        (a: Event, b: Event) =>
+            parseDate(b.attributes.details.date).getTime() -
+            parseDate(a.attributes.details.date).getTime(),
+    );
+}
 ---
 
 <PageLayout isTurnstile>
