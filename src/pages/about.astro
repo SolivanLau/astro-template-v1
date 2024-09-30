@@ -18,6 +18,8 @@ import headerBg from "@images/home-bg-desktop.webp";
 import composer from "@images/about/composer.jpg";
 import musician from "@images/about/musician.jpg";
 import conductor from "@images/about/conductor.jpg";
+import EventGallery from "@components/EventGallery.astro";
+import { title } from "process";
 // TEMP
 
 // CMS Query
@@ -41,7 +43,15 @@ const querParameters = {
             populate: {
                 title: "*",
                 text: "*",
-                featuredEvents: "*",
+                featuredEvents: {
+                    populate: {
+                        title,
+                        poster: "*",
+                        details: {
+                            populate: "*",
+                        },
+                    },
+                },
             },
         },
         ctaBanner: {
@@ -62,9 +72,10 @@ const querParameters = {
 };
 
 const pageQuery = await cmsFetch("about-page", querParameters);
-const data = pageQuery?.attributes;
 
 const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.attributes;
+
+const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.attributes);
 ---
 
 <PageLayout seo={seo} isTurnstile>
@@ -75,134 +86,182 @@ const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.
     />
     <main>
         <!-- MISSION SECTION -->
-        <section class="mission section__padding">
-            <div class="wrapper">
-                <article class="flow">
-                    <Title tagName="h2" topper={missionStatement.title.subtitle || "Our Mission"}>
-                        {missionStatement.title.title || "Championing Local Musicians & Composers"}
-                    </Title>
+        {
+            missionStatement && (
+                <section class="mission section__padding">
+                    <div class="wrapper">
+                        <article class="flow">
+                            <div class="wrapper wrapper--text flow">
+                                <Title
+                                    tagName="h2"
+                                    topper={missionStatement.title.subtitle || "Our Mission"}
+                                >
+                                    {missionStatement.title.title ||
+                                        "Championing Local Musicians & Composers"}
+                                </Title>
 
-                    <BlockRenderer html={missionStatement.text}>
-                        <p>this is backup content</p>
-                    </BlockRenderer>
+                                <BlockRenderer html={missionStatement.text}>
+                                    <p>
+                                        As a non-profit arts organization, the Toronto Wind
+                                        Collective collaborates with early career musicians and
+                                        composers to bring new wind music to the Greater Toronto
+                                        Community.
+                                    </p>
+                                    <p>
+                                        Our vision is to inspire the love for symphonic works to the
+                                        performance spotlight for the community - we are a
+                                        collective created by musicians in the community, for the
+                                        community.
+                                    </p>
+                                </BlockRenderer>
+                            </div>
 
-                    <Picture
-                        src={missionBanner}
-                        alt="Toronto Wind Collective Performance"
-                        widths={[2000, 1000]}
-                        formats={["webp", "jpg"]}
-                    />
-                </article>
-            </div>
-        </section>
+                            <Picture
+                                src={missionBanner}
+                                alt="Toronto Wind Collective Performance"
+                                widths={[2000, 1000]}
+                                formats={["webp", "jpg"]}
+                            />
+                        </article>
+                    </div>
+                </section>
+            )
+        }
 
         <!-- SERVICES -->
-        <section class="services section__padding">
-            <div class="wrapper">
-                <article class="flow">
-                    <Title tagName="h2" topper={services.title.subtitle || "What We Do"}
-                        >{services.title.title || "Our Services"}</Title
-                    >
+        {
+            services && (
+                <section class="services section__padding">
+                    <div class="wrapper">
+                        <article>
+                            <div class="flow">
+                                <Title
+                                    tagName="h2"
+                                    topper={services.title.subtitle || "What We Do"}
+                                >
+                                    {services.title.title || "Our Services"}
+                                </Title>
 
-                    <BlockRenderer html={services.text}>
-                        <p>
-                            The collective works with early career musicians to write, workshop,
-                            record, and premeire wind compositions!
-                        </p>
-                    </BlockRenderer>
-                </article>
-            </div>
-        </section>
+                                <div class="wrapper wrapper--text flow">
+                                    <BlockRenderer html={services.text}>
+                                        <p>
+                                            The collective works with early career musicians to
+                                            write, workshop, record, and premeire wind compositions!
+                                        </p>
+                                    </BlockRenderer>
+                                </div>
+                            </div>
+
+                            <EventGallery events={serviceFeaturedEvents} />
+                        </article>
+                    </div>
+                </section>
+            )
+        }
 
         <!-- CTA BANNER -->
-        <Banner backgroundImgPath={headerBg} backgroundImgPosition="left" class="cta-banner">
-            <h2 class="title-font--display">Hear Us Live!</h2>
-            <Link url="/events" type="button--secondary-white" class="cta-banner__Link">
-                2024/25 Concert Season
-            </Link>
-        </Banner>
+        {
+            ctaBanner && (
+                <Banner
+                    backgroundImgPath={headerBg}
+                    backgroundImgPosition="left"
+                    class="cta-banner"
+                >
+                    <h2 class="title-font--display">Hear Us Live!</h2>
+                    <Link url="/events" type="button--secondary-white" class="cta-banner__Link">
+                        2024/25 Concert Season
+                    </Link>
+                </Banner>
+            )
+        }
 
         <!-- TEAM -->
-        <DividerLayout
-            dividerTopFileName="dividers/tear-top"
-            dividerBottomFileName="dividers/tear-bottom"
-            color="beige"
-            class="team"
-        >
-            <!-- TITLE & TEXT -->
-            <div class="team__text">
-                <Title tagName="h2" topper="Who We Are" class="team__text__title"
-                    >A Project Based Ensemble</Title
+        {
+            team && (
+                <DividerLayout
+                    dividerTopFileName="dividers/tear-top"
+                    dividerBottomFileName="dividers/tear-bottom"
+                    color="beige"
+                    class="team"
                 >
-                <div class="team__text__description">
-                    <p>
-                        The Toronto Wind Collective is made up of local musicians in the Greater
-                        Toronto Area who bring new compositions to our concert seasons.The
-                        collective consists of 3 types of musicians:
-                    </p>
-                </div>
-            </div>
+                    <div class="team__text">
+                        <Title tagName="h2" topper="Who We Are" class="team__text__title">
+                            A Project Based Ensemble
+                        </Title>
+                        <div class="team__text__description">
+                            <p>
+                                The Toronto Wind Collective is made up of local musicians in the
+                                Greater Toronto Area who bring new compositions to our concert
+                                seasons.The collective consists of 3 types of musicians:
+                            </p>
+                        </div>
+                    </div>
 
-            <!-- MEMBERS -->
-            <ol class="team__members">
-                <!-- COMPOSER -->
-                <li class="team__members-card background__image-parent">
-                    <Icon name="feather" />
-                    <h3 class="h4">Composers</h3>
-                    <p>Write and workshop new wind music for chamber and small wind ensembles.</p>
-                    <Picture
-                        class="background__image"
-                        src={composer}
-                        alt="composer"
-                        widths={[1000]}
-                        formats={["webp", "jpg"]}
-                    />
-                </li>
+                    <ol class="team__members">
+                        <li class="team__members-card background__image-parent">
+                            <Icon name="feather" />
+                            <h3 class="h4">Composers</h3>
+                            <p>
+                                Write and workshop new wind music for chamber and small wind
+                                ensembles.
+                            </p>
+                            <Picture
+                                class="background__image"
+                                src={composer}
+                                alt="composer"
+                                widths={[1000]}
+                                formats={["webp", "jpg"]}
+                            />
+                        </li>
 
-                <!-- MUSICIANS -->
-                <li class="team__members-card background__image-parent">
-                    <Icon name="trumpet" />
-                    <h3 class="h4">Musicians</h3>
-                    <p>Rehearse, record, and perform new works for the Toronto Community!</p>
-                    <Picture
-                        class="background__image"
-                        src={musician}
-                        alt="composer"
-                        widths={[1000, 500]}
-                        formats={["webp", "jpg"]}
-                    />
-                </li>
-                <!-- CONDUCTORS -->
-                <li class="team__members-card background__image-parent">
-                    <Icon name="wand" />
-                    <h3 class="h4">Conductors</h3>
-                    <p>Collaborate with composers and musicians to bring each piece to life!</p>
-                    <Picture
-                        class="background__image"
-                        src={conductor}
-                        alt="composer"
-                        widths={[1000]}
-                        formats={["webp", "jpg"]}
-                    />
-                </li>
-            </ol>
+                        <li class="team__members-card background__image-parent">
+                            <Icon name="trumpet" />
+                            <h3 class="h4">Musicians</h3>
+                            <p>
+                                Rehearse, record, and perform new works for the Toronto Community!
+                            </p>
+                            <Picture
+                                class="background__image"
+                                src={musician}
+                                alt="composer"
+                                widths={[1000, 500]}
+                                formats={["webp", "jpg"]}
+                            />
+                        </li>
+                        <li class="team__members-card background__image-parent">
+                            <Icon name="wand" />
+                            <h3 class="h4">Conductors</h3>
+                            <p>
+                                Collaborate with composers and musicians to bring each piece to
+                                life!
+                            </p>
+                            <Picture
+                                class="background__image"
+                                src={conductor}
+                                alt="composer"
+                                widths={[1000]}
+                                formats={["webp", "jpg"]}
+                            />
+                        </li>
+                    </ol>
 
-            <!-- CTA -->
-            <div class="team__cta">
-                <p class="h6 cta">
-                    We are currently looking for wind musicians and composers to collaborate for our
-                    upcoming season!
-                </p>
+                    <div class="team__cta">
+                        <p class="h6 cta">
+                            We are currently looking for wind musicians and composers to collaborate
+                            for our upcoming season!
+                        </p>
 
-                <Link url="/contact" type="button--primary">Join the Collective</Link>
-            </div>
-        </DividerLayout>
+                        <Link url="/contact" type="button--primary">
+                            Join the Collective
+                        </Link>
+                    </div>
+                </DividerLayout>
+            )
+        }
 
         <!-- NEWSLETTER -->
         <Newsletter extraPadding="top" class="newsletter" />
     </main>
-
-    <section class="test background__image-parent"></section>
 </PageLayout>
 
 <style lang="scss">

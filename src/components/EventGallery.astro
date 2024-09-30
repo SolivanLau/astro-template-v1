@@ -1,7 +1,149 @@
 ---
 import Link from "./Link.astro";
 import Picture from "astro/components/Picture.astro";
+import { Icon } from "astro-icon/components";
+import { formatTime, formatDate } from "@assets/scripts/lib/time";
+import { generateGoogleMapsLink } from "@assets/scripts/lib/googleMaps";
 
+interface Props {
+    events: any[];
+    class?: string;
+    [key: string]: any;
+}
+
+const { events, class: className, ...rest } = Astro.props;
 ---
 
+<!-- EVENT GALLERY -->
+<ul class:list={["events__list", className]} {...rest}>
+    {
+        events.map((event) => {
+            const { title, slug, poster, eventType, details } = event || {};
 
+            return (
+                // EVENT CARD
+                <li class="events__item">
+                    {/* POSTER */}
+                    <Link url={`/events/${slug}`}>
+                        <Picture
+                            src={poster.data.attributes.url}
+                            alt={title}
+                            width={400}
+                            height={533.33}
+                            class="events__img"
+                        />
+                    </Link>
+                    {/* TITLE */}
+                    <h3 class="h5 events__title">{title}</h3>
+                    {/* DETAILS */}
+                    <ul class="events__info">
+                        {/* EVENT TYPE */}
+                        <li class="events__detail">
+                            {eventType === "concert" ? (
+                                <>
+                                    <Icon name={"ticket"} class="events__icon" />
+                                    <p>Live Concert</p>
+                                </>
+                            ) : (
+                                <>
+                                    <Icon name={"video"} />
+                                    <p>Video Premiere</p>
+                                </>
+                            )}
+                        </li>
+                        {/* DATE AND TIME */}
+                        <li class="events__detail">
+                            <Icon name="calendar-filled" class="events__icon" />
+                            <time>
+                                {formatDate(details.date, "short")}
+                                {details.startTime && ` | ${formatTime(details.startTime)}`}
+                            </time>
+                        </li>
+
+                        {/* LOCATION */}
+                        <li>
+                            <Link
+                                class="events__detail"
+                                url={generateGoogleMapsLink(details.location)}
+                                isLinkExternal
+                                type="text--light-visible"
+                            >
+                                <Icon name="location-filled" class="events__icon" />
+                                <address>
+                                    {details.location.addressLineOne},{details.location.city}
+                                </address>
+                            </Link>
+                        </li>
+                    </ul>
+
+                    {/* CTA */}
+                    <Link url={`/events/${slug}`} type="button--primary" class="events__cta">
+                        {eventType === "concert" ? "Concert Info" : "Watch Now"}
+                    </Link>
+                </li>
+            );
+        })
+    }
+</ul>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    .events__list {
+        padding-block: var(--spc-lg);
+        display: grid;
+        gap: var(--spc-lg);
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        place-items: center;
+    }
+    .events__item {
+        width: 100%;
+        max-width: 350px;
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 4;
+        justify-content: center;
+        gap: var(--spc-sm);
+
+        @include responsive-style(mobile) {
+            justify-self: center;
+            grid-template-rows: auto;
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+    .events__img {
+        height: fit-content;
+        @include responsive-style(mobile) {
+            width: 100%;
+            max-width: 300px;
+            margin-inline: auto;
+        }
+    }
+
+    .events__title {
+        width: 100%;
+        align-self: start;
+    }
+    .events__info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spc-xs);
+    }
+    .events__detail {
+        display: flex;
+        gap: var(--spc-xs);
+        align-items: center;
+        width: fit-content;
+    }
+
+    .events__icon {
+        font-size: 25px;
+        color: var(--clr-brand-primary);
+    }
+
+    .events__cta {
+        width: 100%;
+    }
+</style>

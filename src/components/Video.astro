@@ -24,6 +24,7 @@ const { name, composer, description }: { name: string; composer: string; descrip
 <div class="video">
     <h2>Watch & Listen</h2>
 
+    <!-- Embed -->
     <div class="video__embed-container background__image-parent">
         <iframe
             class="video__embed"
@@ -48,6 +49,8 @@ const { name, composer, description }: { name: string; composer: string; descrip
             <Icon name="youtube-play" />
         </Link>
     </div>
+
+    <!-- text -->
     <div class="flow">
         {
             name && (
@@ -60,6 +63,7 @@ const { name, composer, description }: { name: string; composer: string; descrip
         {description && <p>{description}</p>}
     </div>
 
+    <!-- CTA -->
     <div class="video__cta">
         <ul class="video__socials">
             <li>

@@ -1,21 +1,23 @@
 @use "@styles/partials/abstracts/mixins" as *;
 // content wrapper
-.wrapper,
-.wrapper--sm {
-    --max-width: 1280px;
-    --gutter-width: 40px;
-    width: min(var(--max-width), 100% - var(--gutter-width));
-    margin-inline: auto;
+.wrapper {
+    --_max-width: 1280px;
+    --_gutter-width: 40px;
+    --_margin-inline: auto;
+    width: min(var(--_max-width), 100% - var(--_gutter-width));
+    margin-inline: var(--_margin-inline);
 }
 
 .wrapper--sm {
-    --max-width: 768px;
+    --_max-width: 768px;
 }
-
-.text-wrap {
-    max-width: 76ch;
+.wrapper--text {
+    --_max-width: 90ch;
+    --_gutter-width: 0;
+    --_margin-inline: 0;
+    width: auto;
+    max-width: var(--_max-width);
 }
-
 // stack
 .stack {
     display: grid;

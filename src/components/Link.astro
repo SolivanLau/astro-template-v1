@@ -5,7 +5,9 @@ interface Props {
     class?: string;
     type?:
         | "text--dark"
+        | "text--dark-visible"
         | "text--light"
+        | "text--light-visible"
         | "button--primary"
         | "button--secondary"
         | "button--secondary-white";
@@ -30,6 +32,8 @@ const classTypes = type && type.includes("button") ? `button ${type}` : type;
 </a>
 
 <style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
     a {
         text-decoration: none;
         transition: all 0.2s ease;
@@ -37,14 +41,37 @@ const classTypes = type && type.includes("button") ? `button ${type}` : type;
 
     .text--light {
         color: var(--clr-brand-primary);
+        font-weight: 700;
+
+        &:hover,
+        &:focus {
+            filter: brightness(110%);
+        }
+    }
+
+    .text--light-visible {
+        color: var(--clr-brand-primary);
+        font-weight: 700;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus {
+            filter: brightness(110%);
+        }
+    }
+
+    .text--dark {
+        color: var(--clr-white);
+
         &:hover,
         &:focus {
             color: var(--clr-brand-accent);
         }
     }
 
-    .text--dark {
+    .text--dark-visible {
         color: var(--clr-white);
+        text-decoration: underline;
 
         &:hover,
         &:focus {

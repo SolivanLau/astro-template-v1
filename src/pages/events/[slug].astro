@@ -38,6 +38,9 @@ export const getStaticPaths = (async () => {
             youtubeVideo: {
                 populate: "*",
             },
+            guests: {
+                populate: "*",
+            },
             seo: "*",
         },
     };
@@ -57,14 +60,13 @@ interface Props {
     about: any;
     program: any;
     youtubeVideo: any;
+    guests: any;
     seo: any;
 }
 
-const { title, subtitle, poster, details, about, program, youtubeVideo, seo } = Astro.props;
+const { title, subtitle, poster, details, about, program, youtubeVideo, guests, seo } = Astro.props;
 
 const mapsLink = generateGoogleMapsLink(details?.location);
-// TO DO:
-// CMS DATA for  details
 ---
 
 <PageLayout seo={seo} isTurnstile>
@@ -126,7 +128,7 @@ const mapsLink = generateGoogleMapsLink(details?.location);
                                         <Link
                                             class="details__item"
                                             url={mapsLink}
-                                            type="text--dark"
+                                            type="text--dark-visible"
                                             isLinkExternal
                                         >
                                             <Icon name="location" />
@@ -184,6 +186,7 @@ const mapsLink = generateGoogleMapsLink(details?.location);
         }
 
         <!-- FEATURED GUESTS -->
+        {}
         <section class="event__featured section__padding">
             <div class="wrapper">
                 <Title tagName="h2" topper="Mosaic">Featured Guests</Title>
@@ -316,6 +319,7 @@ const mapsLink = generateGoogleMapsLink(details?.location);
                 height: fit-content;
                 position: sticky;
                 top: var(--spc-med);
+                box-shadow: 5px 4px 3.3px 0px rgba(0, 0, 0, 0.25);
             }
         }
 
