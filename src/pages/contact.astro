@@ -8,7 +8,7 @@ import Link from "@components/Link.astro";
 import { Icon } from "astro-icon/components";
 import ContactForm from "@components/ContactForm.astro";
 import Newsletter from "@components/Newsletter.astro";
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 // Assets
 import tempBg from "@images/home-bg-desktop.webp";
 ---
@@ -23,11 +23,13 @@ import tempBg from "@images/home-bg-desktop.webp";
                     <!-- TEXT -->
                     <div class="contact__text flow">
                         <!-- IMAGE  -->
-                        <Image
+                        <Picture
                             src={tempBg}
                             alt="Toronto Wind Collective"
+                            width={1200}
                             height={200}
                             widths={[1200, 600]}
+                            sizes="(max-width: 500px) 600px, 1200px"
                             loading="eager"
                         />
                         <p>

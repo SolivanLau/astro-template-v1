@@ -1,0 +1,29 @@
+---
+// Scripts
+import cmsFetch from "@assets/scripts/cms/cmsFetch";
+// Layouts
+import Header from "@layouts/Header.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+// Block Renderer
+import BlockRenderer from "@components/BlockRenderer.astro";
+
+const queryParameters = {
+    populate: {
+        statement: "*",
+        seo: {
+            populate: "*",
+        },
+    },
+};
+
+const pageQuery = await cmsFetch("privacy-page", queryParameters);
+const { statement, seo } = pageQuery.attributes || {};
+---
+
+<PageLayout seo={seo}>
+    <Header title="Privacy Policy" subtitle="Details on your rights and our data practices." />
+
+    <main class="wrapper section__padding flow">
+        <BlockRenderer html={statement} />
+    </main>
+</PageLayout>
