@@ -1,15 +1,15 @@
 ---
 export const prerender = false;
-// CMS Scripts
+// Scripts
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
 import { getCurrentSeason, parseDate } from "@assets/scripts/lib/time";
-// Layouts & Components
+// Layouts
 import PageLayout from "@layouts/PageLayout.astro";
 import EventGallery from "@components/EventGallery.astro";
+import Newsletter from "@components/Newsletter.astro";
+//  Components
 import Header from "@layouts/Header.astro";
 import Title from "@components/Title.astro";
-import Newsletter from "@components/Newsletter.astro";
-
 // ASSETS
 import bgHeader from "@images/events-bg.png";
 interface EventDetails {

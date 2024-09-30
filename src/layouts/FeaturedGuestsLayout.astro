@@ -1,0 +1,110 @@
+---
+// COMPONENNTS
+import Title from "@components/Title.astro";
+import BlockRenderer from "@components/BlockRenderer.astro";
+import { Picture } from "astro:assets";
+
+interface Props {
+    guests?: any[];
+    class?: string;
+    [key: string]: any;
+}
+
+const { guests, class: className, ...rest } = Astro.props;
+---
+
+<section class:list={["event__featured section__padding", className]} {...rest}>
+    <div class="wrapper">
+        <Title tagName="h2" topper="Mosaic">Featured Guests</Title>
+    </div>
+    {
+        guests.map((guest) => {
+            const { name, guestType, guestPiece, picture, description } = guest || {};
+
+            return (
+                <article class="event__featured__guest wrapper">
+                    {picture && (
+                        <Picture
+                            src={picture.data.attributes.url}
+                            alt={`${name}: ${guestType} ${guestPiece && `- ${guestPiece}`}`}
+                            width={picture.data.attributes.width}
+                            height={picture.data.attributes.height}
+                            widths={[800, 400]}
+                            formats={["avif", "webp", "jpeg"]}
+                            sizes="(max-width: 768px) 400px, 800px"
+                            class="event__featured__guest__img"
+                        />
+                    )}
+
+                    <div class=" flow event__featured__guest__text">
+                        <Title
+                            tagName="h3"
+                            topper={`${guestType} - ${guestPiece}`}
+                            type="title--secondary"
+                        >
+                            {name}
+                        </Title>
+
+                        {description && <BlockRenderer html={description} />}
+                    </div>
+                </article>
+            );
+        })
+    }
+</section>
+
+<style lang="scss">
+    @use "@styles/partials/abstracts/mixins" as *;
+
+    // FEATURED GUESTS
+    .event__featured {
+        background-color: var(--clr-beige);
+        display: grid;
+        gap: var(--spc-lg);
+
+        &__guest {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--spc-lg);
+
+            // even child gets different layout (excludes first child aka title)
+            &:nth-child(2n + 3) {
+                grid-template-columns: 2fr 1fr;
+
+                picture {
+                    grid-area: 1 / 2;
+                }
+            }
+
+            &__img {
+                aspect-ratio: 1 / 1;
+                width: 100%;
+                min-width: 300px;
+                max-width: 400px;
+                height: fit-content;
+                object-position: top center;
+            }
+        }
+    }
+
+    @include responsive-style(tablet) {
+        .event__featured {
+            &__guest,
+            &__guest:nth-child(2n + 3) {
+                grid-template-columns: 1fr;
+
+                picture {
+                    grid-area: 1 / 1;
+                }
+
+                .event__featured__guest__img {
+                    position: static;
+                    width: 100%;
+                    min-width: 0;
+                    max-width: none;
+                    aspect-ratio: 16 / 8;
+                }
+            }
+        }
+    }
+</style>

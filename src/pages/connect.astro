@@ -5,12 +5,6 @@ import cmsFetch from "@assets/scripts/cms/cmsFetch";
 // CMS query params
 const queryParameters = {
     populate: {
-        profile: {
-            populate: "*",
-        },
-        links: {
-            populate: "*",
-        },
         seo: {
             populate: "*",
         },
@@ -19,20 +13,12 @@ const queryParameters = {
 // CMS page query
 const pageQuery = await cmsFetch("connect-page", queryParameters);
 
-const { profile, links, seo } = pageQuery.attributes;
+const { profile, links, seo } = pageQuery.attributes || {};
 ---
 
-<PageLayout seo={seo}>
+<PageLayout>
     <Header title="Connect" />
     <main>
         <div class="wrapper"></div>
     </main>
 </PageLayout>
-
-<!-- TESTING -->
-<script define:vars={{ pageQuery, profile, links, seo }}>
-    console.log(pageQuery);
-    console.log("Profile:", profile);
-    console.log("Links:", links);
-    console.log("SEO:", seo.structuredData);
-</script>
