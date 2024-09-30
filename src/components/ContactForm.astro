@@ -65,13 +65,13 @@ const { class: className, ...rest } = Astro.props;
         contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             submitButton.disabled = true;
-            const formData = new FormData(form).toString();
+            const formData = new FormData(form) as any;
 
             try {
                 const send = await fetch("/", {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams(formData),
+                    body: new URLSearchParams(formData).toString(),
                 });
 
                 if (!send.ok) {
