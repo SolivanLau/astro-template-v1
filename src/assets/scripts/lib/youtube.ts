@@ -22,10 +22,12 @@ const constructYoutubeUrl = (
         /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/.+\/|(?:v|e(?:mbed)?|live)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 
     const match = url.match(urlRegex);
+
     if (match) {
-        const watchUrl = `https://www.youtube.com/watch?v=${match[1]}`;
         const imageUrl = `https://img.youtube.com/vi/${match[1]}/sddefault.jpg`;
-        const embedUrl = `https://www.youtube.com/embed/${match[1]}`;
+        let watchUrl = `https://www.youtube.com/watch?v=${match[1]}`;
+        let embedUrl = `https://www.youtube.com/embed/${match[1]}`;
+
         return { embedUrl, imageUrl, watchUrl };
     } else {
         return null;

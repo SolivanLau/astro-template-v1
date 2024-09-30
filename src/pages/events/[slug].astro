@@ -175,8 +175,9 @@ const mapsLink = generateGoogleMapsLink(details?.location);
                 <DividerLayout
                     dividerTopFileName="dividers/tear-top"
                     dividerBottomFileName="dividers/tear-bottom"
-                    bgColorBottom="beige"
+                    bgColorBottom={guests.length < 1 ? null : "beige"}
                     color="brand-primary"
+                    class="video"
                 >
                     <Video url={youtubeVideo?.url} piece={youtubeVideo?.piece} />
                 </DividerLayout>
@@ -184,10 +185,10 @@ const mapsLink = generateGoogleMapsLink(details?.location);
         }
 
         <!-- FEATURED GUESTS -->
-        {guests && <FeaturedGuestsLayout guests={guests} />}
+        {guests && guests.length > 0 && <FeaturedGuestsLayout guests={guests} />}
 
         <!-- NEWSLETTER -->
-        <Newsletter />
+        <Newsletter class="newsletter" extraPadding={guests.length < 1 ? "top" : null} />
     </main>
 </PageLayout>
 
@@ -310,6 +311,16 @@ const mapsLink = generateGoogleMapsLink(details?.location);
             &__text {
                 gap: var(--spc-med);
             }
+        }
+    }
+
+    // NEWSLETTER
+    .video + .newsletter {
+        --_overlap: calc(#{rem(40)} * -1);
+
+        margin-block-start: var(--_overlap);
+        @include responsive-style(tablet) {
+            --_overlap: calc(#{rem(20)} * -1);
         }
     }
 </style>
