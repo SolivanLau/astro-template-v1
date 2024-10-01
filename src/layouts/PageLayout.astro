@@ -1,10 +1,14 @@
 ---
 import "@styles/styles.scss";
+// SCRIPTS
 import cmsFetch from "@assets/scripts/cms/cmsFetch";
+// LAOUTS
 import Navigation from "@components/nav/Navigation.astro";
 import Footer from "@components/Footer.astro";
+// COMPONENTS
 import Favicon from "@components/head/Favicon.astro";
 import Seo from "@components/head/Seo.astro";
+import Preview from "@components/Preview.astro";
 
 interface Props {
     seo?: any;
@@ -48,6 +52,7 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
         }
     </head>
     <body class="page-layout overlay">
+        <Preview />
         <Navigation
             logo={logo.data.attributes}
             mainNavigation={mainNavigation}

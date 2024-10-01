@@ -1,5 +1,13 @@
 import createQueryUrl from "./createQueryUrl";
 
+/**
+ * Fetches data from the Strapi CMS instance. Requires a valid token and
+ * endpoint. Will return null if the request fails.
+ *
+ * @param {string} endpoint The endpoint to query, e.g. "events".
+ * @param {object} options An object containing query parameters, e.g. populate.
+ * @return {Promise<object | null>} The data from the CMS, or null if there was an error.
+ */
 const cmsFetch = async (endpoint, options) => {
     const url = createQueryUrl(endpoint, options);
     // network or cors errors

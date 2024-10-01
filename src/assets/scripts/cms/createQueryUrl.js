@@ -1,5 +1,16 @@
 import qs from "qs";
 
+/**
+ * Creates a query URL for the Strapi CMS. Will generate a URL with parameters
+ * based on the passed queryParameters object. If the queryParameters object is
+ * null or undefined, it will return the base URL for the passed endpoint.
+ *
+ * @param {string} endpoint The endpoint to query, e.g. "events" or "about".
+ * @param {object} queryParameters An object containing query parameters, e.g.
+ * {populate: {title: "*", poster: "*"}}.
+ *
+ * @return {URL} A URL object that can be used to query the Strapi CMS.
+ */
 const createQueryUrl = (endpoint, queryParameters) => {
     // sanitize endpoint with not additional slash /
     endpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;

@@ -1,0 +1,43 @@
+---
+// COMPONENTS
+import { Icon } from "astro-icon/components";
+const isPreview = process.env.IS_PREVIEW_MODE;
+---
+
+{
+    isPreview && (
+        <div class="preview ">
+            <Icon name="trumpet" />
+            <p>
+                You are currently viewing this site in <strong>preview mode</strong>.
+            </p>
+        </div>
+    )
+}
+
+<style lang="scss">
+    .preview {
+        position: fixed;
+        z-index: 10000;
+        bottom: 15vh;
+        right: 0px;
+        // layout
+        display: flex;
+        align-items: start;
+        gap: var(--spc-sm);
+        // styles
+        box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
+        max-width: 300px;
+        background-color: var(--clr-brand-primary);
+        color: var(--clr-white);
+        padding: var(--spc-med);
+        opacity: 0.6;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    [data-icon] {
+        font-size: 50px;
+    }
+</style>
