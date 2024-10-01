@@ -10,8 +10,6 @@ interface Props {
     ctaButton?: any;
 }
 const { logo, mainNavigation, ctaButton } = Astro.props || {};
-
-const { imageMedia, description } = logo || {};
 ---
 
 <nav class="navigation__main" role="navigation">
@@ -19,10 +17,10 @@ const { imageMedia, description } = logo || {};
         <!-- LOGO -->
         <Link url="/">
             {
-                logo.imageMedia.data ? (
+                logo ? (
                     <Picture
                         class="logo"
-                        src={imageMedia.data.attributes.url}
+                        src={logo.url}
                         loading="eager"
                         alt="Toronto Wind Collective logo"
                         widths={[600, 300]}

@@ -1,14 +1,17 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import Link from "@components/Link.astro";
-import logo from "@images/logos/logo.svg";
+import backupLogo from "@images/logos/logo.svg";
 import { Icon } from "astro-icon/components";
 
 interface Props {
-    cmsData?: any;
+    logo?: any;
+    bio?: string;
+    navigation?: [{ id: number; url: string; label: string; isLinkExternal: boolean }];
+    socials?: any;
 }
 
-const { cmsData } = Astro.props;
+const { logo, bio, navigation, socials } = Astro.props;
 ---
 
 <footer>
@@ -17,28 +20,73 @@ const { cmsData } = Astro.props;
         <!-- COMPANY INFO -->
         <div class="footer__info">
             <Link url="/">
-                <Image src={logo} alt="Toronto Wind Collective" width={300} />
+                {
+                    logo ? (
+                        <Picture
+                            src={backupLogo}
+                            alt="Toronto Wind Collective"
+                            width={logo.width}
+                            height={logo.height}
+                            widths={[600, 300]}
+                            sizes="(max-width: 400px) 100vw, 600px"
+                            class="footer__logo"
+                        />
+                    ) : (
+                        <Picture
+                            src={backupLogo}
+                            alt="Toronto Wind Collective"
+                            width={300}
+                            class="footer__logo"
+                        />
+                    )
+                }
             </Link>
             <h2 class="sr-only">Toronto Wind Collective</h2>
-            <p>A project based ensemble, supporting early musicians and composers.</p>
+            <p>
+                {bio ? bio : "A project based ensemble, supporting early musicians and composers."}
+            </p>
             <Link url="/events" type="button--primary">Concerts & Events</Link>
         </div>
         <!-- NAVIGATION -->
         <nav class="footer__nav">
             <h2>Navigation</h2>
             <ul class="list">
-                <li>
-                    <Link url="/" type="text--dark">Home</Link>
-                </li>
-                <li>
-                    <Link url="/about" type="text--dark">About</Link>
-                </li>
-                <li>
-                    <Link url="/events" type="text--dark">Concerts & Events</Link>
-                </li>
-                <li>
-                    <Link url="/contact" type="text--dark">Contact Us</Link>
-                </li>
+                {
+                    // CMS MENU
+                    navigation ? (
+                        navigation.map(({ url, label, isLinkExternal }) => (
+                            <li>
+                                <Link url={url} isLinkExternal={isLinkExternal} type="text--dark">
+                                    {label}
+                                </Link>
+                            </li>
+                        ))
+                    ) : (
+                        // Default menu
+                        <>
+                            <li>
+                                <Link url="/" type="text--dark">
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link url="/about" type="text--dark">
+                                    About
+                                </Link>
+                            </li>
+                            <li>
+                                <Link url="/events" type="text--dark">
+                                    Concerts & Events
+                                </Link>
+                            </li>
+                            <li>
+                                <Link url="/contact" type="text--dark">
+                                    Contact Us
+                                </Link>
+                            </li>
+                        </>
+                    )
+                }
             </ul>
         </nav>
         <!-- CONTACT & SOCIALS -->
@@ -64,33 +112,53 @@ const { cmsData } = Astro.props;
             <div class="socials">
                 <h2 class="sr-only">Socials</h2>
                 <ul class="list">
-                    <li>
-                        <Link
-                            url="https://www.instagram.com/torontowindcollective/"
-                            isLinkExternal
-                            type="button--primary"
-                        >
-                            <Icon name={"socials/instagram"} title="instagram" />
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            url="https://www.youtube.com/@TorontoWindCollective"
-                            isLinkExternal
-                            type="button--primary"
-                        >
-                            <Icon name={"socials/youtube"} title="youtube" />
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            url="https://www.facebook.com/@TorontoWindCollective"
-                            isLinkExternal
-                            type="button--primary"
-                        >
-                            <Icon name={"socials/facebook"} title="facebook" />
-                        </Link>
-                    </li>
+                    {
+                        socials ? (
+                            socials.map(({ attributes }) => {
+                                const { socialPlatform, link } = attributes || {};
+                                return (
+                                    <li>
+                                        <Link url={link.url} isLinkExternal type="text--dark">
+                                            <Icon
+                                                name={`socials/${socialPlatform}`}
+                                                title={link.label}
+                                            />
+                                        </Link>
+                                    </li>
+                                );
+                            })
+                        ) : (
+                            <>
+                                <li>
+                                    <Link
+                                        url="https://www.instagram.com/torontowindcollective/"
+                                        isLinkExternal
+                                        type="button--primary"
+                                    >
+                                        <Icon name={"socials/instagram"} title="instagram" />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        url="https://www.youtube.com/@TorontoWindCollective"
+                                        isLinkExternal
+                                        type="button--primary"
+                                    >
+                                        <Icon name={"socials/youtube"} title="youtube" />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        url="https://www.facebook.com/@TorontoWindCollective"
+                                        isLinkExternal
+                                        type="button--primary"
+                                    >
+                                        <Icon name={"socials/facebook"} title="facebook" />
+                                    </Link>
+                                </li>
+                            </>
+                        )
+                    }
                 </ul>
             </div>
         </div>
@@ -135,6 +203,12 @@ const { cmsData } = Astro.props;
         color: var(--clr-white);
     }
 
+    // LOGO & CTA
+    .footer__logo {
+        width: 300px;
+        aspect-ratio: 300 / 150;
+        height: fit-content;
+    }
     // CTA
     .footer__cta {
         display: flex;
@@ -217,6 +291,7 @@ const { cmsData } = Astro.props;
 
         a {
             text-decoration: underline;
+            width: fit-content;
         }
     }
 

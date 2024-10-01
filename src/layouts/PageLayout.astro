@@ -15,20 +15,23 @@ const { seo, isTurnstile, class: className, ...rest } = Astro.props;
 
 const queryParameters = {
     populate: {
-        navigation: {
+        logo: "*",
+        navigation: "*",
+        mainNavigation: "*",
+        footer: {
             populate: {
-                logo: {
+                bio: "*",
+                ctaButton: "*",
+                navigation: "*",
+                socials: {
                     populate: "*",
                 },
-                ctaButton: "*",
             },
         },
-        mainNavigation: "*",
-        footer: "*",
     },
 };
 const pageQuery = await cmsFetch("site-information", queryParameters);
-const { navigation, mainNavigation, footer } = pageQuery.attributes || {};
+const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
 ---
 
 <!doctype html>
@@ -46,14 +49,19 @@ const { navigation, mainNavigation, footer } = pageQuery.attributes || {};
     </head>
     <body class="page-layout overlay">
         <Navigation
-            logo={navigation.logo}
+            logo={logo.data.attributes}
             mainNavigation={mainNavigation}
             ctaButton={navigation.ctaButton}
         />
         <div class:list={["content", className]} {...rest}>
             <slot />
         </div>
-        <Footer />
+        <Footer
+            logo={logo.data.attributes}
+            bio={footer.bio}
+            navigation={footer.navigation}
+            socials={footer.socials.data}
+        />
     </body>
 </html>
 
