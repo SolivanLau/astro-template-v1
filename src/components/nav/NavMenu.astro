@@ -4,7 +4,7 @@ import SubMenu from "./SubMenu.astro";
 
 interface Props {
     cmsData: {
-        menu?: any;
+        mainNavigation?: any;
         ctaButton?: any;
     };
     class?: string;
@@ -13,16 +13,16 @@ interface Props {
 
 const { cmsData, class: className, ...rest } = Astro.props;
 
-const { menu, ctaButton } = cmsData || {};
+const { mainNavigation, ctaButton } = cmsData || {};
 ---
 
 <div class:list={["menu__container", className]} {...rest}>
     <ul class="menu__list">
         {
-            menu &&
+            mainNavigation &&
             // CMS menu
-            menu.length > 0 ? (
-                menu.map((link) => {
+            mainNavigation.length > 0 ? (
+                mainNavigation.map((link) => {
                     // Regular Link
                     if (link.__component === "shared.link") {
                         return (
@@ -31,6 +31,7 @@ const { menu, ctaButton } = cmsData || {};
                                     url={link.url}
                                     isLinkExternal={link.isLinkExternal}
                                     type="text--dark"
+                                    class="menu__link"
                                 >
                                     {link.label}
                                 </Link>
@@ -50,22 +51,22 @@ const { menu, ctaButton } = cmsData || {};
                 // Default menu
                 <>
                     <li>
-                        <Link url="/" type="text--dark">
+                        <Link url="/" type="text--dark" class="menu__link">
                             Home
                         </Link>
                     </li>
                     <li>
-                        <Link url="/about" type="text--dark">
+                        <Link url="/about" type="text--dark" class="menu__link">
                             About
                         </Link>
                     </li>
                     <li>
-                        <Link url="/events" type="text--dark">
+                        <Link url="/events" type="text--dark" class="menu__link">
                             Concert & Events
                         </Link>
                     </li>
                     <li>
-                        <Link url="/contact" type="text--dark">
+                        <Link url="/contact" type="text--dark" class="menu__link">
                             Contact Us
                         </Link>
                     </li>
@@ -73,7 +74,7 @@ const { menu, ctaButton } = cmsData || {};
             )
         }
     </ul>
-    <!-- mobile cta -->
+    <!-- MOBILE CTA -->
     {
         (
             <Link
@@ -102,7 +103,7 @@ const { menu, ctaButton } = cmsData || {};
         margin: 0;
     }
 
-    .text--dark[aria-current="page"] {
+    .menu__link[aria-current="page"] {
         color: var(--clr-brand-accent);
     }
 
@@ -110,10 +111,9 @@ const { menu, ctaButton } = cmsData || {};
 
     // TABLET
     @include responsive-style(900) {
-        .menu__list {
-            :global(a) {
-                font-size: var(--font-sz-300);
-            }
+        .menu__link,
+        .mobile-cta {
+            font-size: var(--font-sz-300);
         }
     }
     @include responsive-style(tablet) {
@@ -130,38 +130,28 @@ const { menu, ctaButton } = cmsData || {};
             min-height: 100vh;
             min-height: 100dvh;
             padding: 120px var(--spc-med) var(--spc-xl);
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
+            // layout
+            display: grid;
+            align-content: center;
             gap: var(--spc-xl);
             background-color: var(--clr-black);
+            // close state
             transform: translateX(100%);
             transition: transform 0.4s ease-in-out;
         }
         .menu__list {
             width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            max-height: 350px;
-            // layout
             flex-direction: column;
-            justify-content: flex-start;
             gap: var(--spc-med);
-            align-items: start;
-            overflow-y: auto;
-
-            :global(a) {
-                font-size: var(--font-sz-600);
-            }
         }
-
+        .menu__link,
+        .mobile-cta {
+            font-size: clamp(var(--font-sz-400), 1.76vw + 0.81rem, var(--font-sz-600));
+        }
         .mobile-cta {
             display: block;
+            align-self: flex-start;
             width: 100%;
-            a {
-                display: block;
-                text-align: center;
-            }
         }
     }
 
@@ -169,14 +159,6 @@ const { menu, ctaButton } = cmsData || {};
     @include responsive-style(mobile) {
         .menu__container {
             --menu-width: 80%;
-            :global(a) {
-                font-size: var(--font-sz-400);
-            }
-            .menu__list {
-                margin-top: var(--spc-xl);
-
-                max-height: 250px;
-            }
         }
     }
 </style>

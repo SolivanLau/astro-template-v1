@@ -4,8 +4,12 @@ import Link from "@components/Link.astro";
 import NavMenu from "./NavMenu.astro";
 import NavMobileButton from "./NavMobileButton.astro";
 import logoBackup from "@images/logos/logo.svg";
-
-const { logo, menu, ctaButton } = Astro.props.cmsData?.attributes || {};
+interface Props {
+    logo?: any;
+    mainNavigation?: any;
+    ctaButton?: any;
+}
+const { logo, mainNavigation, ctaButton } = Astro.props || {};
 
 const { imageMedia, description } = logo || {};
 ---
@@ -14,21 +18,36 @@ const { imageMedia, description } = logo || {};
     <div class="wrapper">
         <!-- LOGO -->
         <Link url="/">
-            <Picture
-                class="logo"
-                src={logoBackup}
-                loading="eager"
-                alt="Toronto Wind Collective logo"
-                widths={[600]}
-                sizes="(max-width: 768px) 300px, 600px"
-                width={150}
-                height={75}
-            />
+            {
+                logo.imageMedia.data ? (
+                    <Picture
+                        class="logo"
+                        src={imageMedia.data.attributes.url}
+                        loading="eager"
+                        alt="Toronto Wind Collective logo"
+                        widths={[600, 300]}
+                        sizes="(max-width: 768px) 300px, 600px"
+                        width={150}
+                        height={75}
+                    />
+                ) : (
+                    <Picture
+                        class="logo"
+                        src={logoBackup}
+                        loading="eager"
+                        alt="Toronto Wind Collective logo"
+                        widths={[600, 300]}
+                        sizes="(max-width: 768px) 300px, 600px"
+                        width={150}
+                        height={75}
+                    />
+                )
+            }
         </Link>
         <!-- MOBILE MENU BUTTON -->
         <NavMobileButton class="mobile-menu-button" />
         <!-- MENU -->
-        <NavMenu class="navigation-menu" cmsData={{ menu, ctaButton }} />
+        <NavMenu class="navigation-menu" cmsData={{ mainNavigation, ctaButton }} />
 
         <!-- CTA BUTTON -->
         <div class="cta-button">
@@ -56,13 +75,12 @@ const { imageMedia, description } = logo || {};
         color: var(--clr-white);
         position: relative;
         z-index: 999;
+    }
 
-        // text specific styles
-        :global(.text--dark) {
-            &[aria-current="page"] {
-                color: var(--clr-brand-accent);
-            }
-        }
+    // logo
+    .logo {
+        aspect-ratio: 150 / 75;
+        object-fit: contain;
     }
     // layout
     .wrapper {
@@ -76,6 +94,9 @@ const { imageMedia, description } = logo || {};
 
     // TABLET
     @include responsive-style(900) {
+        .logo {
+            max-height: 60px;
+        }
         .cta-button .button--primary {
             font-size: var(--font-sz-300);
         }

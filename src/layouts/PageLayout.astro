@@ -13,20 +13,22 @@ interface Props {
 }
 const { seo, isTurnstile, class: className, ...rest } = Astro.props;
 
-const navigationParameters = {
+const queryParameters = {
     populate: {
-        logo: {
-            populate: "*",
+        navigation: {
+            populate: {
+                logo: {
+                    populate: "*",
+                },
+                ctaButton: "*",
+            },
         },
-        menu: {
-            populate: "*",
-        },
-        ctaButton: {
-            populate: "*",
-        },
+        mainNavigation: "*",
+        footer: "*",
     },
 };
-const navigationQuery = await cmsFetch("navigation", navigationParameters);
+const pageQuery = await cmsFetch("site-information", queryParameters);
+const { navigation, mainNavigation, footer } = pageQuery.attributes || {};
 ---
 
 <!doctype html>
@@ -43,7 +45,11 @@ const navigationQuery = await cmsFetch("navigation", navigationParameters);
         }
     </head>
     <body class="page-layout overlay">
-        <Navigation cmsData={navigationQuery} />
+        <Navigation
+            logo={navigation.logo}
+            mainNavigation={mainNavigation}
+            ctaButton={navigation.ctaButton}
+        />
         <div class:list={["content", className]} {...rest}>
             <slot />
         </div>
@@ -65,10 +71,10 @@ const navigationQuery = await cmsFetch("navigation", navigationParameters);
     @include responsive-style(tablet) {
         // Adjusting content to Fixed Navigation
         html {
-            scroll-padding-top: 95px;
+            scroll-padding-top: 80px;
         }
         .content {
-            margin-top: 95px;
+            margin-top: 80px;
         }
     }
 </style>

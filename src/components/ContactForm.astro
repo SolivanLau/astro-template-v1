@@ -55,7 +55,6 @@ const { class: className, ...rest } = Astro.props;
 
     contactForms.forEach((contactForm) => {
         const form = contactForm as HTMLFormElement;
-        console.log(form);
         const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
         const status = form.querySelector(".status");
         const statusMessage = form.querySelector(".status__message");
