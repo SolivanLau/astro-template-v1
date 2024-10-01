@@ -1,5 +1,10 @@
-[[redirects]]
-    from = "/admin/*"
-     to = "https://strapi-production-2381.up.railway.app/admin/:splat"
-     status = 200
-     force = true
+[build]
+  publish = "dist"
+[context.production]
+  command = "pnpm build:prod"
+
+[context.develop]
+  command = "pnpm build:dev"
+
+[context.deploy-preview]
+  command = "pnpm build:preview"
