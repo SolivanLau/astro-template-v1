@@ -17,7 +17,7 @@ const createQueryUrl = (endpoint, queryParameters) => {
 
     const isProduction = import.meta.env.PROD;
 
-    const urlBase = isProduction ? process.env.CMS_URL : "http://localhost:1337";
+    const urlBase = isProduction ? import.meta.env.CMS_URL : "http://localhost:1337";
     console.log(
         `Creating cms query url for: ${endpoint.toUpperCase()}. ${isProduction ? "Production CMS" : "Localhost CMS"}`,
     );

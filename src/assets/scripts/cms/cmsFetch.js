@@ -13,7 +13,7 @@ const cmsFetch = async (endpoint, options) => {
     // network or cors errors
     try {
         console.log("Fetching CMS data from:", url.toString());
-        
+
         const response = await fetch(url.toString(), {
             method: "GET",
             headers: {
@@ -51,6 +51,8 @@ const cmsFetch = async (endpoint, options) => {
     } catch (error) {
         console.error(`Error fetching CMS data from ${endpoint}: ${error}`);
         console.error("Full error:", error);
+        console.error("Full url:", url);
+
         return null;
     }
 };
