@@ -5,7 +5,7 @@
         "dotenvx": "dotenvx",
         "dev": "dotenvx run -f .env.development -- astro dev",
         "check": "dotenvx run -f .env.production -- astro check",
-        "build": "astro check && dotenvx run -f .env.production -- astro build",
+        "build": "astro check && dotenvx run -- astro build",
         "preview": "dotenvx run -- astro preview",
         "astro": "astro",
         "format": "pnpm exec prettier . --write"
