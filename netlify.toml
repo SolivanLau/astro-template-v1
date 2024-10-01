@@ -3,7 +3,7 @@
 [context.production]
   command = "pnpm build:prod"
 
-[context.develop]
+[context.development]
   command = "pnpm build:dev"
 
 [context.deploy-preview]
