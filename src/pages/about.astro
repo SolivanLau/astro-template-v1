@@ -76,6 +76,8 @@ const pageQuery = await cmsFetch("about-page", querParameters);
 const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.attributes;
 
 const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.attributes);
+
+const isPreview = import.meta.env.VITE_IS_PREVIEW_MODE;
 ---
 
 <PageLayout seo={seo} isTurnstile>
@@ -85,6 +87,7 @@ const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.
         subtitle={header.title.subtitle || ""}
     />
     <main>
+        <h1>{isPreview === "true" ? "Preview Mode is TRUE" : "PREIVEW IS FALSE"}</h1>
         <!-- MISSION SECTION -->
         {
             missionStatement && (
