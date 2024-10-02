@@ -3,7 +3,8 @@
 import { Icon } from "astro-icon/components";
 import Link from "@components/Link.astro";
 const isPreview = import.meta.env.IS_PREVIEW_MODE;
-const cmsURL = import.meta.env.CMS_URL;
+const cmsURL = import.meta.env.VITE_CMS_URL;
+console.log(cmsURL);
 ---
 
 {
@@ -16,7 +17,7 @@ const cmsURL = import.meta.env.CMS_URL;
                 </p>
             </div>
             <Link
-                url={`${cmsURL}/admin`}
+                url={`/admin`}
                 type="button--secondary-white"
                 class="preview__link"
                 isLinkExternal

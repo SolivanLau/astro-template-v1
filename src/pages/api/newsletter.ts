@@ -1,9 +1,9 @@
 export const prerender = false;
 import type { APIRoute, APIContext } from "astro";
 import turnstileVerify from "src/assets/scripts/lib/turnstileVerify";
-const apiKey = import.meta.env.NEWSLETTER_API_KEY;
-const dataCenter = import.meta.env.NEWSLETTER_DATA_CENTER;
-const listId = import.meta.env.NEWSLETTER_LIST_ID;
+const apiKey = import.meta.env.VITE_NEWSLETTER_API_KEY;
+const dataCenter = import.meta.env.VITE_NEWSLETTER_DATA_CENTER;
+const listId = import.meta.env.VITE_NEWSLETTER_LIST_ID;
 
 export const POST: APIRoute = async ({ request }: APIContext) => {
     const data = await request.formData();

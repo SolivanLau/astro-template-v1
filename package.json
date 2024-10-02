@@ -2,9 +2,10 @@
     "name": "astro-template-v1",
     "version": "0.0.1",
     "scripts": {
+        "dotenvx": "dotenvx",
         "dev": "astro dev",
         "check": "astro check",
-        "build": "astro build",
+        "build": "pnpm check && astro build",
         "preview": "astro preview",
         "astro": "astro",
         "format": "pnpm exec prettier . --write"
@@ -21,11 +22,12 @@
     "devDependencies": {
         "@types/node": "^22.7.4",
         "@types/qs": "^6.9.16",
+        "postcss": "^8.4.47",
         "autoprefixer": "^10.4.20",
         "cssnano": "^7.0.6",
-        "postcss": "^8.4.47",
         "prettier": "^3.3.3",
         "prettier-plugin-astro": "^0.14.1",
-        "sass": "^1.79.4"
+        "sass": "^1.79.4",
+        "@dotenvx/dotenvx": "^1.14.2"
     }
 }

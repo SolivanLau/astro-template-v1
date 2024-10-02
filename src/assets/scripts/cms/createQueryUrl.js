@@ -17,13 +17,13 @@ const createQueryUrl = (endpoint, queryParameters) => {
 
     const isProduction = import.meta.env.PROD;
 
-    const urlBase = isProduction ? import.meta.env.CMS_URL : "http://localhost:1337";
+    const urlBase = isProduction ? import.meta.env.VITE_CMS_URL : "http://localhost:1337";
 
-    console.log(`Creating cms query url for: ${endpoint.toUpperCase()}. Url: ${urlBase}`);
+    console.log(`Creating cms query url for: ${endpoint.toUpperCase()}. url ${urlBase}`);
 
     // Strapi CMS preview mode: retrieve only draft entries
     const previewMode =
-        import.meta.env.IS_PREVIEW_MODE === "true"
+        import.meta.env.VITE_IS_PREVIEW_MODE === "true"
             ? {
                   publicationState: "preview",
               }

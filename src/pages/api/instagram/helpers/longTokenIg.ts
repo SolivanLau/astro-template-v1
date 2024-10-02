@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
     const url = new URL("https://graph.instagram.com/access_token");
     const params = new URLSearchParams({
         grant_type: "ig_exchange_token",
-        client_secret: import.meta.env.INSTAGRAM_APP_SECRET,
+        client_secret: import.meta.env.VITE_INSTAGRAM_APP_SECRET,
         access_token: shortToken,
     });
 

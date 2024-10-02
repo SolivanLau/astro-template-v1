@@ -6,10 +6,10 @@ export const GET: APIRoute = async () => {
     const url = "https://api.instagram.com/oauth/access_token";
 
     const params = new URLSearchParams({
-        client_id: import.meta.env.INSTAGRAM_APP_ID,
-        client_secret: import.meta.env.INSTAGRAM_APP_SECRET,
+        client_id: import.meta.env.VITE_INSTAGRAM_APP_ID,
+        client_secret: import.meta.env.VITE_INSTAGRAM_APP_SECRET,
         grant_type: "authorization_code",
-        redirect_uri: import.meta.env.INSTAGRAM_URI,
+        redirect_uri: import.meta.env.VITE_INSTAGRAM_URI,
         code: "AQAGbSx5DwcEf3A270bw8ZHRYTnFEWwDAMoVIGXyrvyKd1hB3Ro6LJwa3tssbm3TBY3XHEofA2je-bUPXSWPa6zg2bXCQIQYK5BYYsRlp8rVuy0FoNgrfbUb52KOjtRdjp7MPUaPqNrc_BqdDfIQl1ztLk52qvzjZ7NFV-GgAYMPUhXWM3LqqrVPzu96oi3dkdtjul4tR3cbTTf9fevcN28ji2RYDeByoouvjhDCrE2w1g",
     });
 

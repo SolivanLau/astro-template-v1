@@ -26,6 +26,10 @@ export default defineConfig({
             name: "prebuild",
             hooks: {
                 "astro:build:start": async (options) => {
+                    console.log("PREBUILD SCRIPTS");
+                    console.log("ENVIRONMENT VARIABLES loaded via import.meta.env:");
+                    console.log(JSON.stringify(import.meta.env, null, 2));
+                    console.log("Fetching Favicons");
                     await fetchFavicons();
                 },
             },
