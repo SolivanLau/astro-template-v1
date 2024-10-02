@@ -18,7 +18,7 @@ const cmsFetch = async (endpoint, options) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.CMS_TOKEN}`,
+                Authorization: `Bearer ${import.meta.env.CMS_TOKEN}`,
             },
         });
 

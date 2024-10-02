@@ -23,7 +23,7 @@ const turnstileVerify = async (data: FormData) => {
     }
 
     // VALIDATION: Secret Key
-    if (!process.env.TURNSTILE_SECRET_KEY) {
+    if (!import.meta.env.TURNSTILE_SECRET_KEY) {
         return new Response(
             JSON.stringify({
                 success: false,
@@ -36,7 +36,7 @@ const turnstileVerify = async (data: FormData) => {
     // VERIFY REQUEST
 
     let requestBody = new FormData();
-    requestBody.append("secret", process.env.TURNSTILE_SECRET_KEY);
+    requestBody.append("secret", import.meta.env.TURNSTILE_SECRET_KEY);
     requestBody.append("response", token);
 
     try {

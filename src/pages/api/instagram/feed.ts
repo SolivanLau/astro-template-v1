@@ -6,7 +6,7 @@ export const GET: APIRoute = async () => {
 
     const params = new URLSearchParams({
         fields: "id,caption,media_type,media_url,thumbnail_url,permalink",
-        access_token: process.env.INSTAGRAM_APP_ACCESS_TOKEN,
+        access_token: import.meta.env.INSTAGRAM_APP_ACCESS_TOKEN,
         limit: "8",
     });
 

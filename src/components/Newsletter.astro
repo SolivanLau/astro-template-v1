@@ -37,7 +37,7 @@ const extraPaddingClass = extraPadding
                 <Input inputType="text" name="Last Name" id="last-name" />
                 <div
                     class="cf-turnstile"
-                    data-sitekey={process.env.TURNSTILE_SITE_KEY}
+                    data-sitekey={import.meta.env.TURNSTILE_SITE_KEY}
                     data-size="flexible"
                     data-theme="light"
                 >

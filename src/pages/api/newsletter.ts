@@ -1,6 +1,6 @@
 export const prerender = false;
 import type { APIRoute, APIContext } from "astro";
-import turnstileVerify from "@assets/scripts/lib/turnstileVerify";
+import turnstileVerify from "src/assets/scripts/lib/turnstileVerify";
 const apiKey = import.meta.env.NEWSLETTER_API_KEY;
 const dataCenter = import.meta.env.NEWSLETTER_DATA_CENTER;
 const listId = import.meta.env.NEWSLETTER_LIST_ID;

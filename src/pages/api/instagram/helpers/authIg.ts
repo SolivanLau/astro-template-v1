@@ -3,7 +3,7 @@ export const preload = false;
 
 // Initially authenticate Test User
 export const GET: APIRoute = async () => {
-    const url = `https://api.instagram.com/oauth/authorize?client_id=${process.env.INSTAGRAM_APP_ID}&redirect_uri=${process.env.INSTAGRAM_URI}&scope=user_profile,user_media&response_type=code`;
+    const url = `https://api.instagram.com/oauth/authorize?client_id=${import.meta.env.INSTAGRAM_APP_ID}&redirect_uri=${import.meta.env.INSTAGRAM_URI}&scope=user_profile,user_media&response_type=code`;
 
     console.log(url);
 

@@ -1,16 +1,28 @@
 ---
 // COMPONENTS
 import { Icon } from "astro-icon/components";
+import Link from "@components/Link.astro";
 const isPreview = import.meta.env.IS_PREVIEW_MODE;
+const cmsURL = import.meta.env.CMS_URL;
 ---
 
 {
     isPreview && (
-        <div class="preview ">
-            <Icon name="trumpet" />
-            <p>
-                You are currently viewing this site in <strong>preview mode</strong>.
-            </p>
+        <div class="preview">
+            <div class="preview__text">
+                <Icon name="trumpet" />
+                <p>
+                    Viewing site in <strong>preview mode</strong>.
+                </p>
+            </div>
+            <Link
+                url={`${cmsURL}/admin`}
+                type="button--secondary-white"
+                class="preview__link"
+                isLinkExternal
+            >
+                Admin Panel
+            </Link>
         </div>
     )
 }
@@ -21,23 +33,33 @@ const isPreview = import.meta.env.IS_PREVIEW_MODE;
         z-index: 10000;
         bottom: 15vh;
         right: 0px;
-        // layout
-        display: flex;
-        align-items: start;
-        gap: var(--spc-sm);
+
         // styles
         box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
         max-width: 300px;
         background-color: var(--clr-brand-primary);
         color: var(--clr-white);
-        padding: var(--spc-med);
-        opacity: 0.6;
+        padding: var(--spc-lg);
+        opacity: 0.7;
         transition: all 0.2s ease-in-out;
         &:hover {
             opacity: 1;
         }
     }
+
+    .preview__text {
+        // layout
+        display: flex;
+        align-items: start;
+        gap: var(--spc-med);
+    }
+
+    .preview__link {
+        margin-block-start: var(--spc-sm);
+        width: 100%;
+        font-size: var(--font-sz-400);
+    }
     [data-icon] {
-        font-size: 50px;
+        font-size: 60px;
     }
 </style>

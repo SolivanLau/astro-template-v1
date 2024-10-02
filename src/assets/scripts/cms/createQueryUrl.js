@@ -18,13 +18,12 @@ const createQueryUrl = (endpoint, queryParameters) => {
     const isProduction = import.meta.env.PROD;
 
     const urlBase = isProduction ? import.meta.env.CMS_URL : "http://localhost:1337";
-    console.log(
-        `Creating cms query url for: ${endpoint.toUpperCase()}. ${isProduction ? "Production CMS" : "Localhost CMS"}`,
-    );
+
+    console.log(`Creating cms query url for: ${endpoint.toUpperCase()}. Url: ${urlBase}`);
 
     // Strapi CMS preview mode: retrieve only draft entries
     const previewMode =
-        process.env.IS_PREVIEW_MODE === "true"
+        import.meta.env.IS_PREVIEW_MODE === "true"
             ? {
                   publicationState: "preview",
               }
@@ -52,6 +51,7 @@ const createQueryUrl = (endpoint, queryParameters) => {
         return url;
     } catch (error) {
         console.error(`Error creating query URL: ${error.message}`, error);
+        return null;
     }
 };
 
