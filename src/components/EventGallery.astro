@@ -24,7 +24,7 @@ const { events, class: className, ...rest } = Astro.props;
                 // EVENT CARD
                 <li class="events__item">
                     {/* POSTER */}
-                    <Link url={`/events/${slug}`}>
+                    <Link url={`/events/${slug}`} class="events__img-link">
                         <Picture
                             src={poster.data.attributes.url}
                             alt={title}
@@ -112,8 +112,17 @@ const { events, class: className, ...rest } = Astro.props;
             max-width: 300px;
         }
     }
+    .events__img-link {
+        overflow: hidden;
+    }
     .events__img {
         height: fit-content;
+        box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4);
+        filter: brightness(95%);
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            filter: brightness(100%);
+        }
         @include responsive-style(mobile) {
             width: 100%;
             max-width: 300px;

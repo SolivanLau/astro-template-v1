@@ -2,13 +2,13 @@
 // COMPONENTS
 import { Icon } from "astro-icon/components";
 import Link from "@components/Link.astro";
-const isPreview = import.meta.env.IS_PREVIEW_MODE;
-const cmsURL = import.meta.env.VITE_CMS_URL;
-console.log(cmsURL);
+const adminPath = import.meta.env.VITE_CMS_URL;
+
+const isPreview = import.meta.env.VITE_IS_PREVIEW_MODE;
 ---
 
 {
-    isPreview && (
+    isPreview && isPreview === "true" && (
         <div class="preview">
             <div class="preview__text">
                 <Icon name="trumpet" />
@@ -17,12 +17,12 @@ console.log(cmsURL);
                 </p>
             </div>
             <Link
-                url={`/admin`}
+                url={`${adminPath}/admin`}
                 type="button--secondary-white"
                 class="preview__link"
                 isLinkExternal
             >
-                Admin Panel
+                Back To Admin Panel
             </Link>
         </div>
     )
@@ -32,15 +32,17 @@ console.log(cmsURL);
     .preview {
         position: fixed;
         z-index: 10000;
-        bottom: 15vh;
+        bottom: 5vh;
         right: 0px;
 
         // styles
-        box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.25);
+        box-shadow:
+            -0.3rem -0.1rem 0.5rem rgba(0, 0, 0, 0.4),
+            -0.5rem -0.5rem 22rem rgba(81, 13, 107, 0.834);
         max-width: 300px;
         background-color: var(--clr-brand-primary);
         color: var(--clr-white);
-        padding: var(--spc-lg);
+        padding: var(--spc-med);
         opacity: 0.7;
         transition: all 0.2s ease-in-out;
         &:hover {
@@ -61,6 +63,6 @@ console.log(cmsURL);
         font-size: var(--font-sz-400);
     }
     [data-icon] {
-        font-size: 60px;
+        font-size: 40px;
     }
 </style>

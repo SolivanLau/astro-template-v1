@@ -120,7 +120,7 @@ const { logo, bio, navigation, socials } = Astro.props;
                                 const { socialPlatform, link } = attributes || {};
                                 return (
                                     <li>
-                                        <Link url={link.url} isLinkExternal type="text--dark">
+                                        <Link url={link.url} isLinkExternal type="button--primary">
                                             <Icon
                                                 name={`socials/${socialPlatform}`}
                                                 title={link.label}
