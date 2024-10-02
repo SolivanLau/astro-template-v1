@@ -1,3 +1,11 @@
 [build]
   publish = "dist"
   command = "pnpm build"
+[context.production]
+  environment = { VITE_IS_PREVIEW_MODE = "false" }
+
+[context.deploy-preview]
+environment = { VITE_IS_PREVIEW_MODE = "true" }
+
+[context.branch-deploy]
+environment = { VITE_IS_PREVIEW_MODE = "true" }
