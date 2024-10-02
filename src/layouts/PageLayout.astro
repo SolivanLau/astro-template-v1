@@ -52,7 +52,7 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
         }
     </head>
     <body class="page-layout overlay">
-        {import.meta.env.VITE_IS_PREVIEW_MODE === '"true"' && <Preview />}
+        {import.meta.env.VITE_IS_PREVIEW_MODE === "true" && <Preview />}
         <Navigation
             logo={logo.data.attributes}
             mainNavigation={mainNavigation}
