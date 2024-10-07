@@ -46,7 +46,7 @@ const { events, class: className, ...rest } = Astro.props;
                                 </>
                             ) : (
                                 <>
-                                    <Icon name={"video"} />
+                                    <Icon name={"video"} class="events__icon" />
                                     <p>Video Premiere</p>
                                 </>
                             )}
@@ -61,19 +61,22 @@ const { events, class: className, ...rest } = Astro.props;
                         </li>
 
                         {/* LOCATION */}
-                        <li>
-                            <Link
-                                class="events__detail"
-                                url={generateGoogleMapsLink(details.location)}
-                                isLinkExternal
-                                type="text--light-visible"
-                            >
-                                <Icon name="location-filled" class="events__icon" />
-                                <address>
-                                    {details.location.addressLineOne},{details.location.city}
-                                </address>
-                            </Link>
-                        </li>
+                        {details?.location.addressLineOne && (
+                            <li>
+                                <Link
+                                    class="events__detail"
+                                    url={generateGoogleMapsLink(details.location)}
+                                    isLinkExternal
+                                    type="text--light-visible"
+                                >
+                                    <Icon name="location-filled" class="events__icon" />
+                                    <address>
+                                        {details.location.addressLineOne}{" "}
+                                        {details.location.city && ` , ${details.location.city}`}
+                                    </address>
+                                </Link>
+                            </li>
+                        )}
                     </ul>
 
                     {/* CTA */}

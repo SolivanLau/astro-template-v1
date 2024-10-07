@@ -83,7 +83,10 @@ if (pageQuery && pageQuery.length > 0) {
 
             {
                 // CHANGE TO UPCOMING EVENTS FOR PRODUCTION
-                pastEvents && pastEvents.length > 0 && <EventGallery events={pastEvents} />
+                // pastEvents && pastEvents.length > 0 && <EventGallery events={pastEvents} />
+                upcomingEvents && upcomingEvents.length > 0 && (
+                    <EventGallery events={upcomingEvents} />
+                )
             }
         </section>
 

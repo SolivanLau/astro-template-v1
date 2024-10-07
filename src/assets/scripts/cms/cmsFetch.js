@@ -8,6 +8,7 @@ import createQueryUrl from "./createQueryUrl";
  * @param {object} options An object containing query parameters, e.g. populate.
  * @return {Promise<object | null>} The data from the CMS, or null if there was an error.
  */
+
 const cmsFetch = async (endpoint, options) => {
     const url = createQueryUrl(endpoint, options);
     // network or cors errors

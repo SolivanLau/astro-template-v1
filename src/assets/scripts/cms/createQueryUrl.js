@@ -21,9 +21,10 @@ const createQueryUrl = (endpoint, queryParameters) => {
 
     console.log(`Creating cms query url for: ${endpoint.toUpperCase()}. url ${urlBase}`);
 
-    // Strapi CMS preview mode: retrieve only draft entries
+    // Strapi CMS preview mode: retrieve and prioritize draft entries
     const previewMode =
-        import.meta.env.VITE_IS_PREVIEW_MODE === "true"
+        import.meta.env.VITE_IS_PREVIEW_MODE === "true" ||
+        import.meta.env.VITE_IS_PREVIEW_MODE === true
             ? {
                   publicationState: "preview",
               }
