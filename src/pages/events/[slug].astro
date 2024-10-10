@@ -24,6 +24,7 @@ export const getStaticPaths = (async () => {
             poster: {
                 populate: "*",
             },
+            eventType: "*",
             details: {
                 populate: "*",
             },
@@ -54,6 +55,7 @@ interface Props {
     title: string;
     subtitle: string;
     poster: any;
+    eventType: "concert" | "video";
     details: any;
     about: any;
     program: any;
@@ -62,12 +64,21 @@ interface Props {
     seo: any;
 }
 
-const { title, subtitle, poster, details, about, program, youtubeVideo, guests, seo } = Astro.props;
+const { title, subtitle, poster, details, eventType, about, program, youtubeVideo, guests, seo } =
+    Astro.props;
 
 const mapsLink = generateGoogleMapsLink(details?.location);
+
+const fallbackSeo = {
+    metaTitle: `${title} | Toronto Wind Collective`,
+    metaDescription:
+        eventType === "concert"
+            ? `Watch our upcoming live concert, ${title}`
+            : `Watch the video premiere of ${title} now!`,
+};
 ---
 
-<PageLayout seo={seo} isTurnstile>
+<PageLayout cmsSeo={seo} fallbackSeo={seo} isTurnstile>
     <main class="event">
         <Header title={title} subtitle={subtitle} />
         <!-- EVENT INFO -->

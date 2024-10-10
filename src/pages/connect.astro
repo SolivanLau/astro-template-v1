@@ -13,10 +13,16 @@ const queryParameters = {
 // CMS page query
 const pageQuery = await cmsFetch("connect-page", queryParameters);
 
-const { profile, links, seo } = pageQuery.attributes || {};
+const { seo } = pageQuery.attributes || {};
+
+const fallbackSeo = {
+    metaTitle: "Connect | Toronto Wind Collective",
+    metaDescription:
+        "Stay in touch with the Collective's upcoming events. Join our community and share your thoughts!",
+};
 ---
 
-<PageLayout>
+<PageLayout cmsSeo={seo} fallbackSeo={fallbackSeo}>
     <Header title="Connect" />
     <main>
         <div class="wrapper"></div>

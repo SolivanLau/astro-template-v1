@@ -10,10 +10,10 @@ const { class: className, ...rest } = Astro.props;
 ---
 
 <form {...rest} class:list={["form", "contact-form", className]} data-netlify="true">
-    <Input inputType="text" name="Name" id="first-name" />
+    <Input inputType="text" name="Name" id="first-name" required />
     <Input inputType="text" name="Phone" id="phone" />
-    <Input inputType="email" name="Email" id="email" />
-    <Input textarea name="Message" id="message" rows="7" />
+    <Input inputType="email" name="Email" id="email" required />
+    <Input textarea name="Message" id="message" rows="7" required />
 
     <div class="response">
         <button class="button button--primary" type="submit">Send Message</button>

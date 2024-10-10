@@ -1,0 +1,80 @@
+// Scrollimate (scroll animations) style-sheet loaded into Page Layouts with the <Scrollimate /> Astro component
+
+// attribute added to elements that should be animated
+[data-scrollimate] {
+    // default options
+    --_duration: 0.5s;
+    --_delay: 0s;
+    --_ease: ease-in-out;
+
+    // transition: all var(--_duration) ease-in-out var(--_delay);
+    transition-property: opacity, transform;
+    transition-duration: var(--_duration);
+    transition-timing-function: var(--_ease);
+    transition-delay: var(--_delay);
+    pointer-events: none;
+
+    // animate class
+    &.animate {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+    }
+}
+
+// FADE ANIMATIONS
+// fade, fade-left, fade-right, fade-up, fade-down
+
+[data-scrollimate^="fade"],
+[data-scrollimate^="zoom"] {
+    // animation  modifers
+    --_translate--amount: 2rem;
+    --_translate--x: 0;
+    --_translate--y: 0;
+    --_translate--z: 0;
+
+    transform: translate3d(var(--_translate--x), var(--_translate--y), var(--_translate--z));
+    opacity: 0;
+}
+
+[data-scrollimate="fade-left"] {
+    --_translate--x: calc(var(--_translate--amount) * -1);
+}
+
+[data-scrollimate="fade-right"] {
+    --_translate--x: calc(var(--_translate--amount));
+}
+
+[data-scrollimate="fade-up"] {
+    --_translate--y: calc(var(--_translate--amount) * -1);
+}
+
+[data-scrollimate="fade-down"] {
+    --_translate--y: calc(var(--_translate--amount));
+}
+
+// ZOOM ANIMATIONS
+// zoom-in, zoom-out, zoom-in-up, zoom-in-down, zoom-in-left, zoom-in-right, zoom-out-up, zoom-out-down, zoom-out-left, zoom-out-right
+
+[data-scrollimate^="zoom-in"] {
+    --_zoom--amount: 0.7;
+
+    transform: translate3d(var(--_translate--x), var(--_translate--y), var(--_translate--z))
+        scale(var(--_zoom--amount));
+}
+
+[data-scrollimate="zoom-in-up"] {
+    --_translate--y: calc(var(--_translate--amount) * -1);
+}
+
+[data-scrollimate="zoom-in-down"] {
+    --_translate--y: calc(var(--_translate--amount));
+}
+
+[data-scrollimate="zoom-in-left"] {
+    --_translate--x: calc(var(--_translate--amount) * -1);
+}
+
+[data-scrollimate="zoom-in-right"] {
+    --_translate--x: calc(var(--_translate--amount));
+}

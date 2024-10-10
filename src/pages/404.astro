@@ -4,9 +4,15 @@ import Link from "@components/Link.astro";
 import Picture from "astro/components/Picture.astro";
 
 import bgImage from "@images/404-bg.webp";
+
+const fallbackSeo = {
+    metaTitle: "Page Not Found | Toronto Wind Collective",
+    metaDescription:
+        "The page you were looking for may have been renamed or removed - try looking at our other pages instead.",
+};
 ---
 
-<PageLayout>
+<PageLayout fallbackSeo={fallbackSeo}>
     <main class="background__image-parent section__padding">
         <div class="page--404 wrapper wrapper--sm flow">
             <h1 class="title-font--display">Page Not Found</h1>

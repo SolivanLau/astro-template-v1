@@ -1,30 +1,46 @@
 ---
-const { seo: seoData } = Astro.props;
+export interface Props {
+    cmsSeo?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        keywords?: string;
+        metaRobots?: string;
+        structuredData?: string;
+    };
+    fallbackSeo: {
+        metaTitle: string;
+        metaDescription: string;
+    };
+}
+const { cmsSeo, fallbackSeo } = Astro.props;
+
 const {
-    metaTitle,
-    metaDescription,
+    metaTitle = fallbackSeo.metaTitle,
+    metaDescription = fallbackSeo.metaDescription,
     keywords,
-    metaRobots,
-    metaViewport,
+    metaRobots = "index, follow",
     structuredData,
-    canonicalURL,
-} = seoData ?? {};
+} = cmsSeo || {};
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+
+// TO DO: ADD CONDITIONAL OG TAGS
 ---
 
 <!-- title -->
-<title>{metaTitle || "Random Title"}</title>
+<title>{metaTitle}</title>
 
 <!-- description -->
-<meta name="description" content={metaDescription || "this is a fallback description"} />
+<meta name="description" content={metaDescription} />
 
 <!-- keywords -->
-<meta name="keywords" content={keywords || "fallback"} />
+{keywords && <meta name="keywords" content={keywords} />}
 
 <!-- canaonical url -->
-<link rel="canonical" href="https://www.example.com/your-page-url" />
+<link rel="canonical" href={canonicalUrl} />
 
 <!-- robots -->
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={metaRobots} />
 
 <!-- Open Graph: Facebook -->
 <meta
@@ -42,5 +58,9 @@ const {
 />
 <!-- Open Graph: Twitter/X -->
 <meta name="twitter:card" content="summary" />
-<!-- Schema Markup -->
-<script set:html={JSON.stringify(structuredData)} type="application/ld+json" />
+
+{
+    structuredData && (
+        <script is:inline set:html={JSON.stringify(structuredData)} type="application/ld+json" />
+    )
+}

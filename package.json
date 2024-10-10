@@ -13,21 +13,20 @@
     "dependencies": {
         "@astrojs/check": "^0.9.3",
         "@astrojs/netlify": "^5.5.3",
-        "@astrojs/partytown": "^2.1.2",
         "astro": "^4.15.9",
         "astro-icon": "^1.1.1",
         "qs": "^6.13.0",
         "sharp": "^0.33.5"
     },
     "devDependencies": {
+        "@dotenvx/dotenvx": "^1.14.2",
         "@types/node": "^22.7.4",
         "@types/qs": "^6.9.16",
-        "postcss": "^8.4.47",
         "autoprefixer": "^10.4.20",
         "cssnano": "^7.0.6",
+        "postcss": "^8.4.47",
         "prettier": "^3.3.3",
         "prettier-plugin-astro": "^0.14.1",
-        "sass": "^1.79.4",
-        "@dotenvx/dotenvx": "^1.14.2"
+        "sass": "^1.79.4"
     }
 }

@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import fetchFavicons from "./src/assets/scripts/prebuild/fetchFavicons";
-import partytown from "@astrojs/partytown";
 import icon from "astro-icon";
 import netlify from "@astrojs/netlify";
 
@@ -18,7 +17,6 @@ export default defineConfig({
         remotePatterns: [{ protocol: "https" }],
     },
     integrations: [
-        partytown(),
         icon({
             iconDir: "src/assets/icons",
         }),

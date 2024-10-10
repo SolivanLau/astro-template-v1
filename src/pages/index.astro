@@ -12,10 +12,25 @@ import Hero from "@layouts/Hero.astro";
 import Link from "@components/Link.astro";
 import Title from "@components/Title.astro";
 import EventGallery from "@components/EventGalleryHighlight.astro";
-import { Picture } from "astro:assets";
+import cmsFetch from "@assets/scripts/cms/cmsFetch";
+
+const queryParameters = {
+    populate: {
+        seo: {
+            populate: "*",
+        },
+    },
+};
+const pageQuery = await cmsFetch("home-page", queryParameters);
+const { seo } = pageQuery || {};
+const fallbackSeo = {
+    metaTitle: "Toronto Wind Collective",
+    metaDescription:
+        "The Toronto Wind Collective a non-profit wind ensemble working with early career musicians and composers to bring new wind music to the Greater Toronto Community. Create, Perform, Collaborate.",
+};
 ---
 
-<PageLayout isTurnstile>
+<PageLayout isTurnstile cmsSeo={seo} fallbackSeo={fallbackSeo}>
     <Hero />
     <main>
         <DividerLayout

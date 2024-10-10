@@ -2,16 +2,17 @@
 // CMS Scripts
 import cmsFetch from "src/assets/scripts/cms/cmsFetch";
 import BlockRenderer from "@components/BlockRenderer.astro";
-// Components
+// Layouts
 import PageLayout from "@layouts/PageLayout.astro";
 import Header from "@layouts/Header.astro";
 import Banner from "@components/Banner.astro";
 import DividerLayout from "@layouts/DividerLayout.astro";
+import Newsletter from "@components/Newsletter.astro";
+// Components
 import Title from "@components/Title.astro";
 import Link from "@components/Link.astro";
 import { Icon } from "astro-icon/components";
 import Picture from "astro/components/Picture.astro";
-import Newsletter from "@components/Newsletter.astro";
 // Assets
 import missionBanner from "@images/about/mission-banner.png";
 import headerBg from "@images/home-bg-desktop.webp";
@@ -19,9 +20,6 @@ import composer from "@images/about/composer.jpg";
 import musician from "@images/about/musician.jpg";
 import conductor from "@images/about/conductor.jpg";
 import EventGallery from "@components/EventGallery.astro";
-import { title } from "process";
-// TEMP
-
 // CMS Query
 const querParameters = {
     populate: {
@@ -45,7 +43,7 @@ const querParameters = {
                 text: "*",
                 featuredEvents: {
                     populate: {
-                        title,
+                        title: "*",
                         poster: "*",
                         details: {
                             populate: "*",
@@ -75,17 +73,24 @@ const pageQuery = await cmsFetch("about-page", querParameters);
 
 const { header, missionStatement, services, ctaBanner, team, seo } = pageQuery?.attributes;
 
-const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.attributes);
+const fallbackSeo = {
+    metaTitle: "About Us | Toronto Wind Collective",
+    metaDescription:
+        "Learn how the Toronto Wind Collective collaborates with early career musicians and composers to bring new wind music to the Greater Toronto Community.",
+};
 
-const isPreview = import.meta.env.VITE_IS_PREVIEW_MODE;
+const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.attributes);
 ---
 
-<PageLayout seo={seo} isTurnstile>
+<PageLayout cmsSeo={seo} fallbackSeo={fallbackSeo} isTurnstile>
+    <!-- HEADER -->
     <Header
-        backgroundImgPath={headerBg}
         title={header.title.title || "About Us"}
         subtitle={header.title.subtitle || ""}
+        backgroundImgPath={headerBg}
+        backgroundImgLoading="eager"
     />
+    <!-- MAIN PAGE CONTENT -->
     <main>
         <!-- MISSION SECTION -->
         {

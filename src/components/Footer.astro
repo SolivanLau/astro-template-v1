@@ -316,6 +316,8 @@ const { logo, bio, navigation, socials } = Astro.props;
     // MOBILE
     @include responsive-style(470) {
         .footer__info {
+            flex-basis: 100%;
+            > *,
             a {
                 align-self: center;
             }

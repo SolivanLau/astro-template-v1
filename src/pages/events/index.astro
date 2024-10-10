@@ -10,6 +10,7 @@ import Newsletter from "@components/Newsletter.astro";
 //  Components
 import Header from "@layouts/Header.astro";
 import Title from "@components/Title.astro";
+import Link from "@components/Link.astro";
 // ASSETS
 import bgHeader from "@images/events-bg.png";
 interface EventDetails {
@@ -28,6 +29,7 @@ const queryParameters = {
         details: {
             populate: "*",
         },
+        seo: "*",
     },
 };
 
@@ -37,6 +39,11 @@ const pageQuery = await cmsFetch("events", queryParameters);
 // GET CURRENT SEASON
 const currentDate = new Date();
 const { seasonStartYear, seasonEndYear, seasonStart } = getCurrentSeason(currentDate);
+
+const fallbackSeo = {
+    metaTitle: "Events | Toronto Wind Collective",
+    metaDescription: `See the upcoming ${seasonStartYear}/${seasonEndYear} season for the Toronto Wind Collective, or revisit our past projects! Live performances, video premieres, and more!`,
+};
 
 // SORTED EVENTS -> DOM
 let upcomingEvents = [];
@@ -70,8 +77,8 @@ if (pageQuery && pageQuery.length > 0) {
 }
 ---
 
-<PageLayout isTurnstile>
-    <Header title="Concert & Events" backgroundImgPath={bgHeader} />
+<PageLayout fallbackSeo={fallbackSeo} isTurnstile>
+    <Header title="Concert & Events" backgroundImgPath={bgHeader} backgroundImgLoading="eager" />
     <main>
         <!-- CURRENT EVENTS -->
         <section class="wrapper section__padding--extra-top">
@@ -83,10 +90,19 @@ if (pageQuery && pageQuery.length > 0) {
             </Title>
 
             {
-                // CHANGE TO UPCOMING EVENTS FOR PRODUCTION
                 // pastEvents && pastEvents.length > 0 && <EventGallery events={pastEvents} />
-                upcomingEvents && upcomingEvents.length > 0 && (
+                // CHANGE TO UPCOMING EVENTS FOR PRODUCTION
+                upcomingEvents && upcomingEvents.length > 0 ? (
                     <EventGallery events={upcomingEvents} />
+                ) : (
+                    <div class="cta flow section__padding">
+                        <p class="h6">
+                            New events are coming soon - join our newsletter to be notified!
+                        </p>
+                        <Link url="#newsletter" type="button--primary">
+                            Subscribe To Our Newsletter
+                        </Link>
+                    </div>
                 )
             }
         </section>
@@ -101,6 +117,12 @@ if (pageQuery && pageQuery.length > 0) {
         </section>
 
         <!-- NEWSLETTER -->
-        <Newsletter />
+        <Newsletter id="newsletter" />
     </main>
 </PageLayout>
+
+<style lang="scss">
+    .cta {
+        text-align: center;
+    }
+</style>

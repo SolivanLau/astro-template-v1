@@ -25,13 +25,14 @@ const { events, class: className, ...rest } = Astro.props;
                 <li class="events__item">
                     {/* POSTER */}
                     <Link url={`/events/${slug}`} class="events__img-link">
-                        <Picture
-                            src={poster.data.attributes.url}
+                        {/* NEED TO ADD IMAGES AGAIN */}
+                        {/* <Picture
+                            src={poster?.data?.attributes?.url || ""}
                             alt={title}
                             width={400}
                             height={533.33}
                             class="events__img"
-                        />
+                        /> */}
                     </Link>
                     {/* TITLE */}
                     <h3 class="h5 events__title">{title}</h3>

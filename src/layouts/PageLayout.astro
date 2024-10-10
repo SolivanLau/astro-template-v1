@@ -1,5 +1,7 @@
 ---
+// STYLES
 import "@styles/styles.scss";
+import type { Props as SeoProps } from "@components/head/Seo.astro";
 // SCRIPTS
 import cmsFetch from "src/assets/scripts/cms/cmsFetch";
 // LAOUTS
@@ -9,13 +11,15 @@ import Footer from "@components/Footer.astro";
 import Favicon from "@components/head/Favicon.astro";
 import Seo from "@components/head/Seo.astro";
 import Preview from "@components/Preview.astro";
+import Scrollimate from "@components/Scrollimate.astro";
 
 interface Props {
-    seo?: any;
+    cmsSeo?: SeoProps["cmsSeo"];
+    fallbackSeo: SeoProps["fallbackSeo"];
     isTurnstile?: boolean;
     class?: string;
 }
-const { seo, isTurnstile, class: className, ...rest } = Astro.props;
+const { cmsSeo, fallbackSeo, isTurnstile, class: className, ...rest } = Astro.props;
 
 const queryParameters = {
     populate: {
@@ -44,10 +48,15 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <Favicon />
-        {seo && <Seo seo={seo} />}
+        <Seo cmsSeo={cmsSeo} fallbackSeo={fallbackSeo} />
         {
             isTurnstile && (
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+                <script
+                    is:inline
+                    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    async
+                    defer
+                />
             )
         }
     </head>
@@ -57,7 +66,7 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
                 import.meta.env.VITE_IS_PREVIEW_MODE === true) && <Preview />
         }
         <Navigation
-            logo={logo.data.attributes}
+            logo={logo?.data?.attributes}
             mainNavigation={mainNavigation}
             ctaButton={navigation.ctaButton}
         />
@@ -65,11 +74,12 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
             <slot />
         </div>
         <Footer
-            logo={logo.data.attributes}
+            logo={logo?.data?.attributes}
             bio={footer.bio}
             navigation={footer.navigation}
             socials={footer.socials.data}
         />
+        <Scrollimate />
     </body>
 </html>
 

@@ -80,6 +80,7 @@ const { logo, mainNavigation, ctaButton } = Astro.props || {};
         aspect-ratio: 150 / 75;
         object-fit: contain;
     }
+
     // layout
     .wrapper {
         display: flex;
@@ -88,6 +89,10 @@ const { logo, mainNavigation, ctaButton } = Astro.props || {};
         padding: 10px 0px;
     }
 
+    // CTA button
+    .cta-button a {
+        font-size: var(--font-sz-400);
+    }
     // MEDIA QUERIES
 
     // TABLET
@@ -125,6 +130,7 @@ const { logo, mainNavigation, ctaButton } = Astro.props || {};
             :global(a) {
                 pointer-events: none;
                 visibility: hidden;
+                transition: all 0.3s ease;
             }
         }
         // OPEN states

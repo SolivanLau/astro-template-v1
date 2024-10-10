@@ -21,11 +21,17 @@ const queryParameters = {
 };
 // CMS Query
 const pageQuery = await cmsFetch("contact-page", queryParameters);
-console.log(pageQuery);
+const { seo } = pageQuery.attributes || {};
+
+const fallbackSeo = {
+    metaTitle: "Contact Us | Toronto Wind Collective",
+    metaDescription:
+        "The Toronto Wind Collective is looking for musicians and collaborators for new music! Contact us at torontowindcollective@gmail.com.",
+};
 ---
 
-<PageLayout isTurnstile>
-    <Header title="Contact Us" backgroundImgPath={tempBg} />
+<PageLayout cmsSeo={seo} fallbackSeo={fallbackSeo} isTurnstile>
+    <Header title="Contact Us" backgroundImgPath={tempBg} backgroundImgLoading="eager" />
     <main>
         <section>
             <div class="wrapper section__padding">
@@ -107,82 +113,79 @@ console.log(pageQuery);
         display: flex;
         gap: var(--spc-med) var(--spc-lg);
         justify-content: space-between;
-        // Page Layout
-        &__form,
-        &__text {
-            width: 50%;
+    }
+
+    .contact__form,
+    .contact__text {
+        width: 50%;
+    }
+    // TEXT: Banner, cms text, socials
+    .contact__text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact__socials {
+        display: grid;
+        gap: var(--spc-med);
+        padding-block-start: var(--spc-lg);
+    }
+    .contact__socials__item {
+        display: flex;
+        gap: var(--spc-xs);
+        align-items: center;
+
+        h3 {
+            font-size: var(--font-sz-400);
+            width: fit-content;
+            color: var(--clr-black);
         }
 
-        // TEXT: Banner, cms text, socials
-        &__text {
-            display: flex;
-            flex-direction: column;
+        span {
+            display: block;
+            font-size: var(--font-sz-300);
+            font-weight: 400;
+            color: #767676;
         }
+    }
+    .icon-container {
+        --icon-size: 30px;
+        display: grid;
+        place-items: center;
+        width: calc(var(--icon-size) + 15px);
+        height: calc(var(--icon-size) + 15px);
+        border: 2px solid var(--clr-brand-primary);
 
-        &__socials {
-            display: grid;
-            gap: var(--spc-med);
-            padding-block-start: var(--spc-lg);
-
-            &__item {
-                display: flex;
-                gap: var(--spc-xs);
-                align-items: center;
-            }
-
-            .icon-container {
-                --icon-size: 30px;
-                display: grid;
-                place-items: center;
-                width: calc(var(--icon-size) + 15px);
-                height: calc(var(--icon-size) + 15px);
-                border: 2px solid var(--clr-brand-primary);
-
-                [data-icon] {
-                    font-size: var(--icon-size);
-                    color: var(--clr-brand-primary);
-                }
-            }
-            h3 {
-                font-size: var(--font-sz-400);
-                width: fit-content;
-                color: var(--clr-black);
-            }
-
-            span {
-                display: block;
-                font-size: var(--font-sz-300);
-                font-weight: 400;
-                color: #767676;
-            }
+        [data-icon] {
+            font-size: var(--icon-size);
+            color: var(--clr-brand-primary);
         }
     }
     // MEDIA QUERIES
-
     @include responsive-style(1030) {
         .contact {
             flex-direction: column;
             align-items: center;
-            &__form,
-            &__text {
-                width: 100%;
-                max-width: 1000px;
-            }
-
-            &__text {
-                img {
-                    width: 100%;
-                    aspect-ratio: 21/9;
-                    height: auto;
-                }
-
-                .text {
-                    max-width: 700px;
-                }
-            }
         }
     }
 
+    .contact__form,
+    .contact__text {
+        width: 100%;
+        max-width: 1000px;
+    }
+
+    .contact__text {
+        img {
+            width: 100%;
+            aspect-ratio: 21/9;
+            height: auto;
+        }
+
+        .text {
+            max-width: 700px;
+        }
+    }
     @include responsive-style(tablet) {
         .contact__socials {
             justify-content: center;

@@ -1,9 +1,6 @@
 import type { APIRoute } from "astro";
 export const preload = false;
 
-const shortToken =
-    "IGQWRNYXd4OFFjdzhILTFuSjEyZA3huMzJWUjA4eUpMRWtEVTBmWkRwVFpRbENpLUVJQWN5SUROdXRydk5Vbl9MUmQ2VW9VUzl0dkZAxX2haYVlGcjF6NEZAGWUdOS2lDN1E4bHJZAQkhUbXgzcGYtOXRJQ1h3ZAVBVcDJiTmtxMm4tSXRVdwZDZD";
-
 export const POST: APIRoute = async ({ request }) => {
     const shortToken: string = await request.json();
 

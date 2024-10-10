@@ -18,9 +18,14 @@ const queryParameters = {
 
 const pageQuery = await cmsFetch("privacy-page", queryParameters);
 const { statement, seo } = pageQuery.attributes || {};
+
+const fallbackSeo = {
+    metaTitle: "Privacy Policy | Toronto Wind Collective",
+    metaDescription: "Learn how the Toronto Wind Collective uses your data.",
+};
 ---
 
-<PageLayout seo={seo}>
+<PageLayout cmsSeo={seo} fallbackSeo={fallbackSeo}>
     <Header title="Privacy Policy" subtitle="Details on your rights and our data practices." />
 
     <main class="wrapper section__padding flow">
