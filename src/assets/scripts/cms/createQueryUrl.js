@@ -14,6 +14,7 @@ import qs from "qs";
 const createQueryUrl = (endpoint, queryParameters) => {
     // sanitize endpoint with not additional slash /
     endpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
+    endpoint = endpoint.endsWith("/") ? endpoint.slice(0, -1) : endpoint;
 
     const isProduction = import.meta.env.PROD;
 
