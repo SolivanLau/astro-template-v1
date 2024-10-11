@@ -12,7 +12,7 @@ const queryParameters = {
 
 const fetchFavicons = async () => {
     const faviconQuery = await cmsFetch("site-information", queryParameters);
-    const favicons = faviconQuery.attributes.favicon;
+    const favicons = faviconQuery?.attributes?.favicon ?? [];
 
     // PRODUCTION: Download fetched images for local use of Favicons
     if (favicons || favicons.length > 0) {

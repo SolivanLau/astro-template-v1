@@ -39,7 +39,12 @@ const queryParameters = {
     },
 };
 const pageQuery = await cmsFetch("site-information", queryParameters);
-const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
+const {
+    logo = null,
+    navigation = null,
+    mainNavigation = null,
+    footer = null,
+} = pageQuery?.attributes ?? {};
 ---
 
 <!doctype html>
@@ -75,7 +80,7 @@ const { logo, navigation, mainNavigation, footer } = pageQuery.attributes || {};
         </div>
         <Footer
             logo={logo?.data?.attributes}
-            bio={footer.bio}
+            bio={footer?.bio}
             navigation={footer.navigation}
             socials={footer.socials.data}
         />

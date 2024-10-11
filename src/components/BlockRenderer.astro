@@ -3,7 +3,7 @@ import type { Node } from "src/assets/scripts/cms/blockRenderer";
 import { renderBlock } from "src/assets/scripts/cms/blockRenderer";
 
 interface Props {
-    html: Node[] | undefined;
+    html: Node[] | string | undefined | null;
 }
 
 const { html } = Astro.props;

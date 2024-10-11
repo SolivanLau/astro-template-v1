@@ -17,7 +17,7 @@ const queryParameters = {
 };
 
 const pageQuery = await cmsFetch("privacy-page", queryParameters);
-const { statement, seo } = pageQuery.attributes || {};
+const { statement = "", seo = null } = pageQuery?.attributes ?? null;
 
 const fallbackSeo = {
     metaTitle: "Privacy Policy | Toronto Wind Collective",
@@ -29,6 +29,6 @@ const fallbackSeo = {
     <Header title="Privacy Policy" subtitle="Details on your rights and our data practices." />
 
     <main class="wrapper section__padding flow">
-        <BlockRenderer html={statement} />
+        <BlockRenderer html={statement ?? ""} />
     </main>
 </PageLayout>

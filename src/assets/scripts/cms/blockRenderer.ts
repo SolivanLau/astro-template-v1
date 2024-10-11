@@ -133,50 +133,57 @@ const renderText = (node: TextInlineNode): string => {
     return html;
 };
 
-export const renderBlock = (block: Node[]): string => {
+export const renderBlock = (block: Node[] | string | undefined | null): string => {
     if (!block) return "";
-    let html = "";
-    block.forEach((block) => {
-        if (block.type === "paragraph") {
-            html += `<p>${renderChildren(block.children)}</p>`;
-        } else if (block.type === "quote") {
-            html += `<blockquote>${renderChildren(block.children)}</blockquote>`;
-        } else if (block.type === "code") {
-            html += `<pre><code>${renderChildren(block.children)}</code></pre>`;
-        } else if (block.type === "heading") {
-            switch (block.level) {
-                case 1:
-                    html += `<h1>${renderChildren(block.children)}</h1>`;
-                    return;
-                case 2:
-                    html += `<h2>${renderChildren(block.children)}</h2>`;
-                    return;
-                case 3:
-                    html += `<h3>${renderChildren(block.children)}</h3>`;
-                    return;
-                case 4:
-                    html += `<h4>${renderChildren(block.children)}</h4>`;
-                    return;
-                case 5:
-                    html += `<h5>${renderChildren(block.children)}</h5>`;
-                    return;
-                case 6:
-                    html += `<h6>${renderChildren(block.children)}</h6>`;
-                    return;
+    if (typeof block === "string") return block;
+
+    if (Array.isArray(block)) {
+        let html = "";
+        block.forEach((block) => {
+            if (block.type === "paragraph") {
+                html += `<p>${renderChildren(block.children)}</p>`;
+            } else if (block.type === "quote") {
+                html += `<blockquote>${renderChildren(block.children)}</blockquote>`;
+            } else if (block.type === "code") {
+                html += `<pre><code>${renderChildren(block.children)}</code></pre>`;
+            } else if (block.type === "heading") {
+                switch (block.level) {
+                    case 1:
+                        html += `<h1>${renderChildren(block.children)}</h1>`;
+                        return;
+                    case 2:
+                        html += `<h2>${renderChildren(block.children)}</h2>`;
+                        return;
+                    case 3:
+                        html += `<h3>${renderChildren(block.children)}</h3>`;
+                        return;
+                    case 4:
+                        html += `<h4>${renderChildren(block.children)}</h4>`;
+                        return;
+                    case 5:
+                        html += `<h5>${renderChildren(block.children)}</h5>`;
+                        return;
+                    case 6:
+                        html += `<h6>${renderChildren(block.children)}</h6>`;
+                        return;
+                }
+            } else if (block.type === "link") {
+                html += `<a href="${block.url}">${renderChildren(block.children)}</a>`;
+            } else if (block.type === "list") {
+                if (block.format === "ordered") {
+                    html += `<ol>${renderChildren(block.children)}</ol>`;
+                } else {
+                    html += `<ul>${renderChildren(block.children)}</ul>`;
+                }
+            } else if (block.type === "list-item") {
+                html += `<li>${renderChildren(block.children)}</li>`;
+            } else if (block.type === "image") {
+                html += `<img src="${block.image.url}" alt="${block.image.alternativeText || undefined}" />`;
             }
-        } else if (block.type === "link") {
-            html += `<a href="${block.url}">${renderChildren(block.children)}</a>`;
-        } else if (block.type === "list") {
-            if (block.format === "ordered") {
-                html += `<ol>${renderChildren(block.children)}</ol>`;
-            } else {
-                html += `<ul>${renderChildren(block.children)}</ul>`;
-            }
-        } else if (block.type === "list-item") {
-            html += `<li>${renderChildren(block.children)}</li>`;
-        } else if (block.type === "image") {
-            html += `<img src="${block.image.url}" alt="${block.image.alternativeText || undefined}" />`;
-        }
-    });
-    return html;
+        });
+        return html;
+    }
+
+    console.warn("Unexpected input type for renderBlock:", typeof block);
+    return "";
 };

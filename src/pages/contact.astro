@@ -21,7 +21,7 @@ const queryParameters = {
 };
 // CMS Query
 const pageQuery = await cmsFetch("contact-page", queryParameters);
-const { seo } = pageQuery.attributes || {};
+const { seo = null } = pageQuery?.attributes ?? {};
 
 const fallbackSeo = {
     metaTitle: "Contact Us | Toronto Wind Collective",
