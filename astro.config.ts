@@ -8,7 +8,7 @@ export default defineConfig({
     adapter: netlify({
         imageCDN: false,
     }),
-    site: "https://astro-template-v1.netlify.app",
+    site: "https://torontowindcollective.com",
     build: {
         inlineStylesheets: "never",
     },

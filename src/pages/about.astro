@@ -174,8 +174,16 @@ const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.
                     backgroundImgPosition="left"
                     class="cta-banner"
                 >
-                    <h2 class="title-font--display">Hear Us Live!</h2>
-                    <Link url="/events" type="button--secondary-white" class="cta-banner__Link">
+                    <h2 class="title-font--display" data-scrollimate="fade-right">
+                        Hear Us Live!
+                    </h2>
+                    <Link
+                        url="/events"
+                        type="button--secondary-white"
+                        class="cta-banner__Link"
+                        data-scrollimate="fade-right"
+                        data-scrollimate-delay="0.5s"
+                    >
                         2024/25 Concert Season
                     </Link>
                 </Banner>
@@ -297,20 +305,20 @@ const serviceFeaturedEvents = services.featuredEvents.data.map((event) => event.
         .content {
             gap: var(--spc-med);
         }
-        &__Link {
-            justify-self: start;
-        }
+    }
+    .cta-banner__Link {
+        justify-self: start;
     }
 
     @include responsive-style(tablet) {
         .cta-banner {
-            .content {
-                gap: var(--spc-xs);
-            }
-            &__Link {
-                justify-self: end;
-                font-size: var(--font-sz-300);
-            }
+        }
+        .content {
+            gap: var(--spc-xs);
+        }
+        .cta-banner__Link {
+            justify-self: end;
+            font-size: var(--font-sz-300);
         }
     }
 

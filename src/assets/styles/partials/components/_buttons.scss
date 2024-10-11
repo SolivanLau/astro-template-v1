@@ -3,6 +3,12 @@
 button {
     border: none;
 }
+
+// FORM BUTTONS
+button[type="submit"] {
+    width: 100%;
+}
+
 .button {
     // Default Button Styles
     --_padding: #{rem(8)} #{rem(16)};
@@ -40,59 +46,68 @@ button {
             opacity: 100%;
         }
     }
-    // MODIFIERS
-    &--loader {
-        position: relative;
-    }
+}
 
-    &__loader {
-        color: var(--_loader);
-        opacity: 0%;
-        visibility: hidden;
-        font-size: 1.3em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
-        animation: spin 1s infinite linear;
-    }
+// BUTTON MODIFIERS
 
-    &--primary,
-    &--secondary,
-    &--secondary-white {
-        --_font-sz: clamp(var(--font-sz-300), 1.036vw + 0.741rem, var(--font-sz-500));
-    }
-    &--primary {
+// BUTTON WITH ADDITIONAL LOADER
+.button--loader {
+    position: relative;
+}
+
+.button__loader {
+    color: var(--_loader);
+    opacity: 0%;
+    visibility: hidden;
+    font-size: 1.3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    animation: spin 1s infinite linear;
+}
+
+// BUTTON VARIANTS
+.button--primary,
+.button--secondary,
+.button--secondary-white {
+    --_font-sz: clamp(var(--font-sz-300), 1.036vw + 0.741rem, var(--font-sz-500));
+}
+
+// PRIMARY
+.button--primary {
+    --_background: var(--clr-brand-primary);
+    --_color: var(--clr-white);
+    --_border: var(--clr-brand-primary);
+}
+
+// SECONDARY
+.button--secondary {
+    --_background: transparent;
+    --_color: var(--clr-brand-primary);
+    --_loader: var(--clr-brand-primary);
+
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
         --_background: var(--clr-brand-primary);
         --_color: var(--clr-white);
-        --_border: var(--clr-brand-primary);
-    }
-    &--secondary {
-        --_background: transparent;
-        --_color: var(--clr-brand-primary);
-        --_loader: var(--clr-brand-primary);
-
-        &:hover:not(:disabled),
-        &:focus-visible:not(:disabled) {
-            --_background: var(--clr-brand-primary);
-            --_color: var(--clr-white);
-        }
-    }
-    &--secondary-white {
-        --_background: transparent;
-        --_border: var(--clr-white);
-        --_color: var(--clr-white);
-        --_loader: var(--clr-white);
-        &:hover:not(:disabled),
-        &:focus-visible:not(:disabled) {
-            filter: brightness(100%);
-            --_border: var(--clr-brand-accent);
-            --_color: var(--clr-brand-accent);
-        }
     }
 }
 
-// loading state
+// SECONDARY WHITE
+.button--secondary-white {
+    --_background: transparent;
+    --_border: var(--clr-white);
+    --_color: var(--clr-white);
+    --_loader: var(--clr-white);
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
+        filter: brightness(100%);
+        --_border: var(--clr-brand-accent);
+        --_color: var(--clr-brand-accent);
+    }
+}
+// LOADING STATE ANIMATION
 
 @keyframes spin {
     from {

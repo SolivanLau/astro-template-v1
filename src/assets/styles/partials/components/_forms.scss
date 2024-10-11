@@ -13,16 +13,11 @@
 
     // Layout
     display: grid;
-
-    &__inputs * {
-        min-width: 0;
-    }
+}
+.form__inputs * {
+    min-width: 0;
 }
 
-// submit button
-button[type="submit"] {
-    width: 100%;
-}
 
 // status text
 .status {

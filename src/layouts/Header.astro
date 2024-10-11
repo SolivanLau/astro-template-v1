@@ -38,11 +38,11 @@ const {
     {...rest}
 >
     <h1 class="title-font--display" data-scrollimate="fade-left">{title}</h1>
-    {subtitle && <p>{subtitle}</p>}
-</Banner>
-
-<style lang="scss">
-    .header {
-        color: var(--clr-white);
+    {
+        subtitle && (
+            <p data-scrollimate="fade-left" data-scrollimate-delay="0.2s">
+                {subtitle}
+            </p>
+        )
     }
-</style>
+</Banner>

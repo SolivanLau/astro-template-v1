@@ -65,58 +65,53 @@ const Tag = tagName ? tagName : "section";
     // full background
     .background {
         background: var(--clr-brand-secondary);
-
-        // Background Image: Modifiers
-        &__image-parent {
-            --_background: var(--clr-brand-secondary);
-            --_img-position: 0;
-            --_content-position: ;
-
-            background: var(
-                --_background,
-                linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%)
-            );
-
-            .background__image {
-                object-position: top;
-            }
-
-            .content {
-                display: grid;
-                justify-content: var(--_content-position, normal);
-                color: var(--clr-white);
-            }
-        }
     }
 
+    // Background Image
     .background__image-parent {
-        // MODIFIERS: Background Image
-        &--img-right {
-            --_background: linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%);
-            --_img-position: 30%;
+        --_background: var(--clr-brand-secondary);
+        --_img-position: 0;
+        --_content-position: ;
 
-            --_content-position: start;
-        }
-
-        &--img-left {
-            --_background: linear-gradient(-92.193deg, #695c7c 50%, rgba(66, 58, 112, 17%) 99%);
-
-            --_img-position: -30%;
-            --_content-position: end;
-        }
+        background: var(
+            --_background,
+            linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%)
+        );
     }
 
-    // LAYOUT
-    @include responsive-style(mobile) {
-        .background__image-parent {
-            &--img-left {
-                --_img-position: -20%;
-            }
+    // MODIFIERS: Image Position
+    .background__image-parent--img-right {
+        --_background: linear-gradient(-85.41deg, rgba(66, 58, 112, 17%) 0%, #695c7c 58%);
+        --_img-position: 30%;
 
-            &--img-right {
-                --_background: linear-gradient(281deg, rgba(66, 58, 112, 17%) 0%, #695c7c 50%);
-                --_img-position: 20%;
-            }
+        --_content-position: start;
+    }
+
+    .background__image-parent--img-left {
+        --_background: linear-gradient(-92.193deg, #695c7c 50%, rgba(66, 58, 112, 17%) 99%);
+
+        --_img-position: -30%;
+        --_content-position: end;
+    }
+
+    .background__image {
+        object-position: top;
+    }
+
+    .content {
+        display: grid;
+        justify-content: var(--_content-position, normal);
+        color: var(--clr-white);
+    }
+
+    @include responsive-style(mobile) {
+        .background__image-parent--img-left {
+            --_img-position: -20%;
+        }
+
+        .background__image-parent--img-right {
+            --_background: linear-gradient(281deg, rgba(66, 58, 112, 17%) 0%, #695c7c 50%);
+            --_img-position: 20%;
         }
     }
 </style>

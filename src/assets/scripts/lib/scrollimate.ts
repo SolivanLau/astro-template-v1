@@ -18,7 +18,6 @@ const getOptions = (element: HTMLElement): { [key: string]: string } => {
             {} as { [key: string]: string },
         );
 
-    console.log(options);
     return options;
 };
 

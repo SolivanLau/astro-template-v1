@@ -50,29 +50,26 @@
 }
 
 // BACKGROUND IMAGE
-.background {
-    &__image-parent {
-        position: relative;
-        overflow: hidden;
+.background__image-parent {
+    position: relative;
+    overflow: hidden;
 
-        --_background: var(--clr-brand-secondary);
-        --_img-position: 0;
-        --_content-position: 0;
+    --_background: var(--clr-brand-secondary);
+    --_img-position: 0;
+    --_content-position: 0;
 
-        // use custome properties in addition to translate and object-position to move image within the parent
-        .background__image {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            right: 0px;
-            z-index: -10;
-            object-fit: cover;
-            translate: var(--_img-position, 0);
-        }
+    // use custome properties in addition to translate and object-position to move image within the parent
+    .background__image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        right: 0px;
+        z-index: -10;
+        object-fit: cover;
+        translate: var(--_img-position, 0);
     }
 }
-
 // OVERLAY: a body class used for stopping site scroll and adding a blurred background
 .overlay {
     transition: opacity 0.3s ease-in-out;
